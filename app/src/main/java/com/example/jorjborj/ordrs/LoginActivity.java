@@ -11,6 +11,9 @@ import android.widget.Button;
 
 public class LoginActivity extends AppCompatActivity {
 
+    //create flash screen!
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
