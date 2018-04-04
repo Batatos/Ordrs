@@ -12,6 +12,7 @@ import android.widget.Button;
 public class LoginActivity extends AppCompatActivity {
 
     //create flash screen!
+    //stam test
 
 
     @Override
