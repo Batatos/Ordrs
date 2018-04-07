@@ -9,7 +9,7 @@ public class OrderItem {
 
     private String title;
     private int counter;
-    private double price;
+    double price;
 
 
     public OrderItem( String title, int counter, double price) {

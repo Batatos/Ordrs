@@ -96,14 +96,21 @@
 
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="monospace"
+                android:layout_marginLeft="50dp"
                 android:text="Price: "
                 android:gravity="center"
                 android:textColor="#fff"
                 android:textSize="20dp" />
+            <TextView
+                android:id="@+id/sumPrice"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:text="00.00"/>
 
             <TextView
                 android:id="@+id/totalItems"

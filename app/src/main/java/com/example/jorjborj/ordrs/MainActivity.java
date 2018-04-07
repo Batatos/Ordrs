@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> orders = null;
     ArrayList<OrderItem> orderItems = null;
     ArrayAdapter orderAdapter = null;
+    double sumPrice = 0.0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         final ListView counterlv = (ListView)findViewById(R.id.counterlist);
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new GridLayoutManager(this,5));
+        //TextView price = (TextView) findViewById(R.id.sumPrice);
         initializeData();
 
 
@@ -292,11 +294,17 @@ public class MainActivity extends AppCompatActivity {
                     OrderItem newItem = new OrderItem(menu.get(position).getName(), 1,menu.get(position).getPrice());
                     orders.add(menu.get(position).getName());
                     orderItems.add(newItem);
-                    //Toast.makeText(mCtx, newItem.getCounter(), Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(mCtx, orderItems.get(orderItems.size()).toString(), Toast.LENGTH_SHORT).show();
+                    sumPrice += newItem.getPrice();
+                    TextView tv = (TextView)findViewById(R.id.sumPrice);
+                    tv.setText(Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(sumPrice))));
                     orderAdapter.notifyDataSetChanged();
                 }else{
                     OrderItem itemAdded = orderItems.get(orders.indexOf(menu.get(position).getName()));
                     itemAdded.setCounter(itemAdded.getCounter()+1);
+                    sumPrice += itemAdded.getPrice();
+                    TextView tv = (TextView)findViewById(R.id.sumPrice);
+                    tv.setText(Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(sumPrice))));
                     orderAdapter.notifyDataSetChanged();
                 }
             }
@@ -382,8 +390,13 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 modelsArrayList.get(position).setCounter(modelsArrayList.get(position).getCounter()+1);
-                                Toast.makeText(context, Double.toString(modelsArrayList.get(position).getPrice()), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(context, Double.toString(modelsArrayList.get(position).getPrice()), Toast.LENGTH_SHORT).show();
+
+                                sumPrice += modelsArrayList.get(position).getPrice();
+                                TextView tv = (TextView)findViewById(R.id.sumPrice);
+                                tv.setText(Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(sumPrice))));
                                 orderAdapter.notifyDataSetChanged();
+
 
                             }
                         });
@@ -393,8 +406,13 @@ public class MainActivity extends AppCompatActivity {
                             public void onClick(View v) {
                                 if(modelsArrayList.get(position).getCounter()<2){
                                     Toast.makeText(context, "Minimum order reached.", Toast.LENGTH_SHORT).show();
+
                                 }else {
+                                    double toLess = modelsArrayList.get(position).getPrice();
+                                    sumPrice -= toLess;
                                     modelsArrayList.get(position).setCounter(modelsArrayList.get(position).getCounter() - 1);
+                                    TextView tv = (TextView)findViewById(R.id.sumPrice);
+                                    tv.setText(Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(sumPrice))));
                                     orderAdapter.notifyDataSetChanged();
                     }
                 }
@@ -403,6 +421,10 @@ public class MainActivity extends AppCompatActivity {
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    sumPrice -= modelsArrayList.get(position).getPrice()*modelsArrayList.get(position).getCounter();
+                    TextView tv = (TextView)findViewById(R.id.sumPrice);
+                    tv.setText(Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(sumPrice))));
+
                     modelsArrayList.remove(modelsArrayList.get(position));
                     orders.remove(position);
                     orderAdapter.notifyDataSetChanged();
