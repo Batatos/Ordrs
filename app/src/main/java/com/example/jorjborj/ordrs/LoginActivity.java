@@ -34,13 +34,13 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(username.getText().toString().equals("admin")){
-                    if(password.getText().toString().equals("")){
+
+
                         Intent i = new Intent(LoginActivity.this,MainActivity.class);
                         startActivity(i);
                         finish();
-                    }
-                }
+
+
             }
         });
 

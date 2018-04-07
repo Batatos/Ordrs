@@ -1,5 +1,7 @@
 package com.example.jorjborj.ordrs;
 
+
+
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -22,6 +24,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,18 +33,22 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.media.CamcorderProfile.get;
+
 /**
  * Created by jorjborj on 4/2/2018.
  */
 
- public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
-     ArrayList<Item> foodmenu = new ArrayList<Item>();
-     ArrayList<Item> drinksmenu = new ArrayList<Item>();
-     ArrayList<Item> dessertsmenu = new ArrayList<Item>();
-     ArrayList<Item> alcoholmenu = new ArrayList<Item>();
-     ArrayAdapter<String> adapter4 = null;
-     ArrayList<String> orders = null;
+    ArrayList<Item> foodmenu = new ArrayList<Item>();
+    ArrayList<Item> drinksmenu = new ArrayList<Item>();
+    ArrayList<Item> dessertsmenu = new ArrayList<Item>();
+    ArrayList<Item> alcoholmenu = new ArrayList<Item>();
+    ArrayAdapter<String> adapter4 = null;
+    ArrayList<String> orders = null;
+    ArrayList<OrderItem> orderItems = null;
+    ArrayAdapter orderAdapter = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,8 +72,12 @@ import java.util.List;
         final String[] DessertsValues = new String[] { "Chocolate Cake", "Truffle", "Donuts" };
         final String[] AlcoholValues = new String[] { "Carlsberg", "Tuborg", "Corona", "Whiskey", "Arak" };
 
+
         orders = new ArrayList<String>();
         adapter4 = new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1, orders);
+
+        orderItems = new ArrayList<>();
+        orderAdapter = new OrderItemAdapter(this,R.layout.counterlistitem,orderItems);
 
         final CardviewAdapter adapter = new CardviewAdapter(this,foodmenu);
         final CardviewAdapter adapter1 = new CardviewAdapter(this,drinksmenu);
@@ -84,8 +95,8 @@ import java.util.List;
 
 
         rv.setAdapter(adapter);
-        counterlv.setAdapter(adapter4);
-        adapter4.setNotifyOnChange(true);
+        counterlv.setAdapter(orderAdapter);
+        orderAdapter.setNotifyOnChange(true);
 
 //        rv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
@@ -178,21 +189,21 @@ import java.util.List;
 
     }
 
-     public ArrayAdapter<String> getAdapter4() {
-         return adapter4;
-     }
+    public ArrayAdapter<String> getAdapter4() {
+        return adapter4;
+    }
 
-     public ArrayList<String> getOrders() {
-         return orders;
-     }
+    public ArrayList<String> getOrders() {
+        return orders;
+    }
 
-     public void setAdapter4(ArrayAdapter<String> adapter4) {
-         this.adapter4 = adapter4;
-     }
+    public void setAdapter4(ArrayAdapter<String> adapter4) {
+        this.adapter4 = adapter4;
+    }
 
-     public void setOrders(ArrayList<String> orders) {
-         this.orders = orders;
-     }
+    public void setOrders(ArrayList<String> orders) {
+        this.orders = orders;
+    }
 
 
 
@@ -228,9 +239,18 @@ import java.util.List;
             holder.mRootView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(mCtx, menu.get(position).getName(), Toast.LENGTH_SHORT).show();
-                    orders.add(menu.get(position).getName());
-                    adapter4.notifyDataSetChanged();
+                    //Toast.makeText(mCtx, menu.get(position).getName(), Toast.LENGTH_SHORT).show();
+                    if(!orders.contains(menu.get(position).getName())) {
+                        OrderItem newItem = new OrderItem(menu.get(position).getName(), 0);
+                        orders.add(menu.get(position).getName());
+                        orderItems.add(newItem);
+                        //Toast.makeText(mCtx, newItem.getCounter(), Toast.LENGTH_SHORT).show();
+                        orderAdapter.notifyDataSetChanged();
+                    }else{
+                        OrderItem itemAdded = orderItems.get(orders.indexOf(menu.get(position).getName()));
+                        itemAdded.setCounter(itemAdded.getCounter()+1);
+                        orderAdapter.notifyDataSetChanged();
+                    }
                 }
             });
         }
@@ -241,7 +261,6 @@ import java.util.List;
         }
 
         class CardviewHolder extends RecyclerView.ViewHolder{
-
             ImageView imageView;
             TextView title;
             protected View mRootView;
@@ -256,4 +275,6 @@ import java.util.List;
             }
         }
     }
- }
+
+
+}

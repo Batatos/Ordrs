@@ -1,6 +1,7 @@
 package com.example.jorjborj.ordrs;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,7 @@ public class CardviewAdapter extends RecyclerView.Adapter<CardviewAdapter.Cardvi
         CardviewHolder cardholder = new CardviewHolder(view);
         return cardholder;
 
+
     }
 
     @Override
@@ -52,7 +54,8 @@ public class CardviewAdapter extends RecyclerView.Adapter<CardviewAdapter.Cardvi
         holder.mRootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mCtx, menu.get(position).getName(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mCtx, menu.get(position).getName(), Toast.LENGTH_SHORT).show();
+                notifyDataSetChanged();
             }
         });
     }
