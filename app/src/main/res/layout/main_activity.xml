@@ -15,9 +15,9 @@
             android:id="@+id/navbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:itemTextColor="#000"
             android:layout_marginRight="2dp"
             android:background="#60b0f4"
+            app:itemTextColor="#000"
             app:menu="@menu/categories" />
 
         <LinearLayout
@@ -26,9 +26,9 @@
 
             <LinearLayout
                 android:id="@+id/largeScreen"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <ListView
                     android:id="@+id/itemsList"
@@ -91,15 +91,16 @@
             android:background="#C6c6c6">
 
             <TextView
+                android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Price: "
                 android:layout_gravity="center"
-                android:gravity="center"
                 android:fontFamily="monospace"
-                android:textSize="20dp"
+                android:text="Price: "
+                android:gravity="center"
                 android:textColor="#fff"
-                />
+                android:textSize="20dp" />
+
             <TextView
                 android:id="@+id/totalItems"
                 android:layout_width="wrap_content"
