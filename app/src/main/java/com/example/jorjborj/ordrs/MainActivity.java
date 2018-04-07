@@ -1,6 +1,7 @@
 package com.example.jorjborj.ordrs;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,6 +10,8 @@ import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -22,12 +25,18 @@ import android.widget.TextView;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
-/**
+ /**
  * Created by jorjborj on 4/2/2018.
  */
 
  public class MainActivity extends AppCompatActivity {
  // matalan qw
+
+     ArrayList<Item> foodmenu = new ArrayList<Item>();
+     ArrayList<Item> drinksmenu = new ArrayList<Item>();
+     ArrayList<Item> dessertsmenu = new ArrayList<Item>();
+     ArrayList<Item> alcoholmenu = new ArrayList<Item>();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +47,11 @@ import java.util.ArrayList;
 
         // Large screen, LISTVIEW and adapters
         final View mainscreen = (View)findViewById(R.id.largeScreen);
-        final ListView lv = (ListView)findViewById(R.id.itemsList);
+        final RecyclerView rv = (RecyclerView)findViewById(R.id.rv);
         final ListView counterlv = (ListView)findViewById(R.id.counterlist);
+        rv.setHasFixedSize(true);
+        rv.setLayoutManager(new GridLayoutManager(this,5));
+        initializeData();
 
         //dummy data for now
         final String[] FoodValues = new String[] {"Chicken Salad", "Nazareth Breakfast", "Antricot" };
@@ -49,72 +61,73 @@ import java.util.ArrayList;
 
         final ArrayList<String> orders = new ArrayList<String>();
 
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, FoodValues);
+        final CardviewAdapter adapter = new CardviewAdapter(this,foodmenu);
+        final CardviewAdapter adapter1 = new CardviewAdapter(this,drinksmenu);
+        final CardviewAdapter adapter2 = new CardviewAdapter(this,dessertsmenu);
+        final CardviewAdapter adapter3 = new CardviewAdapter(this,alcoholmenu);
 
-        final ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, DrinksValues);
-        lv.setAdapter(adapter);
-        final ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, DessertsValues);
-        lv.setAdapter(adapter);
-        final ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, AlcoholValues);
+//        final ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this,
+//                android.R.layout.simple_list_item_1, DrinksValues);
+//        rv.setAdapter(adapter);
+//        final ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,
+//                android.R.layout.simple_list_item_1, DessertsValues);
+//        rv.setAdapter(adapter);
+//        final ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this,
+//                android.R.layout.simple_list_item_1, AlcoholValues);
 
         final ArrayAdapter<String> adapter4 = new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1, orders);
 
-        lv.setAdapter(adapter);
+        rv.setAdapter(adapter);
         counterlv.setAdapter(adapter4);
 
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                orders.add(FoodValues[position]);
-                adapter4.notifyDataSetChanged();
-            }
-        });
-
+//        rv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                orders.add(FoodValues[position]);
+//                adapter4.notifyDataSetChanged();
+//            }
+//        });
+//
         nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            public boolean onNavigationItemSelected(@NonNull final MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.food:
-                        lv.setAdapter(adapter);
-                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        rv.setAdapter(adapter);
+                        rv.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                orders.add(FoodValues[position]);
+                            public void onClick(View v) {
+                                orders.add(item.getTitle().toString());
                                 adapter4.notifyDataSetChanged();
-
                             }
                         });
                         break;
                     case R.id.alcohol:
-                        lv.setAdapter(adapter3);
-                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        rv.setAdapter(adapter3);
+                        rv.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                orders.add(AlcoholValues[position]);
+                            public void onClick(View v) {
+                                orders.add(item.getTitle().toString());
                                 adapter4.notifyDataSetChanged();
                             }
                         });
                         break;
                     case R.id.drinks:
-                        lv.setAdapter(adapter1);
-                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        rv.setAdapter(adapter1);
+                        rv.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                orders.add(DrinksValues[position]);
+                            public void onClick(View v) {
+                                orders.add(item.getTitle().toString());
                                 adapter4.notifyDataSetChanged();
                             }
                         });
                         break;
                     case R.id.desserts:
-                        lv.setAdapter(adapter2);
-                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        rv.setAdapter(adapter2);
+                        rv.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                orders.add(DessertsValues[position]);
+                            public void onClick(View v) {
+                                orders.add(item.getTitle().toString());
                                 adapter4.notifyDataSetChanged();
                             }
                         });
@@ -148,5 +161,42 @@ import java.util.ArrayList;
         }
     }
 
+
+    public void initializeData (){
+
+        Item item = new Item("Chicken Salad",10,'f',null);
+        Item item1 = new Item("Nazareth Breakfast",10,'f',null);
+        Item item2 = new Item("Beef Fillet",10,'f',null);
+
+        foodmenu.add(item);
+        foodmenu.add(item1);
+        foodmenu.add(item2);
+
+        Item item3 = new Item("Cola",10,'f',null);
+        Item item4 = new Item("Sprite",10,'f',null);
+        Item item5 = new Item("Espresso",10,'f',null);
+
+        drinksmenu.add(item3);
+        drinksmenu.add(item4);
+        drinksmenu.add(item5);
+
+        Item item6 = new Item("Chocolate Cake",10,'d',null);
+        Item item7 = new Item("Cheese Cake",10,'d',null);
+        Item item8 = new Item("Truffle",10,'d',null);
+
+        dessertsmenu.add(item6);
+        dessertsmenu.add(item7);
+        dessertsmenu.add(item8);
+
+        Item item9 = new Item("Sex on the beach",10,'d',null);
+        Item item10 = new Item("Beer",10,'d',null);
+        Item item11 = new Item("Whiskey",10,'d',null);
+
+        alcoholmenu.add(item9);
+        alcoholmenu.add(item10);
+        alcoholmenu.add(item11);
+
+
+    }
 
 }
