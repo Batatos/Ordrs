@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -55,8 +56,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
+
         final BottomNavigationView nav = (BottomNavigationView)findViewById(R.id.navbar);
         disableShiftMode(nav);
+
 
         // Large screen, LISTVIEW and adapters
         final View mainscreen = (View)findViewById(R.id.largeScreen);
@@ -66,45 +69,25 @@ public class MainActivity extends AppCompatActivity {
         rv.setLayoutManager(new GridLayoutManager(this,5));
         initializeData();
 
-        //dummy data for now
-        final String[] FoodValues = new String[] {"Chicken Salad", "Nazareth Breakfast", "Antricot" };
-        final String[] DrinksValues = new String[] { "Cola","Sprite","Fanta","Water" };
-        final String[] DessertsValues = new String[] { "Chocolate Cake", "Truffle", "Donuts" };
-        final String[] AlcoholValues = new String[] { "Carlsberg", "Tuborg", "Corona", "Whiskey", "Arak" };
-
 
         orders = new ArrayList<String>();
         adapter4 = new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1, orders);
 
+
         orderItems = new ArrayList<>();
         orderAdapter = new OrderItemAdapter(this,R.layout.counterlistitem,orderItems);
+
 
         final CardviewAdapter adapter = new CardviewAdapter(this,foodmenu);
         final CardviewAdapter adapter1 = new CardviewAdapter(this,drinksmenu);
         final CardviewAdapter adapter2 = new CardviewAdapter(this,dessertsmenu);
         final CardviewAdapter adapter3 = new CardviewAdapter(this,alcoholmenu);
 
-//        final ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this,
-//                android.R.layout.simple_list_item_1, DrinksValues);
-//        rv.setAdapter(adapter);
-//        final ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,
-//                android.R.layout.simple_list_item_1, DessertsValues);
-//        rv.setAdapter(adapter);
-//        final ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this,
-//                android.R.layout.simple_list_item_1, AlcoholValues);
-
 
         rv.setAdapter(adapter);
         counterlv.setAdapter(orderAdapter);
         orderAdapter.setNotifyOnChange(true);
 
-//        rv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                orders.add(FoodValues[position]);
-//                adapter4.notifyDataSetChanged();
-//            }
-//        });
 
         nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -129,6 +112,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
+    /**
+     *     Disable bottomnavbar animation function
+     */
     public static void disableShiftMode(BottomNavigationView view) {
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
         try {
@@ -151,6 +139,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+
+
+
+
+    //Initialize dummy data function
 
     public void initializeData (){
 
@@ -189,6 +183,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
+
+
+    //GETTERS AND SETTERS
+
     public ArrayAdapter<String> getAdapter4() {
         return adapter4;
     }
@@ -207,6 +207,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
+
+
+
+    //INNER CLASS CardViewAdapter - menu card view adapter.
     class CardviewAdapter extends RecyclerView.Adapter<com.example.jorjborj.ordrs.CardviewAdapter.CardviewHolder>{
 
         private Context mCtx;
@@ -237,23 +243,23 @@ public class MainActivity extends AppCompatActivity {
             }
 
             holder.mRootView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //Toast.makeText(mCtx, menu.get(position).getName(), Toast.LENGTH_SHORT).show();
-                    if(!orders.contains(menu.get(position).getName())) {
-                        OrderItem newItem = new OrderItem(menu.get(position).getName(), 0);
-                        orders.add(menu.get(position).getName());
-                        orderItems.add(newItem);
-                        //Toast.makeText(mCtx, newItem.getCounter(), Toast.LENGTH_SHORT).show();
-                        orderAdapter.notifyDataSetChanged();
-                    }else{
-                        OrderItem itemAdded = orderItems.get(orders.indexOf(menu.get(position).getName()));
-                        itemAdded.setCounter(itemAdded.getCounter()+1);
-                        orderAdapter.notifyDataSetChanged();
-                    }
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(mCtx, menu.get(position).getName(), Toast.LENGTH_SHORT).show();
+                if(!orders.contains(menu.get(position).getName())) {
+                    OrderItem newItem = new OrderItem(menu.get(position).getName(), 1);
+                    orders.add(menu.get(position).getName());
+                    orderItems.add(newItem);
+                    //Toast.makeText(mCtx, newItem.getCounter(), Toast.LENGTH_SHORT).show();
+                    orderAdapter.notifyDataSetChanged();
+                }else{
+                    OrderItem itemAdded = orderItems.get(orders.indexOf(menu.get(position).getName()));
+                    itemAdded.setCounter(itemAdded.getCounter()+1);
+                    orderAdapter.notifyDataSetChanged();
                 }
-            });
-        }
+            }
+        });
+    }
 
         @Override
         public int getItemCount() {
@@ -276,5 +282,93 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+
+    //INNER CLASS : OrderItemAdapter - counter listview customized adapter
+    public class OrderItemAdapter extends ArrayAdapter<OrderItem> {
+
+        private final Context context;
+        private final ArrayList<OrderItem> modelsArrayList;
+        private int ctr;
+        private int resource;
+
+        public OrderItemAdapter(Context context, int resource, ArrayList<OrderItem> modelsArrayList) {
+            super(context, resource, modelsArrayList);
+
+
+            this.context = context;
+            this.modelsArrayList = modelsArrayList;
+            this.resource = resource;
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+
+            // 1. Create inflater
+            LayoutInflater inflater = (LayoutInflater) LayoutInflater.from(context);
+            View customView = inflater.inflate(R.layout.counterlistitem,parent,false);
+            //convertView = inflater.inflate(resource,parent,false);
+            // 2. Get rowView from inflater
+
+
+
+            // 3. Get icon,title & counter views from the rowView
+            //     ImageView imgView = (ImageView) customView.findViewById(R.id.item_icon);
+            TextView titleView = (TextView) customView.findViewById(R.id.itemname);
+            TextView counterView = (TextView) customView.findViewById(R.id.item_counter);
+
+
+
+            // 4. Set the text for textView
+
+            titleView.setText(modelsArrayList.get(position).getTitle());
+            //Toast.makeText(context, Integer.toString(modelsArrayList.get(position).getCounter()), Toast.LENGTH_SHORT).show();
+            counterView.setText(Integer.toString(modelsArrayList.get(position).getCounter()));
+
+
+            ImageButton add = (ImageButton)customView.findViewById(R.id.add);
+            ImageButton remove = (ImageButton)customView.findViewById(R.id.remove);
+            ImageButton delete = (ImageButton)customView.findViewById(R.id.delete);
+
+            add.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    modelsArrayList.get(position).setCounter(modelsArrayList.get(position).getCounter()+1);
+                    orderAdapter.notifyDataSetChanged();
+
+                }
+            });
+
+            remove.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(modelsArrayList.get(position).getCounter()<2){
+                        Toast.makeText(context, "Minimum order reached.", Toast.LENGTH_SHORT).show();
+                    }else {
+                        modelsArrayList.get(position).setCounter(modelsArrayList.get(position).getCounter() - 1);
+                        orderAdapter.notifyDataSetChanged();
+                    }
+                }
+            });
+
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    modelsArrayList.remove(modelsArrayList.get(position));
+                    orders.remove(position);
+                    orderAdapter.notifyDataSetChanged();
+
+                }
+            });
+
+
+            // 5. retrn rowView
+            return customView;
+
+
+
+
+        }
+    }
 
 }
