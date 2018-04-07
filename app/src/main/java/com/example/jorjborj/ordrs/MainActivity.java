@@ -31,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Field;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,33 +149,33 @@ public class MainActivity extends AppCompatActivity {
 
     public void initializeData (){
 
-        Item item = new Item("Chicken Salad",10,'f',null);
-        Item item1 = new Item("Nazareth Breakfast",10,'f',null);
-        Item item2 = new Item("Beef Fillet",10,'f',null);
+        Item item = new Item("Chicken Salad",49.90,10,'f',null);
+        Item item1 = new Item("Nazareth Breakfast",65.90,10,'f',null);
+        Item item2 = new Item("Beef Fillet", 109.90, 10,'f',null);
 
         foodmenu.add(item);
         foodmenu.add(item1);
         foodmenu.add(item2);
 
-        Item item3 = new Item("Cola",10,'f',null);
-        Item item4 = new Item("Sprite",10,'f',null);
-        Item item5 = new Item("Espresso",10,'f',null);
+        Item item3 = new Item("Cola",11.90,10,'f',null);
+        Item item4 = new Item("Sprite",11.90,10,'f',null);
+        Item item5 = new Item("Espresso",8.90,10,'f',null);
 
         drinksmenu.add(item3);
         drinksmenu.add(item4);
         drinksmenu.add(item5);
 
-        Item item6 = new Item("Chocolate Cake",10,'d',null);
-        Item item7 = new Item("Cheese Cake",10,'d',null);
-        Item item8 = new Item("Truffle",10,'d',null);
+        Item item6 = new Item("Chocolate Cake", 42.90,10,'d',null);
+        Item item7 = new Item("Cheese Cake",42.90,10,'d',null);
+        Item item8 = new Item("Truffle",35.90,10,'d',null);
 
         dessertsmenu.add(item6);
         dessertsmenu.add(item7);
         dessertsmenu.add(item8);
 
-        Item item9 = new Item("Sex on the beach",10,'d',null);
-        Item item10 = new Item("Beer",10,'d',null);
-        Item item11 = new Item("Whiskey",10,'d',null);
+        Item item9 = new Item("Sex on the beach",35.20,10,'d',null);
+        Item item10 = new Item("Beer",26.90,10,'d',null);
+        Item item11 = new Item("Whiskey",25.90,10,'d',null);
 
         alcoholmenu.add(item9);
         alcoholmenu.add(item10);
@@ -205,12 +206,53 @@ public class MainActivity extends AppCompatActivity {
         this.orders = orders;
     }
 
+    public ArrayList<Item> getFoodmenu() {
+        return foodmenu;
+    }
 
+    public void setFoodmenu(ArrayList<Item> foodmenu) {
+        this.foodmenu = foodmenu;
+    }
 
+    public ArrayList<Item> getDrinksmenu() {
+        return drinksmenu;
+    }
 
+    public void setDrinksmenu(ArrayList<Item> drinksmenu) {
+        this.drinksmenu = drinksmenu;
+    }
 
+    public ArrayList<Item> getDessertsmenu() {
+        return dessertsmenu;
+    }
 
+    public void setDessertsmenu(ArrayList<Item> dessertsmenu) {
+        this.dessertsmenu = dessertsmenu;
+    }
 
+    public ArrayList<Item> getAlcoholmenu() {
+        return alcoholmenu;
+    }
+
+    public void setAlcoholmenu(ArrayList<Item> alcoholmenu) {
+        this.alcoholmenu = alcoholmenu;
+    }
+
+    public ArrayList<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(ArrayList<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
+
+    public ArrayAdapter getOrderAdapter() {
+        return orderAdapter;
+    }
+
+    public void setOrderAdapter(ArrayAdapter orderAdapter) {
+        this.orderAdapter = orderAdapter;
+    }
 
     //INNER CLASS CardViewAdapter - menu card view adapter.
     class CardviewAdapter extends RecyclerView.Adapter<com.example.jorjborj.ordrs.CardviewAdapter.CardviewHolder>{
@@ -247,7 +289,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Toast.makeText(mCtx, menu.get(position).getName(), Toast.LENGTH_SHORT).show();
                 if(!orders.contains(menu.get(position).getName())) {
-                    OrderItem newItem = new OrderItem(menu.get(position).getName(), 1);
+                    OrderItem newItem = new OrderItem(menu.get(position).getName(), 1,menu.get(position).getPrice());
                     orders.add(menu.get(position).getName());
                     orderItems.add(newItem);
                     //Toast.makeText(mCtx, newItem.getCounter(), Toast.LENGTH_SHORT).show();
@@ -329,24 +371,31 @@ public class MainActivity extends AppCompatActivity {
             ImageButton add = (ImageButton)customView.findViewById(R.id.add);
             ImageButton remove = (ImageButton)customView.findViewById(R.id.remove);
             ImageButton delete = (ImageButton)customView.findViewById(R.id.delete);
+            TextView sum = (TextView)customView.findViewById(R.id.sum);
 
-            add.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    modelsArrayList.get(position).setCounter(modelsArrayList.get(position).getCounter()+1);
-                    orderAdapter.notifyDataSetChanged();
+            double suma = modelsArrayList.get(position).getPrice()*((double)modelsArrayList.get(position).getCounter());
+            double sumb = Double.parseDouble(new DecimalFormat("##.##").format(suma));
 
-                }
-            });
+            sum.setText(Double.toString(sumb));
 
-            remove.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(modelsArrayList.get(position).getCounter()<2){
-                        Toast.makeText(context, "Minimum order reached.", Toast.LENGTH_SHORT).show();
-                    }else {
-                        modelsArrayList.get(position).setCounter(modelsArrayList.get(position).getCounter() - 1);
-                        orderAdapter.notifyDataSetChanged();
+                        add.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                modelsArrayList.get(position).setCounter(modelsArrayList.get(position).getCounter()+1);
+                                Toast.makeText(context, Double.toString(modelsArrayList.get(position).getPrice()), Toast.LENGTH_SHORT).show();
+                                orderAdapter.notifyDataSetChanged();
+
+                            }
+                        });
+
+                        remove.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if(modelsArrayList.get(position).getCounter()<2){
+                                    Toast.makeText(context, "Minimum order reached.", Toast.LENGTH_SHORT).show();
+                                }else {
+                                    modelsArrayList.get(position).setCounter(modelsArrayList.get(position).getCounter() - 1);
+                                    orderAdapter.notifyDataSetChanged();
                     }
                 }
             });

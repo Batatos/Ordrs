@@ -9,16 +9,14 @@ public class OrderItem {
 
     private String title;
     private int counter;
+    private double price;
 
 
-
-    public OrderItem(String title) {
-        this(title,0);
-    }
-    public OrderItem( String title, int counter) {
+    public OrderItem( String title, int counter, double price) {
         super();
         this.title = title;
         this.counter = counter;
+        this.price=price;
     }
 
     public String getTitle() {
@@ -37,9 +35,13 @@ public class OrderItem {
         this.counter = counter;
     }
 
+    public double getPrice() {
+        return price;
+    }
 
-
-
+    public void setPrice(double price) {
+        this.price = price;
+    }
 //gettters & setters...
 }
 

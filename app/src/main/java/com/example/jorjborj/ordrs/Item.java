@@ -14,24 +14,26 @@ public class Item {
         Bitmap img;
         String supplier;
         String supplierNumber;
+        double price;
 
 
     //constructor without supplier
-    public Item(String name, int amount, char type, Bitmap img){
+    public Item(String name, double price, int amount, char type, Bitmap img){
         this.name=name;
         this.amount=amount;
         this.type=type;
+        this.price=price;
 
     }
 
     //constructor with supplier
-    public Item(String name, int amount, char type, Bitmap img, String supplier, String supplierNumber){
+    public Item(String name, double price, int amount, char type, Bitmap img, String supplier, String supplierNumber){
         this.name=name;
         this.amount=amount;
         this.type=type;
         this.supplier=supplier;
         this.supplierNumber=supplierNumber;
-
+        this.price=price;
     }
 
     public String getName() {
@@ -80,5 +82,13 @@ public class Item {
 
     public void setImg(Bitmap img) {
         this.img = img;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }
