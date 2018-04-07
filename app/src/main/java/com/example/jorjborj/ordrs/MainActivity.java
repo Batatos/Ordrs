@@ -17,15 +17,20 @@ import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.List;
 
- /**
+/**
  * Created by jorjborj on 4/2/2018.
  */
 
@@ -35,6 +40,8 @@ import java.util.ArrayList;
      ArrayList<Item> drinksmenu = new ArrayList<Item>();
      ArrayList<Item> dessertsmenu = new ArrayList<Item>();
      ArrayList<Item> alcoholmenu = new ArrayList<Item>();
+     ArrayAdapter<String> adapter4 = null;
+     ArrayList<String> orders = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,7 +65,8 @@ import java.util.ArrayList;
         final String[] DessertsValues = new String[] { "Chocolate Cake", "Truffle", "Donuts" };
         final String[] AlcoholValues = new String[] { "Carlsberg", "Tuborg", "Corona", "Whiskey", "Arak" };
 
-        final ArrayList<String> orders = new ArrayList<String>();
+        orders = new ArrayList<String>();
+        adapter4 = new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1, orders);
 
         final CardviewAdapter adapter = new CardviewAdapter(this,foodmenu);
         final CardviewAdapter adapter1 = new CardviewAdapter(this,drinksmenu);
@@ -74,10 +82,10 @@ import java.util.ArrayList;
 //        final ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this,
 //                android.R.layout.simple_list_item_1, AlcoholValues);
 
-        final ArrayAdapter<String> adapter4 = new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1, orders);
 
         rv.setAdapter(adapter);
         counterlv.setAdapter(adapter4);
+        adapter4.setNotifyOnChange(true);
 
 //        rv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
@@ -86,51 +94,22 @@ import java.util.ArrayList;
 //                adapter4.notifyDataSetChanged();
 //            }
 //        });
-//
+
         nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull final MenuItem item) {
-                nav.setSelectedItemId(item.getItemId());
                 switch (item.getItemId()){
                     case R.id.food:
                         rv.setAdapter(adapter);
-                        rv.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                orders.add(item.getTitle().toString());
-                                adapter4.notifyDataSetChanged();
-                            }
-                        });
                         break;
                     case R.id.alcohol:
                         rv.setAdapter(adapter3);
-                        rv.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                orders.add(item.getTitle().toString());
-                                adapter4.notifyDataSetChanged();
-                            }
-                        });
                         break;
                     case R.id.drinks:
                         rv.setAdapter(adapter1);
-                        rv.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                orders.add(item.getTitle().toString());
-                                adapter4.notifyDataSetChanged();
-                            }
-                        });
                         break;
                     case R.id.desserts:
                         rv.setAdapter(adapter2);
-                        rv.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                orders.add(item.getTitle().toString());
-                                adapter4.notifyDataSetChanged();
-                            }
-                        });
                         break;
                 }
                 return false;
@@ -199,4 +178,82 @@ import java.util.ArrayList;
 
     }
 
-}
+     public ArrayAdapter<String> getAdapter4() {
+         return adapter4;
+     }
+
+     public ArrayList<String> getOrders() {
+         return orders;
+     }
+
+     public void setAdapter4(ArrayAdapter<String> adapter4) {
+         this.adapter4 = adapter4;
+     }
+
+     public void setOrders(ArrayList<String> orders) {
+         this.orders = orders;
+     }
+
+
+
+    class CardviewAdapter extends RecyclerView.Adapter<com.example.jorjborj.ordrs.CardviewAdapter.CardviewHolder>{
+
+        private Context mCtx;
+        private List<Item> menu;
+
+        public CardviewAdapter(Context mCtx, List<Item> menu) {
+            this.mCtx = mCtx;
+            this.menu = menu;
+        }
+
+        @Override
+        public com.example.jorjborj.ordrs.CardviewAdapter.CardviewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            LayoutInflater inflater = LayoutInflater.from(mCtx);
+            View view = inflater.inflate(R.layout.cardview_layout, null);
+            com.example.jorjborj.ordrs.CardviewAdapter.CardviewHolder cardholder = new com.example.jorjborj.ordrs.CardviewAdapter.CardviewHolder(view);
+            return cardholder;
+        }
+
+        @Override
+        public void onBindViewHolder(final com.example.jorjborj.ordrs.CardviewAdapter.CardviewHolder holder, final int position) {
+            Item item = menu.get(position);
+            holder.title.setText(item.getName());
+
+            if(item.getImg()==null){
+                holder.imageView.setImageResource(R.mipmap.ordrs_asset); //null picture
+            }else{
+                holder.imageView.setImageBitmap(item.getImg());
+            }
+
+            holder.mRootView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(mCtx, menu.get(position).getName(), Toast.LENGTH_SHORT).show();
+                    orders.add(menu.get(position).getName());
+                    adapter4.notifyDataSetChanged();
+                }
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return menu.size();
+        }
+
+        class CardviewHolder extends RecyclerView.ViewHolder{
+
+            ImageView imageView;
+            TextView title;
+            protected View mRootView;
+
+            public CardviewHolder(View itemView) {
+                super(itemView);
+
+                imageView = (ImageView)itemView.findViewById(R.id.item_img);
+                title = (TextView)itemView.findViewById(R.id.item_name);
+                mRootView = itemView;
+
+            }
+        }
+    }
+ }

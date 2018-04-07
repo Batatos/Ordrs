@@ -5,12 +5,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.Inflater;
 
 /**
  * Created by jorjborj on 4/7/2018.
@@ -36,7 +38,7 @@ public class CardviewAdapter extends RecyclerView.Adapter<CardviewAdapter.Cardvi
     }
 
     @Override
-    public void onBindViewHolder(CardviewHolder holder, final int position) {
+    public void onBindViewHolder(final CardviewHolder holder, final int position) {
         Item item = menu.get(position);
         holder.title.setText(item.getName());
 
@@ -62,7 +64,7 @@ public class CardviewAdapter extends RecyclerView.Adapter<CardviewAdapter.Cardvi
 
 
 
-    class CardviewHolder extends RecyclerView.ViewHolder{
+    static class CardviewHolder extends RecyclerView.ViewHolder{
 
         ImageView imageView;
         TextView title;
