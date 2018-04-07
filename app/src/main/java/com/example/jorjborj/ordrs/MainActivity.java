@@ -30,7 +30,6 @@ import java.util.ArrayList;
  */
 
  public class MainActivity extends AppCompatActivity {
- // matalan qw
 
      ArrayList<Item> foodmenu = new ArrayList<Item>();
      ArrayList<Item> drinksmenu = new ArrayList<Item>();
@@ -42,7 +41,7 @@ import java.util.ArrayList;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-        BottomNavigationView nav = (BottomNavigationView)findViewById(R.id.navbar);
+        final BottomNavigationView nav = (BottomNavigationView)findViewById(R.id.navbar);
         disableShiftMode(nav);
 
         // Large screen, LISTVIEW and adapters
@@ -91,6 +90,7 @@ import java.util.ArrayList;
         nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull final MenuItem item) {
+                nav.setSelectedItemId(item.getItemId());
                 switch (item.getItemId()){
                     case R.id.food:
                         rv.setAdapter(adapter);
