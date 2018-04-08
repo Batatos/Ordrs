@@ -3,6 +3,7 @@ package com.example.jorjborj.ordrs;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -52,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<OrderItem> orderItems = null;
     ArrayAdapter orderAdapter = null;
     double sumPrice = 0.0;
-
+    String tablenum = "waiting for data";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
         final BottomNavigationView nav = (BottomNavigationView)findViewById(R.id.navbar);
         disableShiftMode(nav);
 
+        tablenum = getIntent().getExtras().get("table").toString();
+        getSupportActionBar().setTitle("Order for table #"+tablenum);
 
         // Large screen, LISTVIEW and adapters
         final View mainscreen = (View)findViewById(R.id.largeScreen);
@@ -435,9 +439,6 @@ public class MainActivity extends AppCompatActivity {
 
             // 5. retrn rowView
             return customView;
-
-
-
 
         }
     }
