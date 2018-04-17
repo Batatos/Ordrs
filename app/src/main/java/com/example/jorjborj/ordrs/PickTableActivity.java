@@ -36,8 +36,8 @@ import java.util.List;
                     //final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, tables);
                     final TableCardAdapter adapter3 = new TableCardAdapter(this, tableItems);
 
-//                    LinearLayoutManager llm = new LinearLayoutManager(this.getBaseContext());
-//                    lv.setLayoutManager(llm);
+                    LinearLayoutManager llm = new LinearLayoutManager(this.getBaseContext());
+                    lv.setLayoutManager(llm);
                     lv.setHasFixedSize(true);
                     lv.setAdapter(adapter3);
                     adapter3.notifyDataSetChanged();
@@ -52,22 +52,12 @@ import java.util.List;
                 }
 
                 public void initializeData() {
-                    for(int i=0 ; i<8; i++){
-                     TableItem item = new TableItem(null, i);
+                    for(int i=1 ; i<8; i++){
+                     TableItem item = new TableItem(null, ""+i+"");
                      tableItems.add(item);
                     }
 
-//                    TableItem item = new TableItem(null, 1);
-//                    if(item != null) {
-//                        Toast.makeText(PickTableActivity.this, "Under construction", Toast.LENGTH_SHORT).show();
-//                        tableItems.add(item);
-//                    }
-//                    TableItem item1 = new TableItem(null, 2);
-//                    tableItems.add(item1);
-//                    TableItem item2 = new TableItem(null, 3);
-//                    tableItems.add(item2);
-//                    TableItem item3 = new TableItem(null, 4);
-//                    tableItems.add(item3);
+
 
                 }
             }

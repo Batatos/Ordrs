@@ -8,9 +8,9 @@ import android.graphics.Bitmap;
 
 public class TableItem {
     Bitmap img;
-    int tableNum;
+    String tableNum;
 
-    public TableItem(Bitmap img, int tableNum) {
+    public TableItem(Bitmap img, String tableNum) {
         this.img = img;
         this.tableNum = tableNum;
     }
@@ -23,11 +23,11 @@ public class TableItem {
         this.img = img;
     }
 
-    public int getTableNum() {
+    public String getTableNum() {
         return tableNum;
     }
 
-    public void setTableNum(int tableNum) {
+    public void setTableNum(String tableNum) {
         this.tableNum = tableNum;
     }
 }
