@@ -10,31 +10,32 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Ahed on 4/17/2018.
  */
 
-public class TableCardAdapter extends RecyclerView.Adapter<CardviewAdapter.CardviewHolder> {
+public class TableCardAdapter extends RecyclerView.Adapter<TableCardAdapter.TableCardviewHolder> {
     Context context;
-    ArrayList<TableItem> tableItems;
+    List<TableItem> tableItems = new ArrayList<>();
 
-    public TableCardAdapter(Context context,ArrayList<TableItem> tableItems){
+    public TableCardAdapter(Context context,List<TableItem> tableItems){
         this.context = context;
         this.tableItems = tableItems;
     }
 
     @Override
-    public CardviewAdapter.CardviewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public TableCardviewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.table_cardview_layout, null);
-        CardviewAdapter.CardviewHolder cardholder = new CardviewAdapter.CardviewHolder(view);
+        View view = inflater.inflate(R.layout.table_cardview_layout, parent, false);
+        TableCardviewHolder cardholder = new TableCardviewHolder(view);
         return cardholder;
     }
 
     @Override
-    public void onBindViewHolder(CardviewAdapter.CardviewHolder holder, int position) {
+    public void onBindViewHolder(TableCardAdapter.TableCardviewHolder holder, int position) {
         TableItem itemTable = tableItems.get(position);
         holder.title.setText(itemTable.getTableNum());
 
@@ -52,6 +53,11 @@ public class TableCardAdapter extends RecyclerView.Adapter<CardviewAdapter.Cardv
                 notifyDataSetChanged();
             }
         });
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
     }
 
     @Override

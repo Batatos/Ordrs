@@ -5,13 +5,16 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Ahed on 4/8/2018.
@@ -19,8 +22,7 @@ import java.util.ArrayList;
 
             public class PickTableActivity extends AppCompatActivity {
 
-                private ArrayList<TableItem> tableItems;
-
+                private List<TableItem> tableItems = new ArrayList<>();
 
                 @Override
                 protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,23 +30,17 @@ import java.util.ArrayList;
                     setContentView(R.layout.pick_table_layout);
 
                     RecyclerView lv = (RecyclerView) findViewById(R.id.tables_lv);
-//        final ArrayList<String> tables = new ArrayList<String>();
-//        tables.add("1");
-//        tables.add("2");
-//        tables.add("3");
-//        tables.add("4");
-//        tables.add("5");
-//        tables.add("6");
-//        tables.add("7");
 
                     initializeData();
 
                     //final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, tables);
                     final TableCardAdapter adapter3 = new TableCardAdapter(this, tableItems);
 
-
+//                    LinearLayoutManager llm = new LinearLayoutManager(this.getBaseContext());
+//                    lv.setLayoutManager(llm);
+                    lv.setHasFixedSize(true);
                     lv.setAdapter(adapter3);
-
+                    adapter3.notifyDataSetChanged();
 //        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -56,13 +52,16 @@ import java.util.ArrayList;
                 }
 
                 public void initializeData() {
-//                    for(int i=0 ; i<8; i++){
-//                    TableItem item = new TableItem(null, i);
-//                     tableItems.add(item);
-//                    }
+                    for(int i=0 ; i<8; i++){
+                     TableItem item = new TableItem(null, i);
+                     tableItems.add(item);
+                    }
 
-                    TableItem item = new TableItem(null, 1);
-                    tableItems.add(item);
+//                    TableItem item = new TableItem(null, 1);
+//                    if(item != null) {
+//                        Toast.makeText(PickTableActivity.this, "Under construction", Toast.LENGTH_SHORT).show();
+//                        tableItems.add(item);
+//                    }
 //                    TableItem item1 = new TableItem(null, 2);
 //                    tableItems.add(item1);
 //                    TableItem item2 = new TableItem(null, 3);
