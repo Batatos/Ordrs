@@ -39,7 +39,7 @@ import java.util.List;
 
 //                    LinearLayoutManager llm = new LinearLayoutManager(this.getBaseContext());
 //                    lv.setLayoutManager(llm);
-                    lv.setLayoutManager(new GridLayoutManager(this,5));
+                    lv.setLayoutManager(new GridLayoutManager(this,6));
                     lv.setHasFixedSize(true);
                     lv.setAdapter(adapter3);
                     adapter3.notifyDataSetChanged();
@@ -54,7 +54,7 @@ import java.util.List;
                 }
 
                 public void initializeData() {
-                    for(int i=1 ; i<8; i++){
+                    for(int i=1 ; i<6; i++){
                      TableItem item = new TableItem(null, ""+i+"");
                      tableItems.add(item);
                     }

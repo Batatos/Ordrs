@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         final BottomNavigationView nav = (BottomNavigationView)findViewById(R.id.navbar);
         disableShiftMode(nav);
 
-        tablenum = getIntent().getExtras().get("table").toString();
+        tablenum = getIntent().getExtras().get("table_num").toString();
         getSupportActionBar().setTitle("Order for table #"+tablenum);
 
         // Large screen, LISTVIEW and adapters
@@ -364,21 +364,16 @@ public class MainActivity extends AppCompatActivity {
             //convertView = inflater.inflate(resource,parent,false);
             // 2. Get rowView from inflater
 
-
-
             // 3. Get icon,title & counter views from the rowView
             //     ImageView imgView = (ImageView) customView.findViewById(R.id.item_icon);
             TextView titleView = (TextView) customView.findViewById(R.id.itemname);
             TextView counterView = (TextView) customView.findViewById(R.id.item_counter);
-
-
 
             // 4. Set the text for textView
 
             titleView.setText(modelsArrayList.get(position).getTitle());
             //Toast.makeText(context, Integer.toString(modelsArrayList.get(position).getCounter()), Toast.LENGTH_SHORT).show();
             counterView.setText(Integer.toString(modelsArrayList.get(position).getCounter()));
-
 
             ImageButton add = (ImageButton)customView.findViewById(R.id.add);
             ImageButton remove = (ImageButton)customView.findViewById(R.id.remove);

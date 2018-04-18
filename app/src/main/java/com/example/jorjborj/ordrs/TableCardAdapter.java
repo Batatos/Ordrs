@@ -38,7 +38,7 @@ public class TableCardAdapter extends RecyclerView.Adapter<TableCardAdapter.Tabl
     }
 
     @Override
-    public void onBindViewHolder(TableCardAdapter.TableCardviewHolder holder, int position) {
+    public void onBindViewHolder(TableCardAdapter.TableCardviewHolder holder, final int position) {
         TableItem itemTable = tableItems.get(position);
         holder.title.setText(itemTable.getTableNum());
         this.pos = position;
@@ -53,9 +53,8 @@ public class TableCardAdapter extends RecyclerView.Adapter<TableCardAdapter.Tabl
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, MainActivity.class);
-                i.putExtra("table", tableItems.get(pos).getTableNum());
+                i.putExtra("table_num", tableItems.get(position).getTableNum());
                 context.startActivity(i);
-                Toast.makeText(context, "stam", Toast.LENGTH_SHORT).show();
                 notifyDataSetChanged();
             }
         });
