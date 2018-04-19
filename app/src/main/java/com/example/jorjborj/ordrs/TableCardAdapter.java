@@ -43,7 +43,7 @@ public class TableCardAdapter extends RecyclerView.Adapter<TableCardAdapter.Tabl
         holder.title.setText(itemTable.getTableNum());
         this.pos = position;
         if(itemTable.getImg()==null){
-            holder.imageView.setImageResource(R.mipmap.ordrs_asset); //null picture
+            holder.imageView.setImageResource(R.mipmap.table_asset); //null picture
         }else{
             holder.imageView.setImageBitmap(itemTable.getImg());
         }

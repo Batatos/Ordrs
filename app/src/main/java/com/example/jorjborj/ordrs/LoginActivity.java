@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 
 public class LoginActivity extends AppCompatActivity {
@@ -19,7 +20,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        //this.getWindow().setSoftInputMode(WindowManager.LayoutParams.INPUT);
         Button loginBtn = (Button)findViewById(R.id.loginBtn);
         final TextInputEditText username = (TextInputEditText)findViewById(R.id.usernameInput);
         final TextInputEditText password = (TextInputEditText)findViewById(R.id.passwordInput);
