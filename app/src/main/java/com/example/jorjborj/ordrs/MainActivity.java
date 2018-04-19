@@ -32,6 +32,7 @@ import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
@@ -366,6 +367,7 @@ public class MainActivity extends AppCompatActivity {
                     sumPrice += newItem.getPrice();
                     TextView tv = (TextView)findViewById(R.id.sumPrice);
                     tv.setText(Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(sumPrice))));
+                    calculateTotalPrice();
                     orderAdapter.notifyDataSetChanged();
                 }else{
                     OrderItem itemAdded = orderItems.get(orders.indexOf(menu.get(position).getName()));
@@ -373,6 +375,7 @@ public class MainActivity extends AppCompatActivity {
                     sumPrice += itemAdded.getPrice();
                     TextView tv = (TextView)findViewById(R.id.sumPrice);
                     tv.setText(Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(sumPrice))));
+                    calculateTotalPrice();
                     orderAdapter.notifyDataSetChanged();
                 }
             }
@@ -456,6 +459,7 @@ public class MainActivity extends AppCompatActivity {
                                 sumPrice += modelsArrayList.get(position).getPrice();
                                 TextView tv = (TextView)findViewById(R.id.sumPrice);
                                 tv.setText(Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(sumPrice))));
+                                calculateTotalPrice();
                                 orderAdapter.notifyDataSetChanged();
 
 
@@ -474,6 +478,7 @@ public class MainActivity extends AppCompatActivity {
                                     modelsArrayList.get(position).setCounter(modelsArrayList.get(position).getCounter() - 1);
                                     TextView tv = (TextView)findViewById(R.id.sumPrice);
                                     tv.setText(Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(sumPrice))));
+                                    calculateTotalPrice();
                                     orderAdapter.notifyDataSetChanged();
                     }
                 }
@@ -488,6 +493,7 @@ public class MainActivity extends AppCompatActivity {
 
                     modelsArrayList.remove(modelsArrayList.get(position));
                     orders.remove(position);
+                    calculateTotalPrice();
                     orderAdapter.notifyDataSetChanged();
 
                 }
@@ -498,6 +504,22 @@ public class MainActivity extends AppCompatActivity {
             return customView;
 
         }
+    }
+
+    public void calculateTotalPrice(){
+        double calc = sumPrice*(Double.parseDouble(discounttext.getText().toString())/100);
+        double calc1 = sumPrice-calc;
+        totalprice.setText(Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(calc1))));
+    }
+
+    private void showError() {
+        final EditText t = (EditText) findViewById(R.id.ahoz);
+        t.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                t.setError("Incorrect Input ..");
+            }
+        });
     }
 
 /**
@@ -511,18 +533,28 @@ public class MainActivity extends AppCompatActivity {
 
             setContentView(R.layout.discount_dialog);
             TextView tv = (TextView)findViewById(R.id.discountTitle);
-            final TextInputEditText ahoz = (TextInputEditText)findViewById(R.id.ahoz);
+            final EditText ahoz = (EditText)findViewById(R.id.ahoz);
             Button ok = (Button)findViewById(R.id.okBtn);
             Button cancel = (Button)findViewById(R.id.cancelBtn);
 
             ok.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    discounttext.setText(ahoz.getText().toString());
-                    double calc = sumPrice*(Double.parseDouble(discounttext.getText().toString())/100);
-                    double calc1 = sumPrice-calc;
-                    totalprice.setText(Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(calc1))));
-                    dismiss();
+                    if(Double.parseDouble(ahoz.getText().toString()) <= 100 && Double.parseDouble(ahoz.getText().toString()) >= 0) {
+                        discounttext.setText(ahoz.getText().toString());
+                        double calc = sumPrice * (Double.parseDouble(discounttext.getText().toString()) / 100);
+                        double calc1 = sumPrice - calc;
+                        totalprice.setText(Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(calc1))));
+                        dismiss();
+                    } else{
+                        ahoz.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+                            @Override
+                            public void onFocusChange(View v, boolean hasFocus) {
+                                ahoz.requestFocus();
+                                ahoz.setError("Incorrect Input ..");
+                            }
+                        });
+                    }
                 }
             });
 

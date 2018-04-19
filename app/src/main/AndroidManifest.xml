@@ -24,7 +24,6 @@
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".PickOptionActivity" />
         <activity android:name=".PickTableActivity" />
-        <activity android:name=".TrackingOrdersActivity"></activity>
     </application>
 
 </manifest>
