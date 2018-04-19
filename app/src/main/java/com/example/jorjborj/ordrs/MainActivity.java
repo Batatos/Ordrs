@@ -108,7 +108,11 @@ public class MainActivity extends AppCompatActivity {
                         output += ", ";
                     }
                 }
-                Toast.makeText(MainActivity.this,output, Toast.LENGTH_SHORT).show();
+                if(output.equals("")){
+                    Toast.makeText(MainActivity.this, "No items selected", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(MainActivity.this, output, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
