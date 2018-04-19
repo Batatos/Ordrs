@@ -2,16 +2,22 @@ package com.example.jorjborj.ordrs;
 
 
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.StyleRes;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +31,7 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
@@ -55,10 +62,14 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter orderAdapter = null;
     double sumPrice = 0.0;
     String tablenum = "waiting for data";
+    TextView discounttext,totalprice;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+
+        discounttext = (TextView)findViewById(R.id.discountAhoz);
+        totalprice = (TextView)findViewById(R.id.totalPrice);
 
 
         final BottomNavigationView nav = (BottomNavigationView)findViewById(R.id.navbar);
@@ -76,6 +87,60 @@ public class MainActivity extends AppCompatActivity {
         //TextView price = (TextView) findViewById(R.id.sumPrice);
         initializeData();
 
+
+        Button sendBtn = (Button)findViewById(R.id.sendBtn);
+        Button cancelBtn = (Button)findViewById(R.id.cancelBtn);
+        Button payBtn = (Button)findViewById(R.id.payBtn);
+        final Button discountBtn = (Button)findViewById(R.id.discountBtn);
+
+        sendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String output = "";
+                for (int x=0;x<orderItems.size();x++){
+                    output+=orderItems.get(x).getTitle();
+                    output+=" x";
+                    output+=orderItems.get(x).getCounter();
+
+                    if(x+1==orderItems.size()){
+                        output += ".";
+                    }else {
+                        output += ", ";
+                    }
+                }
+                Toast.makeText(MainActivity.this,output, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getBaseContext(),PickOptionActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
+        
+        payBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Todo Dialog", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        discountBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(MainActivity.this, "Todo Dialog", Toast.LENGTH_SHORT).show();
+
+                DiscountDialog dg = new DiscountDialog(MainActivity.this);
+
+
+                dg.show();
+
+            }
+        });
 
         orders = new ArrayList<String>();
         adapter4 = new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1, orders);
@@ -147,10 +212,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
     //Initialize dummy data function
 
     public void initializeData (){
@@ -189,7 +250,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
 
 
 
@@ -336,8 +396,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
     //INNER CLASS : OrderItemAdapter - counter listview customized adapter
     public class OrderItemAdapter extends ArrayAdapter<OrderItem> {
 
@@ -437,5 +495,57 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
+/**
+ *     Discount Dialog Class
+ */
+
+    public class DiscountDialog extends Dialog {
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+
+            setContentView(R.layout.discount_dialog);
+            TextView tv = (TextView)findViewById(R.id.discountTitle);
+            final TextInputEditText ahoz = (TextInputEditText)findViewById(R.id.ahoz);
+            Button ok = (Button)findViewById(R.id.okBtn);
+            Button cancel = (Button)findViewById(R.id.cancelBtn);
+
+            ok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    discounttext.setText(ahoz.getText().toString());
+                    double calc = sumPrice*(Double.parseDouble(discounttext.getText().toString())/100);
+                    double calc1 = sumPrice-calc;
+                    totalprice.setText(Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(calc1))));
+                    dismiss();
+                }
+            });
+
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dismiss();
+                }
+            });
+
+        }
+
+        public DiscountDialog(@NonNull Context context) {
+            super(context);
+
+        }
+
+        public DiscountDialog(@NonNull Context context, @StyleRes int themeResId) {
+            super(context, themeResId);
+        }
+
+        protected DiscountDialog(@NonNull Context context, boolean cancelable, @Nullable OnCancelListener cancelListener) {
+            super(context, cancelable, cancelListener);
+        }
+
+
+    }
+
 
 }
