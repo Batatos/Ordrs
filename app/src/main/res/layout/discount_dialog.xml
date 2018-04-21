@@ -9,7 +9,7 @@
         android:layout_width="500dp"
         android:layout_height="300dp"
         android:layout_gravity="center"
-        android:background="#c6c6c6"
+        android:background="@mipmap/granite"
         android:gravity="center"
         android:orientation="vertical"
         android:focusable="true"
@@ -30,7 +30,7 @@
             android:layout_width="150dp"
             android:layout_height="50dp"
             android:hint="%"
-            android:inputType="text"
+            android:inputType="number"
             android:maxLines="1"
             android:textAlignment="center" />
 

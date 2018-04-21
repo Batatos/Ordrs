@@ -4,41 +4,47 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="2dp">
+    android:layout_margin="2dp"
+    android:background="@color/colorPrimary">
 
     <LinearLayout
         android:layout_width="850dp"
         android:layout_height="match_parent"
+        android:layout_marginRight="1.5dp"
         android:orientation="vertical">
 
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/navbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="2dp"
-            android:background="#60b0f4"
+            android:layout_height="57dp"
+            android:layout_marginRight="1.5dp"
+            android:background="@mipmap/granite"
             app:itemTextColor="#000"
             app:menu="@menu/categories" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginRight="1.5dp"
             android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/largeScreen"
                 android:layout_width="match_parent"
                 android:layout_height="530dp"
+                android:layout_marginTop="1.5dp"
+                android:background="@mipmap/granite"
                 android:orientation="vertical">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rv"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"></android.support.v7.widget.RecyclerView>
                 <!--<ListView-->
-                    <!--android:id="@+id/itemsList"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent"></ListView>-->
+                <!--android:id="@+id/itemsList"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"></ListView>-->
 
             </LinearLayout>
 
@@ -46,50 +52,75 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
+                android:layout_marginTop="1.5dp"
+                android:background="@mipmap/granite"
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/discountBtn"
-                    android:layout_width="100dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="center"
-                    android:backgroundTint="@android:color/holo_blue_dark"
-                    android:gravity="center"
-                    android:layout_marginRight="10dp"
-                    android:text="Discount"
-                    android:textColor="#fff" />
 
-                <Button
-                    android:id="@+id/cancelBtn"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:backgroundTint="@android:color/holo_red_dark"
-                    android:gravity="center"
-                    android:layout_marginRight="10dp"
-                    android:text="cancel order"
-                    android:textColor="#fff" />
+                    android:layout_weight="50">
 
-                <Button
-                    android:id="@+id/payBtn"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    <Button
+                        android:id="@+id/cancelBtn"
+                        android:layout_width="100dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:backgroundTint="#fa755f"
+                        android:gravity="center"
+                        android:text="cancel order"
+                        android:textColor="#fff" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:gravity="center"
-                    android:layout_marginRight="10dp"
-                    android:text="pay" />
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="50"
+                    android:gravity="end">
 
-                <Button
-                    android:id="@+id/sendBtn"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="center"
-                    android:backgroundTint="@android:color/holo_green_dark"
-                    android:gravity="center"
-                    android:text="send order"
-                    android:textColor="#fff" />
+                    <Button
+                        android:id="@+id/discountBtn"
+                        android:layout_width="100dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="10dp"
+                        android:backgroundTint="#c9b61d"
+                        android:gravity="center"
+                        android:text="Discount"
+                        android:textColor="#fff" />
 
+                    <Button
+                        android:id="@+id/sendBtn"
+                        android:layout_width="100dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="10dp"
+                        android:backgroundTint="@android:color/holo_green_dark"
+                        android:gravity="center"
+                        android:text="send order"
+                        android:textColor="#fff" />
+
+                    <Button
+                        android:id="@+id/payBtn"
+                        android:layout_width="100dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center"
+                        android:backgroundTint="#ffb000"
+                        android:gravity="center"
+                        android:text="pay"
+                        android:textColor="#fff" />
+
+
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
@@ -103,9 +134,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="57dp"
             android:layout_gravity="center"
-            android:background="@color/colorPrimaryDark"
+            android:background="@mipmap/granite"
             android:gravity="center">
 
             <TextView
@@ -122,9 +153,9 @@
         <LinearLayout
             android:id="@+id/itemscounter"
             android:layout_width="match_parent"
-            android:layout_height="450dp"
-            android:layout_marginTop="2dp"
-            android:background="#6c6c6c"
+            android:layout_height="460dp"
+            android:layout_marginTop="1.5dp"
+            android:background="@mipmap/granite"
             android:orientation="vertical">
 
             <ListView
@@ -141,14 +172,15 @@
             android:id="@+id/SmallScreen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#C6c6c6"
+            android:background="@mipmap/granite"
+            android:layout_marginTop="1.5dp"
             android:orientation="vertical"
             >
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="15dp">
 
                 <TextView
@@ -170,10 +202,11 @@
                     android:textSize="20dp" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="15dp">
 
                 <TextView
@@ -185,20 +218,38 @@
                     android:textColor="#000"
                     android:textSize="20dp" />
 
-                <TextView
-                    android:id="@+id/discountAhoz"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="monospace"
-                    android:text="00.00"
-                    android:textColor="#000"
-                    android:textSize="20dp" />
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/discountAhoz"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="monospace"
+                        android:text="0"
+                        android:textColor="#000"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/ahozsign"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:fontFamily="monospace"
+                        android:text="%"
+                        android:textColor="#000"
+                        android:textSize="20dp" />
+
+                </LinearLayout>
+
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="15dp">
 
                 <TextView
@@ -206,8 +257,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="monospace"
-                    android:text="Total:     "
+                    android:text="Total:    "
                     android:textColor="#000"
+                    android:textStyle="bold"
                     android:textSize="20dp" />
 
                 <TextView
@@ -217,6 +269,8 @@
                     android:fontFamily="monospace"
                     android:text="00.00"
                     android:textColor="#000"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="10dp"
                     android:textSize="20dp" />
 
             </LinearLayout>

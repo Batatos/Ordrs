@@ -18,6 +18,7 @@ import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TextInputEditText;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String output = "";
+                String output = "Table #"+tablenum+": ";
                 for (int x=0;x<orderItems.size();x++){
                     output+=orderItems.get(x).getTitle();
                     output+=" x";
@@ -109,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                         output += ", ";
                     }
                 }
-                if(output.equals("")){
+                if(output.equals("Table #"+tablenum+": ")){
                     Toast.makeText(MainActivity.this, "No items selected", Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(MainActivity.this, output, Toast.LENGTH_SHORT).show();
@@ -121,12 +122,20 @@ public class MainActivity extends AppCompatActivity {
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getBaseContext(),PickOptionActivity.class);
-                startActivity(i);
-                finish();
+
+                //if there are no items ordered.. there is no need to show dialog.
+                if(orderItems.isEmpty()){
+                    Intent i = new Intent(getBaseContext(),PickOptionActivity.class);
+                    finish();
+                    startActivity(i);
+                }else {
+
+                    showCancelAlert();
+
+                }
             }
         });
-        
+
         payBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,11 +146,7 @@ public class MainActivity extends AppCompatActivity {
         discountBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(MainActivity.this, "Todo Dialog", Toast.LENGTH_SHORT).show();
-
                 DiscountDialog dg = new DiscountDialog(MainActivity.this);
-
-
                 dg.show();
 
             }
@@ -165,22 +170,29 @@ public class MainActivity extends AppCompatActivity {
         counterlv.setAdapter(orderAdapter);
         orderAdapter.setNotifyOnChange(true);
 
-
         nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
+
             public boolean onNavigationItemSelected(@NonNull final MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.food:
                         rv.setAdapter(adapter);
+                        item.setChecked(true);
                         break;
                     case R.id.alcohol:
                         rv.setAdapter(adapter3);
+                        item.setChecked(true);
+
                         break;
                     case R.id.drinks:
                         rv.setAdapter(adapter1);
+                        item.setChecked(true);
+
                         break;
                     case R.id.desserts:
                         rv.setAdapter(adapter2);
+                        item.setChecked(true);
+
                         break;
                 }
                 return false;
@@ -189,6 +201,31 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void showCancelAlert() {
+
+        final AlertDialog.Builder cancelAlert = new AlertDialog.Builder(MainActivity.this);
+        cancelAlert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent i = new Intent(getBaseContext(), PickOptionActivity.class);
+                startActivity(i);
+                finish();
+
+            }
+        });
+        cancelAlert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        cancelAlert.setTitle("Cancel Order");
+        cancelAlert.setMessage("Are you sure you want to cancel order on table " + tablenum + " ?");
+        cancelAlert.show();
+
+
+    }
 
 
     /**
@@ -256,10 +293,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        if(orderItems.isEmpty()){
+        super.onBackPressed();}else{
+            showCancelAlert();
+        }
+    }
 
-
-
-    //GETTERS AND SETTERS
+//GETTERS AND SETTERS
 
     public ArrayAdapter<String> getAdapter4() {
         return adapter4;
@@ -487,6 +529,8 @@ public class MainActivity extends AppCompatActivity {
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //TODO: Alert dialog --> are you sure you want to delete items? (IF quantity>1)
+
                     sumPrice -= modelsArrayList.get(position).getPrice()*modelsArrayList.get(position).getCounter();
                     TextView tv = (TextView)findViewById(R.id.sumPrice);
                     tv.setText(Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(sumPrice))));
@@ -540,6 +584,12 @@ public class MainActivity extends AppCompatActivity {
             ok.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    if(ahoz.getText().toString().isEmpty()){
+                        Toast.makeText(MainActivity.this, "Insert %", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
                     if(Double.parseDouble(ahoz.getText().toString()) <= 100 && Double.parseDouble(ahoz.getText().toString()) >= 0) {
                         discounttext.setText(ahoz.getText().toString());
                         double calc = sumPrice * (Double.parseDouble(discounttext.getText().toString()) / 100);
@@ -551,9 +601,10 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onFocusChange(View v, boolean hasFocus) {
                                 ahoz.requestFocus();
-                                ahoz.setError("Incorrect Input ..");
                             }
                         });
+                        Toast.makeText(MainActivity.this, "Incorrect Input", Toast.LENGTH_SHORT).show();
+
                     }
                 }
             });

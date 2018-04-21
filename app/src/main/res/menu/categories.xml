@@ -4,24 +4,23 @@
 
     <item android:id="@+id/food"
         android:title="Food"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/forkknife"
         app:showAsAction="always"/>
 
     <item android:id="@+id/drinks"
         android:title="Drinks"
-        android:icon="@mipmap/ic_launcher"
-
+        android:icon="@mipmap/coffee_asset"
         app:showAsAction="always"/>
 
     <item android:id="@+id/desserts"
         android:title="Desserts"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/dessert_asset"
 
         app:showAsAction="always"/>
 
     <item android:id="@+id/alcohol"
         android:title="Alcohol"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/food_asset"
 
         app:showAsAction="always"/>
 

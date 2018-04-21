@@ -29,6 +29,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="6dp"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:text=""
                 android:textAlignment="center" />
         </LinearLayout>

@@ -39,10 +39,11 @@ import java.util.List;
 
 //                    LinearLayoutManager llm = new LinearLayoutManager(this.getBaseContext());
 //                    lv.setLayoutManager(llm);
-                    lv.setLayoutManager(new GridLayoutManager(this,6));
+                    lv.setLayoutManager(new GridLayoutManager(this,7));
                     lv.setHasFixedSize(true);
                     lv.setAdapter(adapter3);
                     adapter3.notifyDataSetChanged();
+
 //        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -54,7 +55,7 @@ import java.util.List;
                 }
 
                 public void initializeData() {
-                    for(int i=1 ; i<10; i++){
+                    for(int i=1 ; i<18; i++){
                      TableItem item = new TableItem(null, ""+i+"");
                      tableItems.add(item);
                     }
