@@ -30,9 +30,9 @@ public class PickOptionActivity extends AppCompatActivity {
         table_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(PickOptionActivity.this, "Under construction", Toast.LENGTH_SHORT).show();
-                //Intent i1= new Intent(this,TableOrder.class);
-                //startActivity(i1);
+                //Toast.makeText(PickOptionActivity.this, "Under construction", Toast.LENGTH_SHORT).show();
+                Intent i1= new Intent(getBaseContext(),OrderTableActivity.class);
+                startActivity(i1);
             }
         });
 

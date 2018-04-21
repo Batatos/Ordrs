@@ -30,28 +30,18 @@ import java.util.List;
                     super.onCreate(savedInstanceState);
                     setContentView(R.layout.pick_table_layout);
 
-                    RecyclerView lv = (RecyclerView) findViewById(R.id.tables_lv);
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+                    RecyclerView lv = (RecyclerView) findViewById(R.id.tables_lv);
                     initializeData();
 
-                    //final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, tables);
                     final TableCardAdapter adapter3 = new TableCardAdapter(this, tableItems);
-
-//                    LinearLayoutManager llm = new LinearLayoutManager(this.getBaseContext());
-//                    lv.setLayoutManager(llm);
                     lv.setLayoutManager(new GridLayoutManager(this,7));
                     lv.setHasFixedSize(true);
                     lv.setAdapter(adapter3);
                     adapter3.notifyDataSetChanged();
 
-//        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent i = new Intent(getBaseContext(), MainActivity.class);
-//                i.putExtra("table", tableItems.get(position).getTableNum());
-//                startActivity(i);
-//            }
-//        });
                 }
 
                 public void initializeData() {
@@ -63,4 +53,10 @@ import java.util.List;
 
 
                 }
-            }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
+    }
+}
