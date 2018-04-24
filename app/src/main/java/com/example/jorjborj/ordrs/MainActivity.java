@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.IntegerRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
@@ -593,7 +594,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     if(Double.parseDouble(ahoz.getText().toString()) <= 100 && Double.parseDouble(ahoz.getText().toString()) >= 0) {
-                        discounttext.setText(ahoz.getText().toString());
+                        discounttext.setText(Integer.toString(Integer.parseInt(ahoz.getText().toString())/1));
                         double calc = sumPrice * (Double.parseDouble(discounttext.getText().toString()) / 100);
                         double calc1 = sumPrice - calc;
                         totalprice.setText(Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(calc1))));
