@@ -45,7 +45,7 @@
             <Button
                 android:id="@+id/cancelBtn"
                 android:layout_width="100dp"
-                android:backgroundTint="@android:color/holo_red_light"
+                android:backgroundTint="@color/sweetredalert"
                 android:layout_height="60dp"
                 android:textColor="#fff"
                 android:text="Cancel"/>

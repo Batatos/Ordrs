@@ -1,26 +1,33 @@
 package com.example.jorjborj.ordrs;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
  * Created by jorjborj on 4/21/2018.
  */
 
-public class OrderTableCardViewAdapter extends RecyclerView.Adapter<OrderTableCardViewAdapter.OrderTableCardViewHolder> {
+public class OrderTableCardViewAdapter extends RecyclerView.Adapter<OrderTableCardViewAdapter.OrderTableCardViewHolder>{
     Context context;
     List<TableItem> tableItems = new ArrayList<>();
-    int pos;
+    int pos, day,month,year,hour,minute;
+    int dayFinal,monthFinal,yearFinal,hourFinal,minuteFinal;
 
     public OrderTableCardViewAdapter(Context context,List<TableItem> tableItems){
         this.context = context;
@@ -37,7 +44,7 @@ public class OrderTableCardViewAdapter extends RecyclerView.Adapter<OrderTableCa
     }
 
     @Override
-    public void onBindViewHolder(OrderTableCardViewAdapter.OrderTableCardViewHolder holder, final int position) {
+    public void onBindViewHolder(final OrderTableCardViewAdapter.OrderTableCardViewHolder holder, final int position) {
         TableItem itemTable = tableItems.get(position);
         holder.title.setText(itemTable.getTableNum());
         this.pos = position;
@@ -55,7 +62,12 @@ public class OrderTableCardViewAdapter extends RecyclerView.Adapter<OrderTableCa
 //                i.putExtra("table_num", tableItems.get(position).getTableNum());
 //                context.startActivity(i);
 //                notifyDataSetChanged();
-                Toast.makeText(context, "Insert Table Order Details...", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "Insert Table Order Details...", Toast.LENGTH_SHORT).show();
+
+                Intent i = new Intent(holder.mRootView.getContext(),TableOrderDetails.class);
+                i.putExtra("order_table",tableItems.get(position).getTableNum());
+                holder.mRootView.getContext().startActivity(i);
+
             }
         });
     }
@@ -82,7 +94,6 @@ public class OrderTableCardViewAdapter extends RecyclerView.Adapter<OrderTableCa
 
             imageView = (ImageView)itemView.findViewById(R.id.tableItem_img);
             title = (TextView)itemView.findViewById(R.id.tableItem_num);
-
             mRootView = itemView;
 
         }
