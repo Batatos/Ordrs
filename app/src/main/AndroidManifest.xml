@@ -21,11 +21,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".PickOptionActivity" />
         <activity android:name=".PickTableActivity" />
         <activity android:name=".OrderTableActivity" />
-
+        <activity android:name=".OrderTableMain"></activity>
     </application>
 
 </manifest>
