@@ -13,7 +13,7 @@
             android:layout_width="160dp"
             android:layout_height="190dp"
             android:orientation="vertical"
-            android:background="@mipmap/paper">
+            android:background="#fff">
 
             <ImageView
                 android:id="@+id/item_img"

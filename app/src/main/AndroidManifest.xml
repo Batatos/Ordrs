@@ -25,7 +25,6 @@
         <activity android:name=".PickOptionActivity" />
         <activity android:name=".PickTableActivity" />
         <activity android:name=".OrderTableActivity" />
-        <activity android:name=".TableOrderDetails" />
 
     </application>
 
