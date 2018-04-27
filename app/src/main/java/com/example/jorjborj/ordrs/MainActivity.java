@@ -262,36 +262,58 @@ public class MainActivity extends AppCompatActivity {
     public void initializeData (){
 
         Item item = new Item("Chicken Salad",49.90,10,'f',null);
+        Item item0 = new Item("Caesar Salad",53.90,10,'f',null);
+        Item item01 = new Item("Tuna Salad",51.90,10,'f',null);
         Item item1 = new Item("Nazareth Breakfast",65.90,10,'f',null);
         Item item2 = new Item("Beef Fillet", 109.90, 10,'f',null);
+        Item item22 = new Item("English Breakfast", 54.50, 10,'f',null);
+        Item item222 = new Item("Italian Pasta", 67.90, 10,'f',null);
+        Item item2222 = new Item("French Fries", 28.90, 10,'f',null);
 
         foodmenu.add(item);
+        foodmenu.add(item0);
+        foodmenu.add(item01);
         foodmenu.add(item1);
         foodmenu.add(item2);
+        foodmenu.add(item22);
+        foodmenu.add(item222);
+        foodmenu.add(item2222);
 
         Item item3 = new Item("Cola",11.90,10,'f',null);
         Item item4 = new Item("Sprite",11.90,10,'f',null);
         Item item5 = new Item("Espresso",8.90,10,'f',null);
+        Item item55 = new Item("Americano",10.90,10,'f',null);
+        Item item555 = new Item("Cappuccino",14.90,10,'f',null);
+        Item item5555 = new Item("Orange Juice",16.90,10,'f',null);
 
         drinksmenu.add(item3);
         drinksmenu.add(item4);
         drinksmenu.add(item5);
+        drinksmenu.add(item55);
+        drinksmenu.add(item555);
+        drinksmenu.add(item5555);
 
         Item item6 = new Item("Chocolate Cake", 42.90,10,'d',null);
         Item item7 = new Item("Cheese Cake",42.90,10,'d',null);
         Item item8 = new Item("Truffle",35.90,10,'d',null);
+        Item item18 = new Item("Apple Pie",33.90,10,'d',null);
 
         dessertsmenu.add(item6);
         dessertsmenu.add(item7);
         dessertsmenu.add(item8);
+        dessertsmenu.add(item18);
 
         Item item9 = new Item("Sex on the beach",35.20,10,'d',null);
         Item item10 = new Item("Beer",26.90,10,'d',null);
         Item item11 = new Item("Whiskey",25.90,10,'d',null);
+        Item item111 = new Item("Jin",35.90,10,'d',null);
+        Item item1111 = new Item("Arak",22.90,10,'d',null);
 
         alcoholmenu.add(item9);
         alcoholmenu.add(item10);
         alcoholmenu.add(item11);
+        alcoholmenu.add(item111);
+        alcoholmenu.add(item1111);
 
 
     }

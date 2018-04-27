@@ -35,141 +35,126 @@
         />
     
 </LinearLayout>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="445dp"
-    android:orientation="vertical"
-    android:layout_marginLeft="80dp">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:text="Contact Full Name: "/>
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center">
 
-        <EditText
-            android:id="@+id/contantname"
-            android:layout_width="400dp"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:inputType="text"
-            android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:layout_marginLeft="100dp"/>
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:text="Contact Phone Number: "/>
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/contantnumber"
-            android:layout_width="400dp"
-            android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:inputType="phone"
-            android:layout_marginLeft="34dp"/>
+<android.support.design.widget.TextInputLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/contantname"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLines="1"
+                android:hint="Contact Full Name"
+                android:singleLine="true"
+                android:textSize="30sp" />
+</android.support.design.widget.TextInputLayout>
+        </LinearLayout>
 
-    </LinearLayout>
 
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:text="Number of people: "/>
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/numberofpeople"
-            android:layout_width="400dp"
-            android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:inputType="number"
-            android:layout_marginLeft="110dp"/>
+<android.support.design.widget.TextInputLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/contantnumber"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:hint="Phone Number"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textSize="30sp" />
+</android.support.design.widget.TextInputLayout>
+        </LinearLayout>
 
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
-
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Notes: "
-            android:textSize="30sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/notes"
-            android:layout_width="400dp"
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/numberofpeople"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:hint="Number of People"
+                android:textSize="30sp" />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="272dp"
-            android:lines="2"
-            android:maxLines="5"
-            android:outlineProvider="background"
-            android:textSize="30sp"
-            android:gravity="bottom"/>
-    </LinearLayout>
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/notes"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:lines="2"
+                android:maxLines="5"
+                android:hint="Notes"
+                android:outlineProvider="background"
+                android:textSize="30sp" />
+            </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+        </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:orientation="horizontal"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        android:gravity="center">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:text="Pick date: "
-            android:textSize="30sp"
-            android:textStyle="bold" />
 
         <ImageButton
             android:id="@+id/pickdate"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:layout_marginLeft="125dp"
             android:background="@drawable/ic_time"/>
 
         <TextView
             android:id="@+id/date"
-            android:layout_width="400dp"
+            android:layout_width="300dp"
             android:layout_height="50dp"
-            android:textSize="30sp"
-            android:layout_marginLeft="50dp"/>
+            android:layout_marginLeft="10dp"
+            android:text="DD/MM/YY, HH:mm"
+            android:textSize="30sp" />
 
 
     </LinearLayout>
 
-</LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -182,14 +167,14 @@
         <Button
             android:id="@+id/confirm"
             android:layout_width="200dp"
-            android:layout_height="match_parent"
+            android:layout_height="90dp"
             android:backgroundTint="@color/colorPrimary"
             android:text="Confirm"
             android:textColor="#fff"/>
         <Button
             android:id="@+id/cancel"
             android:layout_width="200dp"
-            android:layout_height="match_parent"
+            android:layout_height="90dp"
             android:backgroundTint="@color/sweetredalert"
             android:text="Cancel"
             android:layout_marginLeft="20dp"

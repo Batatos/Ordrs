@@ -1,10 +1,16 @@
 package com.example.jorjborj.ordrs;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.StyleRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class PickOptionActivity extends AppCompatActivity {
@@ -40,10 +46,59 @@ public class PickOptionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(PickOptionActivity.this, "Under construction", Toast.LENGTH_SHORT).show();
-                //Intent i2 = new Intent(this,SuppliesManagement.class);
-               // startActivity(i2);
+                AdminLoginDialog dialog = new AdminLoginDialog(PickOptionActivity.this);
+                dialog.setTitle("Admin Area");
+                dialog.show();
             }
         });
 
     }
+
+
+    public class AdminLoginDialog extends Dialog {
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+
+            setContentView(R.layout.admin_login);
+            final EditText password = (EditText)findViewById(R.id.inputPassword);
+            Button submit = (Button)findViewById(R.id.submit);
+            Button cancel = (Button)findViewById(R.id.cancel);
+
+
+            submit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(password.getText().toString().equals("0000")){
+                    Toast.makeText(PickOptionActivity.this, "OK", Toast.LENGTH_SHORT).show();}else{
+                        Toast.makeText(PickOptionActivity.this, "WRONG", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dismiss();
+                }
+            });
+
+        }
+
+
+        public AdminLoginDialog(@NonNull Context context) {
+            super(context);
+        }
+
+        public AdminLoginDialog(@NonNull Context context, @StyleRes int themeResId) {
+            super(context, themeResId);
+        }
+
+        protected AdminLoginDialog(@NonNull Context context, boolean cancelable, @Nullable OnCancelListener cancelListener) {
+            super(context, cancelable, cancelListener);
+        }
+    }
+
+
+
 }
