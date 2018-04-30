@@ -14,21 +14,20 @@
         android:roundIcon="@mipmap/ordrs_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
+        <activity android:name=".LoginActivity" android:screenOrientation="reverseLandscape">
         </activity>
-        <activity android:name=".MainActivity">
-
+        <activity android:name=".MainActivity" android:screenOrientation="reverseLandscape">
         </activity>
-        <activity android:name=".PickOptionActivity">
+        <activity android:name=".PickOptionActivity" android:screenOrientation="reverseLandscape">
         <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            <action android:name="android.intent.action.MAIN"  />
 
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
         </activity>
-        <activity android:name=".PickTableActivity" />
-        <activity android:name=".TableOrderDetails" />
-        <activity android:name=".OrderTableActivity" />
+        <activity android:name=".PickTableActivity" android:screenOrientation="reverseLandscape"/>
+        <activity android:name=".TableOrderDetails" android:screenOrientation="reverseLandscape"/>
+        <activity android:name=".OrderTableActivity" android:screenOrientation="reverseLandscape"/>
 
     </application>
 

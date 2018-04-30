@@ -73,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
+        DatabaseHelper myDb = new DatabaseHelper(this);
+
         discounttext = (TextView)findViewById(R.id.discountAhoz);
         totalprice = (TextView)findViewById(R.id.totalPrice);
 
@@ -314,7 +316,6 @@ public class MainActivity extends AppCompatActivity {
         alcoholmenu.add(item11);
         alcoholmenu.add(item111);
         alcoholmenu.add(item1111);
-
 
     }
 
