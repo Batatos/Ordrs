@@ -97,7 +97,6 @@ public class OrdersDashboard extends AppCompatActivity {
 
 class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.DashboardHolder>{
 
-
     private Context mCtx;
     private List<OrderItem> menu;
 
@@ -123,6 +122,53 @@ class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.DashboardHo
         OrderItem item = menu.get(position);
         holder.tablenum.setText(Integer.toString(position+1)); //should be table number.
 
+        List<String> order1 = new ArrayList<>();
+        List<String> order2 = new ArrayList<>();
+        List<String> order3 = new ArrayList<>();
+        List<String> order4 = new ArrayList<>();
+        List<String> order5 = new ArrayList<>();
+        List<String> order6 = new ArrayList<>();
+
+        order1.add("Caesar Salad");
+        order1.add("Hummus and Beef");
+        order1.add("Chicken Breast");
+        order1.add("Cordon Blu");
+        order1.add("Apple Pie");
+
+        order2.add("Chicken Salad");
+        order2.add("Beef Fillet");
+        order2.add("Nazareth Breakfast");
+        order2.add("Margarita Pizza");
+        order2.add("Chicken Breast");
+
+        order3.add("Margarita Pizza");
+        order3.add("Beef Fillet");
+
+        order4.add("Coca-Cola");
+        order4.add("Orange Juice");
+        order4.add("Chocolate Cake");
+        order4.add("Apple Pie");
+
+        order5.add("Cordon Blu");
+        order5.add("Chicken Salad");
+
+        order6.add("Orange Juice");
+        order6.add("Whiskey");
+        order6.add("Truffle");
+
+        if(position==0)
+        holder.lv.setAdapter(new ArrayAdapter<String>(mCtx,android.R.layout.simple_list_item_1,order1));
+        if(position==1)
+            holder.lv.setAdapter(new ArrayAdapter<String>(mCtx,android.R.layout.simple_list_item_1,order2));
+        if(position==2)
+            holder.lv.setAdapter(new ArrayAdapter<String>(mCtx,android.R.layout.simple_list_item_1,order3));
+        if(position==3)
+            holder.lv.setAdapter(new ArrayAdapter<String>(mCtx,android.R.layout.simple_list_item_1,order4));
+        if(position==4)
+            holder.lv.setAdapter(new ArrayAdapter<String>(mCtx,android.R.layout.simple_list_item_1,order5));
+        if(position==5)
+            holder.lv.setAdapter(new ArrayAdapter<String>(mCtx,android.R.layout.simple_list_item_1,order6));
+
         holder.mRootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,18 +190,13 @@ class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.DashboardHo
         TextView tablenum;
         ListView lv;
         protected View mRootView;
-        List<String> order = new ArrayList<>();
-
 
         public DashboardHolder(final View itemView) {
             super(itemView);
 
-            initData();
-
             lv = (ListView)itemView.findViewById(R.id.orderitems);
             tablenum = (TextView)itemView.findViewById(R.id.tblnumber);
 
-            lv.setAdapter(new ArrayAdapter<String>(this.itemView.getContext(),android.R.layout.simple_list_item_1,order));
             lv.setOnTouchListener(new ListView.OnTouchListener() {
 
                 @Override
@@ -170,38 +211,26 @@ class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.DashboardHo
                         case MotionEvent.ACTION_UP:
                             // Allow ScrollView to intercept touch events.
                             v.getParent().requestDisallowInterceptTouchEvent(false);
-                            break;
-                    }
+            break;
+        }
 
-                    // Handle ListView touch events.
+        // Handle ListView touch events.
                     v.onTouchEvent(event);
                     return true;
+    }
+});
+
+                lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                         Toast.makeText(itemView.getContext(),lv.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
                 }
-            });
-
-            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Toast.makeText(itemView.getContext(),lv.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
-                }
-            });
+                });
 
 
-            mRootView = itemView;
+        mRootView = itemView;
 
         }
-
-        private void initData() {
-            order.add("Chicken Salad");
-            order.add("Beef Fillet");
-            order.add("Nazareth Breakfast");
-            order.add("Margarita Pizza");
-            order.add("Chicken Breast");
-            order.add("Cordon Blu");
-            order.add("Apple Pie");
-
-        }
-
 
     }
 }
