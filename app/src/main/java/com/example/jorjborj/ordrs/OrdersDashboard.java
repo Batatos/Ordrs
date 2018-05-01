@@ -250,6 +250,7 @@ class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.DashboardHo
 
         mRootView = itemView;
 
+
         }
 
     }
