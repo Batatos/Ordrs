@@ -26,6 +26,7 @@ public class OrderTableActivity extends AppCompatActivity {
         RecyclerView lv = (RecyclerView) findViewById(R.id.tables_lv);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initializeData();
+        getSupportActionBar().setTitle("Choose Table");
 
         final OrderTableCardViewAdapter adapter3 = new OrderTableCardViewAdapter(this, tableItems);
         lv.setLayoutManager(new GridLayoutManager(this,6));

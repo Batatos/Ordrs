@@ -4,5 +4,20 @@
         android:id="@+id/dashboard"
         android:orderInCategory="100"
         android:icon="@mipmap/woodbg"
-        android:title="Dashboard"/>
+        android:title="Kitchen Dashboard"/>
+    <item
+        android:id="@+id/dashboard1"
+        android:orderInCategory="100"
+        android:icon="@mipmap/woodbg"
+        android:title="Bar Dashboard"/>
+    <item
+        android:id="@+id/events"
+        android:orderInCategory="100"
+        android:icon="@mipmap/woodbg"
+        android:title="Upcoming Events"/>
+    <item
+        android:id="@+id/suppliers"
+        android:orderInCategory="100"
+        android:icon="@mipmap/woodbg"
+        android:title="Suppliers"/>
 </menu>

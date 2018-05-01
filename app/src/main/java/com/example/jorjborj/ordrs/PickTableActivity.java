@@ -31,7 +31,7 @@ import java.util.List;
                     setContentView(R.layout.pick_table_layout);
 
                     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+                    getSupportActionBar().setTitle("Choose Table");
 
                     RecyclerView lv = (RecyclerView) findViewById(R.id.tables_lv);
                     initializeData();

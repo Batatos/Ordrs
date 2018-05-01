@@ -28,7 +28,7 @@ import java.util.List;
  * Created by jorjborj on 5/1/2018.
  */
 
-public class OrdersDashboard extends AppCompatActivity {
+public class BarDashboard extends AppCompatActivity {
 
     ArrayList<OrderItem> list;
     LinearLayout container;
@@ -37,7 +37,7 @@ public class OrdersDashboard extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.orders_dashboard);
+        setContentView(R.layout.bar_dashboard);
 
         container = (LinearLayout) findViewById(R.id.container);
 
@@ -46,13 +46,13 @@ public class OrdersDashboard extends AppCompatActivity {
         anim.setExitFadeDuration(4000);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Kitchen Dashboard");
+        getSupportActionBar().setTitle("Bar Dashboard");
         RecyclerView rv = (RecyclerView) findViewById(R.id.dashboard);
 
         list = new ArrayList<>();
         initializeData();
 
-        final DashboardAdapter adapter = new DashboardAdapter(this,list);
+        final BarDashboardAdapter adapter = new BarDashboardAdapter(this,list);
 
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new GridLayoutManager(this,3));
@@ -64,14 +64,12 @@ public class OrdersDashboard extends AppCompatActivity {
     private void initializeData() {
 
         OrderItem item = new OrderItem("Chicken Salad",2,50.90);
-        OrderItem item1 = new OrderItem("Chicken Salad",2,50.90);
         OrderItem item2 = new OrderItem("Cheese Cake",1,42.90);
         OrderItem item3 = new OrderItem("Chocolate Cake",1,42.90);
         OrderItem item4 = new OrderItem("Chocolate Cake",1,42.90);
         OrderItem item5 = new OrderItem("Chocolate Cake",1,42.90);
 
         list.add(item);
-        list.add(item1);
         list.add(item2);
         list.add(item3);
         list.add(item4);
@@ -100,22 +98,22 @@ public class OrdersDashboard extends AppCompatActivity {
     }
 }
 
-class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.DashboardHolder>{
+class BarDashboardAdapter extends RecyclerView.Adapter<BarDashboardAdapter.BarDashboardHolder>{
 
     private Context mCtx;
     private List<OrderItem> menu;
 
-    public DashboardAdapter(Context mCtx, List<OrderItem> menu) {
+    public BarDashboardAdapter(Context mCtx, List<OrderItem> menu) {
         this.mCtx = mCtx;
         this.menu = menu;
     }
 
     @Override
-    public DashboardHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BarDashboardHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(mCtx);
         View view = inflater.inflate(R.layout.order_list_item_card, null);
 
-        DashboardHolder cardholder = new DashboardHolder(view);
+        BarDashboardHolder cardholder = new BarDashboardHolder(view);
         return cardholder;
 
 
@@ -123,7 +121,7 @@ class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.DashboardHo
 
 
     @Override
-    public void onBindViewHolder(final DashboardHolder holder, final int position) {
+    public void onBindViewHolder(final BarDashboardHolder holder, final int position) {
         OrderItem item = menu.get(position);
         holder.tablenum.setText(Integer.toString(position+1)); //should be table number.
 
@@ -134,34 +132,33 @@ class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.DashboardHo
         List<String> order5 = new ArrayList<>();
         List<String> order6 = new ArrayList<>();
 
-        order1.add("Caesar Salad");
-        order1.add("Hummus and Beef");
-        order1.add("Chicken Breast");
-        order1.add("Cordon Blu");
-        order1.add("Margarita Pizza");
+        order1.add("Coca-Cola");
+        order1.add("Sprite");
+        order1.add("Espresso");
+        order1.add("Orange Juice");
+        order1.add("Cappuccino");
 
-        order2.add("Chicken Salad");
-        order2.add("Beef Fillet");
-        order2.add("Nazareth Breakfast");
-        order2.add("Margarita Pizza");
-        order2.add("Chicken Breast");
+        order2.add("Sprite");
+        order2.add("Cheese Cake");
+        order2.add("Espresso");
 
-        order3.add("Margarita Pizza");
-        order3.add("Beef Fillet");
+        order3.add("Espresso");
+        order3.add("Soda");
+        order3.add("Water");
 
-        order4.add("Chicken Breast");
-        order4.add("Chicken Salad");
-        order4.add("Hummus and Beef");
+        order4.add("Chocolate Cake");
+        order4.add("Truffle");
+        order4.add("Cappuccino");
 
-        order5.add("Cordon Blu");
-        order5.add("Chicken Salad");
+        order5.add("Espresso");
+        order5.add("Water");
 
-        order6.add("Nazareth Breakfast");
-        order6.add("Margarita Pizza");
-        order6.add("Chicken Salad");
+        order6.add("Lemonade");
+        order6.add("Orange Juice");
+        order6.add("Truffle");
 
         if(position==0)
-        holder.lv.setAdapter(new ArrayAdapter<String>(mCtx,android.R.layout.simple_list_item_1,order1));
+            holder.lv.setAdapter(new ArrayAdapter<String>(mCtx,android.R.layout.simple_list_item_1,order1));
         if(position==1)
             holder.lv.setAdapter(new ArrayAdapter<String>(mCtx,android.R.layout.simple_list_item_1,order2));
         if(position==2)
@@ -189,13 +186,13 @@ class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.DashboardHo
 
 
 
-    static class DashboardHolder extends RecyclerView.ViewHolder{
+    static class BarDashboardHolder extends RecyclerView.ViewHolder{
 
         TextView tablenum;
         ListView lv;
         protected View mRootView;
 
-        public DashboardHolder(final View itemView) {
+        public BarDashboardHolder(final View itemView) {
             super(itemView);
 
             lv = (ListView)itemView.findViewById(R.id.orderitems);
@@ -215,24 +212,24 @@ class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.DashboardHo
                         case MotionEvent.ACTION_UP:
                             // Allow ScrollView to intercept touch events.
                             v.getParent().requestDisallowInterceptTouchEvent(false);
-            break;
-        }
+                            break;
+                    }
 
-        // Handle ListView touch events.
+                    // Handle ListView touch events.
                     v.onTouchEvent(event);
                     return true;
-    }
-});
-
-                lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                         Toast.makeText(itemView.getContext(),lv.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
                 }
-                });
+            });
+
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Toast.makeText(itemView.getContext(),lv.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
+                }
+            });
 
 
-        mRootView = itemView;
+            mRootView = itemView;
 
         }
 

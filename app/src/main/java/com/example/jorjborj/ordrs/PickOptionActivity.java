@@ -84,6 +84,17 @@ public class PickOptionActivity extends AppCompatActivity {
                 Intent i = new Intent(PickOptionActivity.this,OrdersDashboard.class);
                 startActivity(i);
                 break;
+            case R.id.dashboard1:
+                Intent i1 = new Intent(PickOptionActivity.this,BarDashboard.class);
+                startActivity(i1);
+                break;
+            case R.id.events:
+                Toast.makeText(this, "Upcoming Events", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.suppliers:
+                Toast.makeText(this, "Suppliers", Toast.LENGTH_SHORT).show();
+                break;
+
         }
         return true;
     }

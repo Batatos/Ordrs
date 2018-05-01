@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         disableShiftMode(nav);
 
         tablenum = getIntent().getExtras().get("table_num").toString();
-        getSupportActionBar().setTitle("Order for table #"+tablenum);
+        getSupportActionBar().setTitle("Order on table #"+tablenum);
 
         // Large screen, LISTVIEW and adapters
         final View mainscreen = (View)findViewById(R.id.largeScreen);
