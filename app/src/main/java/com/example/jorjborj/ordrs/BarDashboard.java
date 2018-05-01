@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -191,12 +192,15 @@ class BarDashboardAdapter extends RecyclerView.Adapter<BarDashboardAdapter.BarDa
         TextView tablenum;
         ListView lv;
         protected View mRootView;
+        Button done,dismiss;
 
         public BarDashboardHolder(final View itemView) {
             super(itemView);
 
             lv = (ListView)itemView.findViewById(R.id.orderitems);
             tablenum = (TextView)itemView.findViewById(R.id.tblnumber);
+            done = (Button)itemView.findViewById(R.id.done);
+            dismiss = (Button)itemView.findViewById(R.id.dismiss);
 
             lv.setOnTouchListener(new ListView.OnTouchListener() {
 
@@ -225,6 +229,19 @@ class BarDashboardAdapter extends RecyclerView.Adapter<BarDashboardAdapter.BarDa
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Toast.makeText(itemView.getContext(),lv.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            done.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(itemView.getContext(), "DONE", Toast.LENGTH_SHORT).show();
+                }
+            });
+            dismiss.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(itemView.getContext(), "DISMISS", Toast.LENGTH_SHORT).show();
                 }
             });
 

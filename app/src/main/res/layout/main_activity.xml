@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="57dp"
             android:layout_marginRight="1.5dp"
-            android:background="@mipmap/granite"
+            android:background="@mipmap/beigesilk"
             app:itemTextColor="#000"
             app:menu="@menu/categories" />
 
@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="530dp"
                 android:layout_marginTop="1.5dp"
-                android:background="@mipmap/granite"
+                android:background="@mipmap/beigesilk"
                 android:orientation="vertical">
 
                 <android.support.v7.widget.RecyclerView
@@ -53,7 +53,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginTop="1.5dp"
-                android:background="@mipmap/granite"
+                android:background="@mipmap/beigesilk"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -136,7 +136,7 @@
             android:layout_width="match_parent"
             android:layout_height="57dp"
             android:layout_gravity="center"
-            android:background="@mipmap/granite"
+            android:background="@mipmap/beigesilk"
             android:gravity="center">
 
             <TextView
@@ -155,7 +155,7 @@
             android:layout_width="match_parent"
             android:layout_height="460dp"
             android:layout_marginTop="1.5dp"
-            android:background="@mipmap/granite"
+            android:background="@mipmap/beigesilk"
             android:orientation="vertical">
 
             <ListView
@@ -172,7 +172,7 @@
             android:id="@+id/SmallScreen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@mipmap/granite"
+            android:background="@mipmap/beigesilk"
             android:layout_marginTop="1.5dp"
             android:orientation="vertical"
             >

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -193,6 +194,7 @@ class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.DashboardHo
 
         TextView tablenum;
         ListView lv;
+        Button done,dismiss;
         protected View mRootView;
 
         public DashboardHolder(final View itemView) {
@@ -200,6 +202,8 @@ class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.DashboardHo
 
             lv = (ListView)itemView.findViewById(R.id.orderitems);
             tablenum = (TextView)itemView.findViewById(R.id.tblnumber);
+            done = (Button)itemView.findViewById(R.id.done);
+            dismiss = (Button)itemView.findViewById(R.id.dismiss);
 
             lv.setOnTouchListener(new ListView.OnTouchListener() {
 
@@ -231,6 +235,18 @@ class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.DashboardHo
                 }
                 });
 
+            done.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(itemView.getContext(), "DONE", Toast.LENGTH_SHORT).show();
+                }
+            });
+            dismiss.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(itemView.getContext(), "DISMISS", Toast.LENGTH_SHORT).show();
+                }
+            });
 
         mRootView = itemView;
 

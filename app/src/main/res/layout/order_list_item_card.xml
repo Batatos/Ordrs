@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="300dp"
-    android:layout_height="wrap_content">
+    android:layout_height="320dp">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -39,9 +39,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="180dp"
             android:layout_marginTop="20dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <ListView
                 android:id="@+id/orderitems"
@@ -49,6 +49,32 @@
                 android:layout_height="match_parent"></ListView>
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:background="@mipmap/paper"
+            android:layout_gravity="center"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/done"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:text="DONE"
+                android:textColor="#fff"/>
+            <Button
+                android:id="@+id/dismiss"
+                android:layout_width="90dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="5dp"
+                android:backgroundTint="@color/sweetredalert"
+                android:text="DISMISS"
+                android:textColor="#fff"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 

@@ -36,10 +36,7 @@ public class PickOptionActivity extends AppCompatActivity {
         Button order = (Button)findViewById(R.id.order);
         Button table_order = (Button)findViewById(R.id.tableorder);
         Button supplies_management = (Button)findViewById(R.id.supplies);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
+        
 
         order.setOnClickListener(new View.OnClickListener() {
             @Override

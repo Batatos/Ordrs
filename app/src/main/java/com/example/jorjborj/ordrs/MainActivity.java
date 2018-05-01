@@ -22,9 +22,11 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -39,6 +41,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,7 +56,7 @@ import static android.media.CamcorderProfile.get;
  * Created by jorjborj on 4/2/2018.
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NumberPicker.OnValueChangeListener {
 
     ArrayList<Item> foodmenu = new ArrayList<Item>();
     ArrayList<Item> drinksmenu = new ArrayList<Item>();
@@ -69,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
@@ -172,6 +175,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         rv.setAdapter(adapter);
+
+
         counterlv.setAdapter(orderAdapter);
         orderAdapter.setNotifyOnChange(true);
 
@@ -393,6 +398,11 @@ public class MainActivity extends AppCompatActivity {
         this.orderAdapter = orderAdapter;
     }
 
+    @Override
+    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+        Log.i("value is",""+newVal);
+    }
+
     //INNER CLASS CardViewAdapter - menu card view adapter.
     class CardviewAdapter extends RecyclerView.Adapter<com.example.jorjborj.ordrs.CardviewAdapter.CardviewHolder>{
 
@@ -413,8 +423,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
+        public void onBindViewHolder(com.example.jorjborj.ordrs.CardviewAdapter.CardviewHolder holder, int position, List<Object> payloads) {
+            super.onBindViewHolder(holder, position, payloads);
+        }
+
+        @Override
         public void onBindViewHolder(final com.example.jorjborj.ordrs.CardviewAdapter.CardviewHolder holder, final int position) {
-            Item item = menu.get(position);
+            final Item item = menu.get(position);
             holder.title.setText(item.getName());
 
             if(item.getImg()==null){
@@ -422,6 +437,14 @@ public class MainActivity extends AppCompatActivity {
             }else{
                 holder.imageView.setImageBitmap(item.getImg());
             }
+
+            holder.mRootView.setOnLongClickListener(new View.OnLongClickListener() {
+                                                        @Override
+                                                        public boolean onLongClick(View v) {
+                                                            Toast.makeText(mCtx, "Price: "+Double.toString(item.getPrice()), Toast.LENGTH_SHORT).show();
+                                                            return false;
+                                                        }
+                                                    });
 
             holder.mRootView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -448,7 +471,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-    }
+        }
 
         @Override
         public int getItemCount() {
@@ -469,6 +492,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }
+
+
     }
 
     //INNER CLASS : OrderItemAdapter - counter listview customized adapter
@@ -603,6 +628,7 @@ public class MainActivity extends AppCompatActivity {
 
             setContentView(R.layout.discount_dialog);
             TextView tv = (TextView)findViewById(R.id.discountTitle);
+
             final EditText ahoz = (EditText)findViewById(R.id.ahoz);
             Button ok = (Button)findViewById(R.id.okBtn);
             Button cancel = (Button)findViewById(R.id.cancelBtn);
