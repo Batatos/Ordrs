@@ -9,6 +9,8 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,12 +33,12 @@ public class PickOptionActivity extends AppCompatActivity {
 //        anim.setEnterFadeDuration(4000);
 //        anim.setExitFadeDuration(4000);
 
-
-
-
         Button order = (Button)findViewById(R.id.order);
         Button table_order = (Button)findViewById(R.id.tableorder);
         Button supplies_management = (Button)findViewById(R.id.supplies);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
 
         order.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +70,23 @@ public class PickOptionActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.mainmenu, menu);
+        return super.onCreateOptionsMenu(menu);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.dashboard:
+                Intent i = new Intent(PickOptionActivity.this,OrdersDashboard.class);
+                startActivity(i);
+                break;
+        }
+        return true;
+    }
 
     public class AdminLoginDialog extends Dialog {
 

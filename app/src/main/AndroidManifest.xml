@@ -28,6 +28,7 @@
         <activity android:name=".PickTableActivity" android:screenOrientation="reverseLandscape"/>
         <activity android:name=".TableOrderDetails" android:screenOrientation="reverseLandscape"/>
         <activity android:name=".OrderTableActivity" android:screenOrientation="reverseLandscape"/>
+        <activity android:name=".OrdersDashboard" android:screenOrientation="reverseLandscape"/>
 
     </application>
 
