@@ -17,26 +17,37 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class PickOptionActivity extends AppCompatActivity {
 
 //    LinearLayout container;
-//    AnimationDrawable anim;
-
+        AnimationDrawable anim;
+        LinearLayout happyhour;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pick_option);
 
-//        container = (LinearLayout) findViewById(R.id.container);
-//
-//        anim = (AnimationDrawable) container.getBackground();
-//        anim.setEnterFadeDuration(4000);
-//        anim.setExitFadeDuration(4000);
+        //HAPPY HOUR!@#!@#!@#!@#!@#
+        happyhour = (LinearLayout)findViewById(R.id.happyHourBar);
+
+        anim = (AnimationDrawable) happyhour.getBackground();
+        anim.setEnterFadeDuration(4000);
+        anim.setExitFadeDuration(4000);
 
         Button order = (Button)findViewById(R.id.order);
         Button table_order = (Button)findViewById(R.id.tableorder);
         Button supplies_management = (Button)findViewById(R.id.supplies);
-        
+
+        Calendar rightNow = Calendar.getInstance();
+        int currentHour = rightNow.get(Calendar.HOUR_OF_DAY); // return the hour in 24 hrs format (ranging from 0-23)
+
+        if(currentHour>14 && currentHour<17){
+            happyhour.setVisibility(LinearLayout.GONE);
+        }else{
+        }
 
         order.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,8 +99,9 @@ public class PickOptionActivity extends AppCompatActivity {
             case R.id.events:
                 Toast.makeText(this, "Upcoming Events", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.suppliers:
-                Toast.makeText(this, "Suppliers", Toast.LENGTH_SHORT).show();
+            case R.id.reports:
+                Intent i4 = new Intent(PickOptionActivity.this,MonthlyReport.class);
+                startActivity(i4);
                 break;
 
         }
@@ -144,15 +156,15 @@ public class PickOptionActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        if (anim != null && !anim.isRunning())
-//            anim.start();
+        if (anim != null && !anim.isRunning())
+            anim.start();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-//        if (anim != null && anim.isRunning())
-//            anim.stop();
+        if (anim != null && anim.isRunning())
+            anim.stop();
     }
 
 }

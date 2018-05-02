@@ -16,8 +16,9 @@
         android:icon="@mipmap/woodbg"
         android:title="Upcoming Events"/>
     <item
-        android:id="@+id/suppliers"
+        android:id="@+id/reports"
         android:orderInCategory="100"
         android:icon="@mipmap/woodbg"
-        android:title="Suppliers"/>
+        android:title="Monthly Reports"/>
+
 </menu>

@@ -30,6 +30,7 @@
         <activity android:name=".OrderTableActivity" android:screenOrientation="reverseLandscape"/>
         <activity android:name=".OrdersDashboard" android:screenOrientation="reverseLandscape"/>
         <activity android:name=".BarDashboard" android:screenOrientation="reverseLandscape"/>
+        <activity android:name=".MonthlyReport" android:screenOrientation="reverseLandscape"/>
 
     </application>
 

@@ -6,53 +6,65 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.jorjborj.ordrs.PickOptionActivity"
-    android:background="@mipmap/restbg">
+    android:background="@mipmap/mainbg"
+    android:orientation="vertical">
 
+    <LinearLayout
+        android:id="@+id/happyHourBar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:background="@drawable/animation_list">
+        <TextView
+            android:id="@+id/happyhour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HAPPY HOUR | 10% ON ALL ORDERS | 14:00-17:00"
+            android:textColor="#fff"
+            android:textSize="40sp"
+            android:textStyle="bold"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:layout_margin="150dp"
+        android:layout_margin="50dp"
         android:gravity="center">
 
         <Button
-            android:id="@+id/order"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
+            android:id="@+id/tableorder"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
             android:layout_margin="8dp"
-            android:background="@drawable/rounded_edges"
-            android:backgroundTint="#60b0f4"
-            android:text="FOOD ORDER"
+            android:background="@drawable/left_rounded_edges"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:text="TABLE     ORDER"
             android:textColor="#fff"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:textSize="32sp" />
 
         <Button
-            android:id="@+id/tableorder"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:layout_margin="25dp"
-            android:background="@drawable/rounded_edges"
-            android:backgroundTint="#60b0f4"
-            android:text="TABLE ORDER"
+            android:id="@+id/order"
+            android:layout_width="243dp"
+            android:layout_height="243dp"
+            android:layout_margin="5dp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:text="FOOD     ORDER"
             android:textColor="#fff"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textSize="40sp" />
 
         <Button
             android:id="@+id/supplies"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
             android:layout_margin="8dp"
-            android:background="@drawable/rounded_edges"
-            android:backgroundTint="#60b0f4"
+            android:background="@drawable/right_rounded_edges"
+            android:backgroundTint="@color/colorPrimaryDark"
             android:text="SUPPLIES MANAGEMENT"
             android:textColor="#fff"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:textSize="28sp"/>
 
     </LinearLayout>
-
-
 </LinearLayout>

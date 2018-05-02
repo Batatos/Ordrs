@@ -39,6 +39,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.NumberPicker;
@@ -48,6 +49,7 @@ import android.widget.Toast;
 import java.lang.reflect.Field;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import static android.media.CamcorderProfile.get;
@@ -81,7 +83,6 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         discounttext = (TextView)findViewById(R.id.discountAhoz);
         totalprice = (TextView)findViewById(R.id.totalPrice);
 
-
         final BottomNavigationView nav = (BottomNavigationView)findViewById(R.id.navbar);
         disableShiftMode(nav);
 
@@ -96,6 +97,17 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         rv.setLayoutManager(new GridLayoutManager(this,5));
         //TextView price = (TextView) findViewById(R.id.sumPrice);
         initializeData();
+
+
+        Calendar rightNow = Calendar.getInstance();
+        int currentHour = rightNow.get(Calendar.HOUR_OF_DAY); // return the hour in 24 hrs format (ranging from 0-23)
+        if(currentHour>14 && currentHour<17){
+            discounttext.setText("10");
+        }else{
+        }
+
+
+
 
 
         Button sendBtn = (Button)findViewById(R.id.sendBtn);
