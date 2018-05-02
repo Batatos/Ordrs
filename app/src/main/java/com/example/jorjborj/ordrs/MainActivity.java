@@ -280,14 +280,14 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
 
     public void initializeData (){
 
-        Item item = new Item("Chicken Salad",49.90,10,'f',null);
-        Item item0 = new Item("Caesar Salad",53.90,10,'f',null);
-        Item item01 = new Item("Tuna Salad",51.90,10,'f',null);
-        Item item1 = new Item("Nazareth Breakfast",65.90,10,'f',null);
-        Item item2 = new Item("Beef Fillet", 109.90, 10,'f',null);
-        Item item22 = new Item("English Breakfast", 54.50, 10,'f',null);
-        Item item222 = new Item("Italian Pasta", 67.90, 10,'f',null);
-        Item item2222 = new Item("French Fries", 28.90, 10,'f',null);
+        Item item = new Item("Chicken Salad",49.90,10,'f',BitmapFactory.decodeResource(getResources(),R.mipmap.chicken_salad));
+        Item item0 = new Item("Caesar Salad",53.90,10,'f',BitmapFactory.decodeResource(getResources(),R.mipmap.caesar_salad));
+        Item item01 = new Item("Tuna Salad",51.90,10,'f',BitmapFactory.decodeResource(getResources(),R.mipmap.tuna_salad));
+        Item item1 = new Item("Nazareth Breakfast",65.90,10,'f',BitmapFactory.decodeResource(getResources(),R.mipmap.nazareth_breakfast));
+        Item item2 = new Item("Beef Fillet", 109.90, 10,'f',BitmapFactory.decodeResource(getResources(),R.mipmap.beef_fillet));
+        Item item22 = new Item("English Breakfast", 54.50, 10,'f',BitmapFactory.decodeResource(getResources(),R.mipmap.english_breakfast));
+        Item item222 = new Item("Italian Pasta", 67.90, 10,'f',BitmapFactory.decodeResource(getResources(),R.mipmap.italian_pasta));
+        Item item2222 = new Item("French Fries", 28.90, 10,'f',BitmapFactory.decodeResource(getResources(),R.mipmap.french_fries));
 
         foodmenu.add(item);
         foodmenu.add(item0);
@@ -298,12 +298,12 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         foodmenu.add(item222);
         foodmenu.add(item2222);
 
-        Item item3 = new Item("Cola",11.90,10,'f',null);
-        Item item4 = new Item("Sprite",11.90,10,'f',null);
-        Item item5 = new Item("Espresso",8.90,10,'f',null);
-        Item item55 = new Item("Americano",10.90,10,'f',null);
-        Item item555 = new Item("Cappuccino",14.90,10,'f',null);
-        Item item5555 = new Item("Orange Juice",16.90,10,'f',null);
+        Item item3 = new Item("Cola",11.90,10,'f',BitmapFactory.decodeResource(getResources(),R.mipmap.cola));
+        Item item4 = new Item("Sprite",11.90,10,'f',BitmapFactory.decodeResource(getResources(),R.mipmap.sprite));
+        Item item5 = new Item("Espresso",8.90,10,'f',BitmapFactory.decodeResource(getResources(),R.mipmap.espresso));
+        Item item55 = new Item("Americano",10.90,10,'f',BitmapFactory.decodeResource(getResources(),R.mipmap.americano));
+        Item item555 = new Item("Cappuccino",14.90,10,'f',BitmapFactory.decodeResource(getResources(),R.mipmap.cappuccino));
+        Item item5555 = new Item("Orange Juice",16.90,10,'f',BitmapFactory.decodeResource(getResources(),R.mipmap.orange_juice));
 
         drinksmenu.add(item3);
         drinksmenu.add(item4);
@@ -312,21 +312,21 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         drinksmenu.add(item555);
         drinksmenu.add(item5555);
 
-        Item item6 = new Item("Chocolate Cake", 42.90,10,'d',null);
-        Item item7 = new Item("Cheese Cake",42.90,10,'d',null);
-        Item item8 = new Item("Truffle",35.90,10,'d',null);
-        Item item18 = new Item("Apple Pie",33.90,10,'d',null);
+        Item item6 = new Item("Chocolate Cake", 42.90,10,'d',BitmapFactory.decodeResource(getResources(),R.mipmap.chocolate_cake));
+        Item item7 = new Item("Cheese Cake",42.90,10,'d',BitmapFactory.decodeResource(getResources(),R.mipmap.cheese_cake));
+        Item item8 = new Item("Truffle",35.90,10,'d',BitmapFactory.decodeResource(getResources(),R.mipmap.truffle));
+        Item item18 = new Item("Apple Pie",33.90,10,'d',BitmapFactory.decodeResource(getResources(),R.mipmap.apple_pie));
 
         dessertsmenu.add(item6);
         dessertsmenu.add(item7);
         dessertsmenu.add(item8);
         dessertsmenu.add(item18);
 
-        Item item9 = new Item("Sex on the beach",35.20,10,'d',null);
-        Item item10 = new Item("Beer",26.90,10,'d',null);
-        Item item11 = new Item("Whiskey",25.90,10,'d',null);
-        Item item111 = new Item("Jin",35.90,10,'d',null);
-        Item item1111 = new Item("Arak",22.90,10,'d',null);
+        Item item9 = new Item("Pina Colada",35.20,10,'d',BitmapFactory.decodeResource(getResources(),R.mipmap.pina_colada));
+        Item item10 = new Item("Beer",26.90,10,'d',BitmapFactory.decodeResource(getResources(),R.mipmap.beer));
+        Item item11 = new Item("Whiskey",25.90,10,'d',BitmapFactory.decodeResource(getResources(),R.mipmap.whiskey));
+        Item item111 = new Item("Jin",35.90,10,'d',BitmapFactory.decodeResource(getResources(),R.mipmap.jin));
+        Item item1111 = new Item("Arak",22.90,10,'d',BitmapFactory.decodeResource(getResources(),R.mipmap.arak));
 
         alcoholmenu.add(item9);
         alcoholmenu.add(item10);

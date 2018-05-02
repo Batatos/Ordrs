@@ -23,6 +23,7 @@ public class Item {
         this.amount=amount;
         this.type=type;
         this.price=price;
+        this.img=img;
 
     }
 
