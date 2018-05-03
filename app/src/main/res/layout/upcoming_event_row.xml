@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             android:id="@+id/eventicon"
             android:src="@drawable/ic_eventicon"
-            android:layout_margin="10dp"/>
+            android:layout_margin="15dp"/>
     </LinearLayout>
     <LinearLayout
         android:orientation="vertical"
@@ -29,7 +29,8 @@
             android:id="@+id/contactname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="BLA"/>
+            android:text="BLA"
+            android:textSize="20sp"/>
     </LinearLayout>
     <LinearLayout
         android:orientation="vertical"
@@ -42,7 +43,8 @@
             android:id="@+id/contactnumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="BLA"/>
+            android:text="BLA"
+            android:textSize="20sp"/>
     </LinearLayout>
     <LinearLayout
         android:orientation="vertical"
@@ -55,7 +57,8 @@
             android:id="@+id/numberofpeople"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="BLA"/>
+            android:text="BLA"
+            android:textSize="20sp"/>
     </LinearLayout>
     <LinearLayout
         android:orientation="vertical"
@@ -68,7 +71,8 @@
             android:id="@+id/dateTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="BLA"/>
+            android:text="BLA"
+            android:textSize="20sp"/>
     </LinearLayout>
 
 </LinearLayout>

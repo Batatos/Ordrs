@@ -47,7 +47,9 @@
         <activity
             android:name=".MonthlyReport"
             android:screenOrientation="reverseLandscape" />
-        <activity android:name=".UpcomingEventsActivity"></activity>
+
+        <activity android:name=".UpcomingEventsActivity"
+                  android:screenOrientation="reverseLandscape"/>
     </application>
 
 </manifest>
