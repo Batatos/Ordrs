@@ -1,6 +1,6 @@
 package com.example.jorjborj.ordrs;
 
-import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Ahed on 5/3/2018.
@@ -12,13 +12,13 @@ public class UpcomingEventObject {
     int phoneNum;
     int numOfPeople;
     String notes;
-    Calendar timeDate;
+    Date timeDate;
 
     public UpcomingEventObject(){
 
     }
 
-    public UpcomingEventObject(int tableNum, String contactName, int phoneNum, int numOfPeople, String notes, Calendar timeDate) {
+    public UpcomingEventObject(int tableNum, String contactName, int phoneNum, int numOfPeople, String notes, Date timeDate) {
         this.tableNum = tableNum;
         this.contactName = contactName;
         this.phoneNum = phoneNum;
@@ -67,11 +67,11 @@ public class UpcomingEventObject {
         this.notes = notes;
     }
 
-    public Calendar getTimeDate() {
+    public Date getTimeDate() {
         return timeDate;
     }
 
-    public void setTimeDate(Calendar timeDate) {
+    public void setTimeDate(Date timeDate) {
         this.timeDate = timeDate;
     }
 }

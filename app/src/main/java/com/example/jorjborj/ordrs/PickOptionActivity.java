@@ -4,11 +4,11 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.Calendar;
-import java.util.Date;
 
 public class PickOptionActivity extends AppCompatActivity {
 
@@ -100,7 +99,7 @@ public class PickOptionActivity extends AppCompatActivity {
             case R.id.events:
                 Intent iStam = new Intent(PickOptionActivity.this,UpcomingEventsActivity.class);
                 startActivity(iStam);
-                Toast.makeText(this, "Upcoming Events", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Upcoming Events", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.reports:
                 Intent i4 = new Intent(PickOptionActivity.this,MonthlyReport.class);
