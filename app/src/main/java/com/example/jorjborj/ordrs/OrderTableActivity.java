@@ -41,8 +41,6 @@ public class OrderTableActivity extends AppCompatActivity {
             tableItems.add(item);
         }
 
-
-
     }
 
     @Override

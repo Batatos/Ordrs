@@ -98,6 +98,8 @@ public class PickOptionActivity extends AppCompatActivity {
                 startActivity(i1);
                 break;
             case R.id.events:
+                Intent iStam = new Intent(PickOptionActivity.this,UpcomingEventsActivity.class);
+                startActivity(iStam);
                 Toast.makeText(this, "Upcoming Events", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.reports:
