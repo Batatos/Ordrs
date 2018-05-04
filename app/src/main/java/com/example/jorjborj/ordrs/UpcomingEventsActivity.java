@@ -1,16 +1,22 @@
 package com.example.jorjborj.ordrs;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.PopupMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -42,11 +48,10 @@ public class UpcomingEventsActivity extends AppCompatActivity {
         adapter = new EventsAdapter(UpcomingEventsActivity.this,R.layout.upcoming_event_row,eventsArrayList);
         lv.setAdapter(adapter);
         adapter.setNotifyOnChange(true);
-
     }
 
     private void initializeData() {
-        Cursor data = mDataBaseHelper.getEvenrData();
+        Cursor data = mDataBaseHelper.getEventData();
 
         if(data != null){
             if(data.moveToFirst()){
@@ -100,6 +105,49 @@ public class UpcomingEventsActivity extends AppCompatActivity {
             numberOfPeople.setText(Integer.toString(modelsArrayList.get(position).getNumOfPeople()));
             dateTime.setText(modelsArrayList.get(position).getTimeDate().toString());
 
+            customView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                                         UpcomingEventObject o = eventsArrayList.get(position);
+                        AlertDialog alertDialog = new AlertDialog.Builder(UpcomingEventsActivity.this).create();
+                        alertDialog.setTitle("Notes for event");
+                        alertDialog.setMessage(o.getNotes());
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                        alertDialog.show();
+
+                    }
+            });
+
+            customView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    PopupMenu popup = new PopupMenu(getContext(), v);
+                    //Inflating the Popup using xml file
+                    popup.getMenuInflater()
+                            .inflate(R.menu.notes_settings_menu, popup.getMenu());
+
+
+                    //registering popup with OnMenuItemClickListener
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        public boolean onMenuItemClick(MenuItem item) {
+                            Toast.makeText(context, item.getTitle().toString(), Toast.LENGTH_SHORT).show();
+                            return true;
+                        }
+                    });
+
+                    popup.show(); //showing popup menu
+
+
+
+                    return false;
+                }
+            });
             return customView;
         }
     }

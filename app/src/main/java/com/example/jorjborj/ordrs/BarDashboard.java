@@ -64,11 +64,11 @@ public class BarDashboard extends AppCompatActivity {
 
     private void initializeData() {
 
-        OrderItem item = new OrderItem("Chicken Salad",2,50.90);
-        OrderItem item2 = new OrderItem("Cheese Cake",1,42.90);
-        OrderItem item3 = new OrderItem("Chocolate Cake",1,42.90);
-        OrderItem item4 = new OrderItem("Chocolate Cake",1,42.90);
-        OrderItem item5 = new OrderItem("Chocolate Cake",1,42.90);
+        OrderItem item = new OrderItem("Chicken Salad",2,50.90,'k');
+        OrderItem item2 = new OrderItem("Cheese Cake",1,42.90,'b');
+        OrderItem item3 = new OrderItem("Chocolate Cake",1,42.90,'b');
+        OrderItem item4 = new OrderItem("Chocolate Cake",1,42.90,'b');
+        OrderItem item5 = new OrderItem("Chocolate Cake",1,42.90,'b');
 
         list.add(item);
         list.add(item2);
@@ -174,7 +174,7 @@ class BarDashboardAdapter extends RecyclerView.Adapter<BarDashboardAdapter.BarDa
         holder.mRootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mCtx, Integer.toString(position+1) , Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mCtx, Integer.toString(position+1) , Toast.LENGTH_SHORT).show();
                 notifyDataSetChanged();
             }
         });

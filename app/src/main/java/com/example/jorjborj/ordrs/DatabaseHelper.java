@@ -16,10 +16,6 @@ import java.util.Date;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "ordrs.db";
-    public static final String ORDER_TABLE = "tblOrder";
-    public static final String ORDER_ID_COL = "ID";
-    public static final String ORDER_TABLENUM_COL = "TABLENUMBER";
-    public static final String ORDER_STATUS_COL = "STATUS";
 
     // event table
     public static final String EVENT_TABLE = "events";
@@ -31,6 +27,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_NOTES = "notes";
     public static final String COLUMN_DATE = "date";
 
+    // event table
+    public static final String ORDER_TABLE = "orders";
+    public static final String ORDER_ID_COL = "ID";
+    public static final String ORDER_TABLENUM_COL = "tablenum";
+
+    // event table
+    public static final String ORDERITEM_TABLE = "orderitem";
+    public static final String ORDERITEM_NAME_COL = "name";
+    public static final String ORDERITEM_ID_COL = "ID"; //FOREIGN KEY
+    public static final String ORDERITEM_QUANTITY_COL = "quantity";
+    public static final String ORDERITEM_NOTES_COL = "notes";
 
 
     public DatabaseHelper(Context context) {
@@ -40,10 +47,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
-        //STAM TESTING -> it works
-        //Order (As a whole order that contains order items) table creation.
-        db.execSQL("create table "+ORDER_TABLE+" (ID INTEGER PRIMARY KEY AUTOINCREMENT,TABLENUMBER INTEGER,STATUS TEXT)");
 
         db.execSQL("CREATE TABLE " + EVENT_TABLE + " ("
                 + EVENT_ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -55,6 +58,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_DATE + " TEXT"
                 + ")");
 
+        //TODO: order, orderitem creation
+    }
+
+    public boolean insertOrder(){
+
+
+
+        return false;
     }
 
     public boolean insertEvent(int tableNum, String contactName, int phoneNum, int numOfPeope, String notes, String date){
@@ -77,7 +88,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Cursor getEvenrData(){
+    public Cursor getEventData(){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor data = db.rawQuery("SELECT * FROM " + EVENT_TABLE, null);
         return data;
@@ -86,7 +97,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS"+ORDER_TABLE);
+        //TODO: to other tables
         db.execSQL("DROP TABLE IF EXISTS"+EVENT_TABLE);
         onCreate(db);
     }

@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         setContentView(R.layout.main_activity);
 
         DatabaseHelper myDb = new DatabaseHelper(this);
+        myDb.getWritableDatabase();
 
         discounttext = (TextView)findViewById(R.id.discountAhoz);
         totalprice = (TextView)findViewById(R.id.totalPrice);
@@ -97,7 +98,6 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         rv.setLayoutManager(new GridLayoutManager(this,5));
         //TextView price = (TextView) findViewById(R.id.sumPrice);
         initializeData();
-
 
         Calendar rightNow = Calendar.getInstance();
         int currentHour = rightNow.get(Calendar.HOUR_OF_DAY); // return the hour in 24 hrs format (ranging from 0-23)
@@ -280,14 +280,14 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
 
     public void initializeData (){
 
-        Item item = new Item("Chicken Salad",49.90,10,'f',BitmapFactory.decodeResource(getResources(),R.mipmap.chicken_salad));
-        Item item0 = new Item("Caesar Salad",53.90,10,'f',BitmapFactory.decodeResource(getResources(),R.mipmap.caesar_salad));
-        Item item01 = new Item("Tuna Salad",51.90,10,'f',BitmapFactory.decodeResource(getResources(),R.mipmap.tuna_salad));
-        Item item1 = new Item("Nazareth Breakfast",65.90,10,'f',BitmapFactory.decodeResource(getResources(),R.mipmap.nazareth_breakfast));
-        Item item2 = new Item("Beef Fillet", 109.90, 10,'f',BitmapFactory.decodeResource(getResources(),R.mipmap.beef_fillet));
-        Item item22 = new Item("English Breakfast", 54.50, 10,'f',BitmapFactory.decodeResource(getResources(),R.mipmap.english_breakfast));
-        Item item222 = new Item("Italian Pasta", 67.90, 10,'f',BitmapFactory.decodeResource(getResources(),R.mipmap.italian_pasta));
-        Item item2222 = new Item("French Fries", 28.90, 10,'f',BitmapFactory.decodeResource(getResources(),R.mipmap.french_fries));
+        Item item = new Item("Chicken Salad",49.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.chicken_salad));
+        Item item0 = new Item("Caesar Salad",53.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.caesar_salad));
+        Item item01 = new Item("Tuna Salad",51.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.tuna_salad));
+        Item item1 = new Item("Nazareth Breakfast",65.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.nazareth_breakfast));
+        Item item2 = new Item("Beef Fillet", 109.90, 10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.beef_fillet));
+        Item item22 = new Item("English Breakfast", 54.50, 10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.english_breakfast));
+        Item item222 = new Item("Italian Pasta", 67.90, 10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.italian_pasta));
+        Item item2222 = new Item("French Fries", 28.90, 10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.french_fries));
 
         foodmenu.add(item);
         foodmenu.add(item0);
@@ -298,12 +298,12 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         foodmenu.add(item222);
         foodmenu.add(item2222);
 
-        Item item3 = new Item("Cola",11.90,10,'f',BitmapFactory.decodeResource(getResources(),R.mipmap.cola));
-        Item item4 = new Item("Sprite",11.90,10,'f',BitmapFactory.decodeResource(getResources(),R.mipmap.sprite));
-        Item item5 = new Item("Espresso",8.90,10,'f',BitmapFactory.decodeResource(getResources(),R.mipmap.espresso));
-        Item item55 = new Item("Americano",10.90,10,'f',BitmapFactory.decodeResource(getResources(),R.mipmap.americano));
-        Item item555 = new Item("Cappuccino",14.90,10,'f',BitmapFactory.decodeResource(getResources(),R.mipmap.cappuccino));
-        Item item5555 = new Item("Orange Juice",16.90,10,'f',BitmapFactory.decodeResource(getResources(),R.mipmap.orange_juice));
+        Item item3 = new Item("Cola",11.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.cola));
+        Item item4 = new Item("Sprite",11.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.sprite));
+        Item item5 = new Item("Espresso",8.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.espresso));
+        Item item55 = new Item("Americano",10.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.americano));
+        Item item555 = new Item("Cappuccino",14.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.cappuccino));
+        Item item5555 = new Item("Orange Juice",16.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.orange_juice));
 
         drinksmenu.add(item3);
         drinksmenu.add(item4);
@@ -312,21 +312,21 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         drinksmenu.add(item555);
         drinksmenu.add(item5555);
 
-        Item item6 = new Item("Chocolate Cake", 42.90,10,'d',BitmapFactory.decodeResource(getResources(),R.mipmap.chocolate_cake));
-        Item item7 = new Item("Cheese Cake",42.90,10,'d',BitmapFactory.decodeResource(getResources(),R.mipmap.cheese_cake));
-        Item item8 = new Item("Truffle",35.90,10,'d',BitmapFactory.decodeResource(getResources(),R.mipmap.truffle));
-        Item item18 = new Item("Apple Pie",33.90,10,'d',BitmapFactory.decodeResource(getResources(),R.mipmap.apple_pie));
+        Item item6 = new Item("Chocolate Cake", 42.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.chocolate_cake));
+        Item item7 = new Item("Cheese Cake",42.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.cheese_cake));
+        Item item8 = new Item("Truffle",35.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.truffle));
+        Item item18 = new Item("Apple Pie",33.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.apple_pie));
 
         dessertsmenu.add(item6);
         dessertsmenu.add(item7);
         dessertsmenu.add(item8);
         dessertsmenu.add(item18);
 
-        Item item9 = new Item("Pina Colada",35.20,10,'d',BitmapFactory.decodeResource(getResources(),R.mipmap.pina_colada));
-        Item item10 = new Item("Beer",26.90,10,'d',BitmapFactory.decodeResource(getResources(),R.mipmap.beer));
-        Item item11 = new Item("Whiskey",25.90,10,'d',BitmapFactory.decodeResource(getResources(),R.mipmap.whiskey));
-        Item item111 = new Item("Jin",35.90,10,'d',BitmapFactory.decodeResource(getResources(),R.mipmap.jin));
-        Item item1111 = new Item("Arak",22.90,10,'d',BitmapFactory.decodeResource(getResources(),R.mipmap.arak));
+        Item item9 = new Item("Pina Colada",35.20,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.pina_colada));
+        Item item10 = new Item("Beer",26.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.beer));
+        Item item11 = new Item("Whiskey",25.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.whiskey));
+        Item item111 = new Item("Jin",35.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.jin));
+        Item item1111 = new Item("Arak",22.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.arak));
 
         alcoholmenu.add(item9);
         alcoholmenu.add(item10);
@@ -463,7 +463,7 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
             public void onClick(View v) {
                 //Toast.makeText(mCtx, menu.get(position).getName(), Toast.LENGTH_SHORT).show();
                 if(!orders.contains(menu.get(position).getName())) {
-                    OrderItem newItem = new OrderItem(menu.get(position).getName(), 1,menu.get(position).getPrice());
+                    OrderItem newItem = new OrderItem(menu.get(position).getName(), 1,menu.get(position).getPrice(),menu.get(position).getType());
                     orders.add(menu.get(position).getName());
                     orderItems.add(newItem);
                     // Toast.makeText(mCtx, orderItems.get(orderItems.size()).toString(), Toast.LENGTH_SHORT).show();
@@ -523,6 +523,9 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
             this.context = context;
             this.modelsArrayList = modelsArrayList;
             this.resource = resource;
+
+
+            //TODO: bind modelsArrayList to database.
         }
 
         @Override
@@ -534,6 +537,32 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
             //convertView = inflater.inflate(resource,parent,false);
             // 2. Get rowView from inflater
 
+            customView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Toast.makeText(context, "Long CLick on "+modelsArrayList.get(position).getTitle().toString(), Toast.LENGTH_SHORT).show();
+
+                    PopupMenu popup = new PopupMenu(MainActivity.this, v);
+                    //Inflating the Popup using xml file
+                    popup.getMenuInflater()
+                            .inflate(R.menu.order_item_menu, popup.getMenu());
+
+
+                    //registering popup with OnMenuItemClickListener
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        public boolean onMenuItemClick(MenuItem item) {
+                            NotesDialog nd = new NotesDialog(getContext());
+                            nd.show();
+                            return true;
+                        }
+                    });
+
+                    popup.show(); //showing popup menu
+
+
+                    return false;
+                }
+            });
             // 3. Get icon,title & counter views from the rowView
             //     ImageView imgView = (ImageView) customView.findViewById(R.id.item_icon);
             TextView titleView = (TextView) customView.findViewById(R.id.itemname);
@@ -549,6 +578,10 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
             ImageButton remove = (ImageButton)customView.findViewById(R.id.remove);
             ImageButton delete = (ImageButton)customView.findViewById(R.id.delete);
             TextView sum = (TextView)customView.findViewById(R.id.sum);
+
+
+
+
 
             double suma = modelsArrayList.get(position).getPrice()*((double)modelsArrayList.get(position).getCounter());
             double sumb = Double.parseDouble(new DecimalFormat("##.##").format(suma));
@@ -698,5 +731,51 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
 
     }
 
+    public class NotesDialog extends Dialog {
 
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+
+            setContentView(R.layout.notes_dialog);
+
+            final EditText notes = (EditText)findViewById(R.id.notesText);
+            Button ok = (Button)findViewById(R.id.submitBtn);
+            final Button cancel = (Button)findViewById(R.id.cancelBtn);
+
+
+            ok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if(notes.getText().toString().isEmpty()){
+                        Toast.makeText(MainActivity.this, "Insert Notes", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(MainActivity.this, notes.getText().toString(), Toast.LENGTH_SHORT).show();
+                        dismiss();
+                    }
+                }
+                });
+
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dismiss();
+                }
+            });
+
+
+        }
+        public NotesDialog(@NonNull Context context) {
+            super(context);
+        }
+
+        public NotesDialog(@NonNull Context context, @StyleRes int themeResId) {
+            super(context, themeResId);
+        }
+
+        protected NotesDialog(@NonNull Context context, boolean cancelable, @Nullable OnCancelListener cancelListener) {
+            super(context, cancelable, cancelListener);
+        }
+    }
 }
