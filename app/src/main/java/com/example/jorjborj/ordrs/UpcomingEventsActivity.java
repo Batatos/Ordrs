@@ -37,7 +37,7 @@ public class UpcomingEventsActivity extends AppCompatActivity {
 
         UpcomingEventObject event1 = new UpcomingEventObject(1,"George Aoun",545983177,12,"BlaBla", Calendar.getInstance().getTime());
         UpcomingEventObject event2 = new UpcomingEventObject(1,"Ahed Istaiteh",545922731,10,"BlaBla", Calendar.getInstance().getTime());
-        UpcomingEventObject event3 = new UpcomingEventObject(1,"Einav Menkov",525994121,5,"BlaBla", Calendar.getInstance().getTime());
+        UpcomingEventObject event3 = new UpcomingEventObject(1,"Areej Salameh",543010759,2,"BlaBla", Calendar.getInstance().getTime());
         UpcomingEventObject event4 = new UpcomingEventObject(1,"Luna Zreik",505452311,25,"BlaBla", Calendar.getInstance().getTime());
         UpcomingEventObject event5 = new UpcomingEventObject(1,"David Cohen",545123327,8,"BlaBla", Calendar.getInstance().getTime());
         UpcomingEventObject event6 = new UpcomingEventObject(1,"Avi Harari",545922477,30,"BlaBla", Calendar.getInstance().getTime());
