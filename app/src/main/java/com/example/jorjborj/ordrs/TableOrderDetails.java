@@ -84,16 +84,20 @@ public class TableOrderDetails extends AppCompatActivity implements DatePickerDi
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-                Date theDate = Calendar.getInstance().getTime();
-                String dateString = date.getText().toString();
+                if(contactName.getText().toString().isEmpty() || contactNumber.getText().toString().isEmpty() ||
+                        numberOfPeople.getText().toString().isEmpty()){
+                    Toast.makeText(TableOrderDetails.this, "Data is missing", Toast.LENGTH_SHORT).show();
+                }else
+                {
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                    Date theDate = Calendar.getInstance().getTime();
+                    String dateString = date.getText().toString();
+                    AddData(Integer.parseInt(tableNumber), contactName.getText().toString(), Integer.parseInt(contactNumber.getText().toString())
+                            , Integer.parseInt(numberOfPeople.getText().toString()), notes.getText().toString(), dateString);
+                    Intent i = new Intent(getApplicationContext(), UpcomingEventsActivity.class);
 
-
-                AddData(Integer.parseInt(tableNumber),contactName.getText().toString(),Integer.parseInt(contactNumber.getText().toString())
-                        ,Integer.parseInt(numberOfPeople.getText().toString()),notes.getText().toString(),dateString);
-                Intent i = new Intent(getApplicationContext(),UpcomingEventsActivity.class);
-
-                startActivity(i);
+                    startActivity(i);
+                }
             }
 
             private void AddData(int i, String s, int i1, int i2, String s1, String theDate) {

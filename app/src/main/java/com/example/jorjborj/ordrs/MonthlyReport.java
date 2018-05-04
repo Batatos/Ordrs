@@ -36,6 +36,7 @@ public class MonthlyReport extends AppCompatActivity {
         mChart = (BarChart)findViewById(R.id.monthly_sales);
         mChart.getDescription().setEnabled(false);
         setData(12);
+
         //mChart.setFitBars(true);
         mChart.disableScroll();
         mChart.setDoubleTapToZoomEnabled(false);
@@ -73,9 +74,13 @@ public class MonthlyReport extends AppCompatActivity {
         }
 
         final BarDataSet set = new BarDataSet(yVals,"Months");
-
         set.setColors(ColorTemplate.MATERIAL_COLORS);
         set.setDrawValues(true);
+        mChart.animate();
+        set.setValueTextSize(15);
+        mChart.getXAxis().setTextSize(11);
+        mChart.getAxisLeft().setTextSize(13);
+        mChart.getAxisRight().setTextSize(13);
         BarData data = new BarData(set);
         mChart.setData(data);
         mChart.invalidate();

@@ -293,6 +293,7 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         Item starter10 = new Item("Baked Sweet Potato",28.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.baked_sweet_potato));
         Item starter11 = new Item("Corn Soup",29.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.corn_soup));
         Item starter12 = new Item("Fish Soup",34.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.fish_soup));
+        Item starter13 = new Item("French Fries", 28.90, 10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.french_fries));
 
 
         startersmenu.add(starter);
@@ -308,61 +309,113 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         startersmenu.add(starter10);
         startersmenu.add(starter11);
         startersmenu.add(starter12);
+        startersmenu.add(starter13);
 
 
-        Item item = new Item("Chicken Salad",49.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.chicken_salad));
-        Item item0 = new Item("Caesar Salad",53.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.caesar_salad));
-        Item item01 = new Item("Tuna Salad",51.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.tuna_salad));
-        Item item1 = new Item("Nazareth Breakfast",65.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.nazareth_breakfast));
-        Item item2 = new Item("Beef Fillet", 109.90, 10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.beef_fillet));
-        Item item22 = new Item("English Breakfast", 54.50, 10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.english_breakfast));
-        Item item222 = new Item("Italian Pasta", 67.90, 10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.italian_pasta));
-        Item item2222 = new Item("French Fries", 28.90, 10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.french_fries));
+        Item fooditem = new Item("Chicken Salad",49.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.chicken_salad));
+        Item fooditem1 = new Item("Caesar Salad",53.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.caesar_salad));
+        Item fooditem2 = new Item("Tuna Salad",51.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.tuna_salad));
+        Item fooditem3 = new Item("Nazareth Breakfast",65.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.nazareth_breakfast));
+        Item fooditem4 = new Item("Beef Fillet", 109.90, 10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.beef_fillet));
+        Item fooditem5 = new Item("English Breakfast", 54.50, 10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.english_breakfast));
+        Item fooditem6 = new Item("Italian Pasta", 67.90, 10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.italian_pasta));
+        Item fooditem7 = new Item("Cavatappi Pasta", 28.90, 10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.cavatappi_pasta));
+        Item fooditem8 = new Item("Chicken Pie", 28.90, 10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.chicken_pie));
+        Item fooditem9 = new Item("Fresco Shrimps", 28.90, 10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.fresco_shrimps));
+        Item fooditem10 = new Item("Potato Tortilla", 57.90, 10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.potato_tortilla));
+        Item fooditem11 = new Item("Mac and Cheese", 53.90, 10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.mac_cheese));
+        Item fooditem12 = new Item("Sloppy Joe", 58.90, 10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.sloppy_joe));
+        Item fooditem13 = new Item("Cheesy Cabbage", 56.90, 10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.cabbage_cheese));
 
-        foodmenu.add(item);
-        foodmenu.add(item0);
-        foodmenu.add(item01);
-        foodmenu.add(item1);
-        foodmenu.add(item2);
-        foodmenu.add(item22);
-        foodmenu.add(item222);
-        foodmenu.add(item2222);
+        foodmenu.add(fooditem);
+        foodmenu.add(fooditem1);
+        foodmenu.add(fooditem2);
+        foodmenu.add(fooditem3);
+        foodmenu.add(fooditem4);
+        foodmenu.add(fooditem5);
+        foodmenu.add(fooditem6);
+        foodmenu.add(fooditem7);
+        foodmenu.add(fooditem8);
+        foodmenu.add(fooditem9);
+        foodmenu.add(fooditem10);
+        foodmenu.add(fooditem11);
+        foodmenu.add(fooditem12);
+        foodmenu.add(fooditem13);
 
-        Item item3 = new Item("Cola",11.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.cola));
-        Item item4 = new Item("Sprite",11.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.sprite));
-        Item item5 = new Item("Espresso",8.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.espresso));
-        Item item55 = new Item("Americano",10.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.americano));
-        Item item555 = new Item("Cappuccino",14.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.cappuccino));
-        Item item5555 = new Item("Orange Juice",16.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.orange_juice));
+        Item drinkitem = new Item("Cola",11.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.cola));
+        Item drinkitem1 = new Item("Sprite",11.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.sprite));
+        Item drinkitem2 = new Item("Espresso",8.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.espresso));
+        Item drinkitem3 = new Item("Americano",10.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.americano));
+        Item drinkitem4 = new Item("Cappuccino",14.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.cappuccino));
+        Item drinkitem5 = new Item("Orange Juice",15.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.orange_juice));
+        Item drinkitem6 = new Item("Lemonade",14.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.lemonade));
+        Item drinkitem7 = new Item("Summer Smoothie",19.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.summer_vibes));
+        Item drinkitem8 = new Item("Fruits Smoothie",16.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.colorfull_smoothie));
+        Item drinkitem9 = new Item("Diaster Milkshake",25.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.disaster_milkshake));
+        Item drinkitem10 = new Item("Red Vanil Milkshake",21.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.vanil_strawberry_milkshake));
+        Item drinkitem11 = new Item("Choco Milkshake",19.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.choco_milkshake));
 
-        drinksmenu.add(item3);
-        drinksmenu.add(item4);
-        drinksmenu.add(item5);
-        drinksmenu.add(item55);
-        drinksmenu.add(item555);
-        drinksmenu.add(item5555);
+        drinksmenu.add(drinkitem);
+        drinksmenu.add(drinkitem1);
+        drinksmenu.add(drinkitem2);
+        drinksmenu.add(drinkitem3);
+        drinksmenu.add(drinkitem4);
+        drinksmenu.add(drinkitem5);
+        drinksmenu.add(drinkitem6);
+        drinksmenu.add(drinkitem7);
+        drinksmenu.add(drinkitem8);
+        drinksmenu.add(drinkitem9);
+        drinksmenu.add(drinkitem10);
+        drinksmenu.add(drinkitem11);
 
-        Item item6 = new Item("Chocolate Cake", 42.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.chocolate_cake));
-        Item item7 = new Item("Cheese Cake",42.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.cheese_cake));
-        Item item8 = new Item("Truffle",35.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.truffle));
-        Item item18 = new Item("Apple Pie",33.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.apple_pie));
+        Item dessertitem = new Item("Chocolate Cake", 42.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.chocolate_cake));
+        Item dessertitem1 = new Item("Cheese Cake",42.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.cheese_cake));
+        Item dessertitem2 = new Item("Truffle",35.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.truffle));
+        Item dessertitem3 = new Item("Apple Pie",33.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.apple_pie));
+        Item dessertitem4 = new Item("Chocolate Mousse",42.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.choco_mousse));
+        Item dessertitem5 = new Item("Strawberry Cake",45.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.straw_cake));
+        Item dessertitem6 = new Item("Lemon Sorbet",33.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.lemon_sorbet));
+        Item dessertitem7 = new Item("Lemon Tart",42.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.lemon_tart));
+        Item dessertitem8 = new Item("IceCream Cake",45.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.iceream_cake));
+        Item dessertitem9 = new Item("Guinness Cake",34.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.guinness_cake));
+        Item dessertitem10 = new Item("Bannoffee Whoopies",43.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.bannoffee_whoopies));
 
-        dessertsmenu.add(item6);
-        dessertsmenu.add(item7);
-        dessertsmenu.add(item8);
-        dessertsmenu.add(item18);
+        dessertsmenu.add(dessertitem);
+        dessertsmenu.add(dessertitem1);
+        dessertsmenu.add(dessertitem2);
+        dessertsmenu.add(dessertitem3);
+        dessertsmenu.add(dessertitem4);
+        dessertsmenu.add(dessertitem5);
+        dessertsmenu.add(dessertitem6);
+        dessertsmenu.add(dessertitem7);
+        dessertsmenu.add(dessertitem8);
+        dessertsmenu.add(dessertitem9);
+        dessertsmenu.add(dessertitem10);
 
-        Item item9 = new Item("Pina Colada",35.20,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.pina_colada));
-        Item item10 = new Item("Beer",26.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.beer));
-        Item item11 = new Item("Whiskey",25.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.whiskey));
-        Item item111 = new Item("Jin",35.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.jin));
-        Item item1111 = new Item("Arak",22.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.arak));
 
-        alcoholmenu.add(item9);
-        alcoholmenu.add(item10);
-        alcoholmenu.add(item11);
-        alcoholmenu.add(item111);
-        alcoholmenu.add(item1111);
+        Item alcoholitem = new Item("Pina Colada",35.20,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.pina_colada));
+        Item alcoholitem1 = new Item("Jin",35.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.jin));
+        Item alcoholitem2 = new Item("Arak",22.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.arak));
+        Item alcoholitem3 = new Item("Carlsberg",26.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.carlsberg));
+        Item alcoholitem4 = new Item("Heineken",22.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.heineken));
+        Item alcoholitem5 = new Item("Green Tuborg",22.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.green_tuborg));
+        Item alcoholitem6 = new Item("Red Tuborg",22.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.red_tuborg));
+        Item alcoholitem7 = new Item("Corona",22.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.corona));
+        Item alcoholitem8 = new Item("Red Label",22.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.red_label));
+        Item alcoholitem9 = new Item("Jameson",25.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.jameson));
+        Item alcoholitem10 = new Item("Royal Chivas",25.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.royal_chivas));
+
+        alcoholmenu.add(alcoholitem);
+        alcoholmenu.add(alcoholitem1);
+        alcoholmenu.add(alcoholitem2);
+        alcoholmenu.add(alcoholitem3);
+        alcoholmenu.add(alcoholitem4);
+        alcoholmenu.add(alcoholitem5);
+        alcoholmenu.add(alcoholitem6);
+        alcoholmenu.add(alcoholitem7);
+        alcoholmenu.add(alcoholitem8);
+        alcoholmenu.add(alcoholitem9);
+        alcoholmenu.add(alcoholitem10);
 
     }
 

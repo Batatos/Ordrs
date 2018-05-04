@@ -102,5 +102,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public boolean deleteEvent(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM "+ EVENT_TABLE +" WHERE "+ EVENT_ID_COL +" = '"+id+"'";
+        db.execSQL(query);
+        return true;
+    }
+
+    public int getEventId(String contactName, int phoneNum, int numOfPeople, String date){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor data = db.rawQuery("SELECT "+EVENT_ID_COL+" FROM "+EVENT_TABLE+" " +
+                "WHERE "+COLUMN_CONTACT_NAME+" = '"+contactName+"'"+
+                " AND "+COLUMN_PHONENUM+" = '"+phoneNum+"'"+
+                " AND "+COLUMN_NUMOFPEOPLE+" = '"+numOfPeople+"'"+
+                " AND "+COLUMN_DATE+" = '"+date+"'", null);
+        data.moveToFirst();
+        return data.getInt(0);
+    }
 
 }

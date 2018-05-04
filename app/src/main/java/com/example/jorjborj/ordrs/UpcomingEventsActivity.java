@@ -132,11 +132,19 @@ public class UpcomingEventsActivity extends AppCompatActivity {
                     popup.getMenuInflater()
                             .inflate(R.menu.notes_settings_menu, popup.getMenu());
 
-
+                    UpcomingEventObject o = eventsArrayList.get(position);
                     //registering popup with OnMenuItemClickListener
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         public boolean onMenuItemClick(MenuItem item) {
-                            Toast.makeText(context, item.getTitle().toString(), Toast.LENGTH_SHORT).show();
+                            UpcomingEventObject o = eventsArrayList.get(position);
+                            if(item.getTitle().toString().equals("Delete")){
+                                int rowId = mDataBaseHelper.getEventId(o.getContactName(),o.getPhoneNum(),o.getNumOfPeople(),o.getTimeDate());
+                                mDataBaseHelper.deleteEvent(rowId);
+                                Intent i = new Intent(getBaseContext(),UpcomingEventsActivity.class);
+                                startActivity(i);
+                                Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
+                            }
+
                             return true;
                         }
                     });
@@ -152,6 +160,8 @@ public class UpcomingEventsActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
+        Intent i = new Intent(getBaseContext(),PickOptionActivity.class);
+        startActivity(i);
         finish();
         return true;
     }
