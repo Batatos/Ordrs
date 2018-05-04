@@ -17,7 +17,14 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
+import static com.example.jorjborj.ordrs.R.id.contactnumber;
+import static com.example.jorjborj.ordrs.R.id.events;
+import static com.example.jorjborj.ordrs.R.id.start;
 
 /**
  * Created by jorjborj on 4/24/2018.
@@ -32,6 +39,8 @@ public class TableOrderDetails extends AppCompatActivity implements DatePickerDi
     ImageButton pickDate;
     Button confirm,cancel;
     String tableNumber;
+    DatabaseHelper dataBaseHelper;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,6 +51,7 @@ public class TableOrderDetails extends AppCompatActivity implements DatePickerDi
         tableNumber = getIntent().getStringExtra("order_table");
         getSupportActionBar().setTitle("Table Order Details");
 
+        dataBaseHelper = new DatabaseHelper(this);
 
         contactName = (EditText)findViewById(R.id.contantname);
         contactNumber = (EditText)findViewById(R.id.contantnumber);
@@ -52,9 +62,7 @@ public class TableOrderDetails extends AppCompatActivity implements DatePickerDi
         tblnum = (TextView)findViewById(R.id.table_number);
         confirm = (Button)findViewById(R.id.confirm);
         cancel = (Button)findViewById(R.id.cancel);
-
         tblnum.setText(tableNumber);
-
 
 
         pickDate.setOnClickListener(new View.OnClickListener() {
@@ -76,8 +84,26 @@ public class TableOrderDetails extends AppCompatActivity implements DatePickerDi
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String confirmOutput = "Table #"+tableNumber+" Order Summary: \n"+"Contact Name: "+contactName.getText().toString()+"\n"+"Contact Number: "+contactNumber.getText().toString()+"\n"+"Number of People: "+numberOfPeople.getText().toString()+"\n"+"Date: "+date.getText().toString();
-                Toast.makeText(TableOrderDetails.this, confirmOutput, Toast.LENGTH_SHORT).show();
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                Date theDate = Calendar.getInstance().getTime();
+                String dateString = date.getText().toString();
+
+
+                AddData(Integer.parseInt(tableNumber),contactName.getText().toString(),Integer.parseInt(contactNumber.getText().toString())
+                        ,Integer.parseInt(numberOfPeople.getText().toString()),notes.getText().toString(),dateString);
+                Intent i = new Intent(getApplicationContext(),UpcomingEventsActivity.class);
+
+                startActivity(i);
+            }
+
+            private void AddData(int i, String s, int i1, int i2, String s1, String theDate) {
+
+                boolean insertData = dataBaseHelper.insertEvent(i,s,i1,i2,s1,theDate);
+                if(insertData){
+                    Toast.makeText(getBaseContext(),"Data added", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(getBaseContext(),"Failed to add data", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -114,11 +140,11 @@ public class TableOrderDetails extends AppCompatActivity implements DatePickerDi
             //cosmetics
             String minutes = "0";
             minutes += Integer.toString(minuteFinal);
-            String time1 = dayFinal + "/" + monthFinal + "/" + yearFinal + ", " + hourFinal + ":" + minutes + ".";
+            String time1 = dayFinal + "/" + monthFinal + "/" + yearFinal + " " + hourFinal + ":" + minutes + "";
             date.setText(time1);
             Toast.makeText(getBaseContext(), "Table #" + getIntent().getStringExtra("order_table")+ "- Date&Time: " + dayFinal + "/" + monthFinal + "/" + yearFinal + ", " + hourFinal + ":" + minutes + ".", Toast.LENGTH_SHORT).show();
         } else {
-            String time = dayFinal + "/" + monthFinal + "/" + yearFinal + ", " + hourFinal + ":" + minuteFinal + ".";
+            String time = dayFinal + "/" + monthFinal + "/" + yearFinal + " " + hourFinal + ":" + minuteFinal + "";
             Toast.makeText(getBaseContext(), "Table #"+ getIntent().getStringExtra("order_table") + "- Date&Time: " + dayFinal + "/" + monthFinal + "/" + yearFinal + ", " + hourFinal + ":" + minuteFinal + ".", Toast.LENGTH_SHORT).show();
             date.setText(time);
 

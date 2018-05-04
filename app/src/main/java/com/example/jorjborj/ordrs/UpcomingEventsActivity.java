@@ -1,6 +1,8 @@
 package com.example.jorjborj.ordrs;
 
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -10,53 +12,57 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 public class UpcomingEventsActivity extends AppCompatActivity {
 
-    ArrayList<UpcomingEventObject> events;
-    @Override
+    public static ArrayList<UpcomingEventObject> eventsArrayList = new ArrayList<>();
+    public static EventsAdapter adapter;
+    DatabaseHelper mDataBaseHelper;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upcoming_events);
 
+        mDataBaseHelper = new DatabaseHelper(getBaseContext());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ListView lv = (ListView) findViewById(R.id.eventslv);
 
-        events = new ArrayList<>();
-        initializeDummyEvents();
+        eventsArrayList = new ArrayList<>();
 
-        lv.setAdapter(new EventsAdapter(UpcomingEventsActivity.this,R.layout.upcoming_event_row,events));
-
+//        Intent intent = getIntent();
+//        UpcomingEventObject eventObject = (UpcomingEventObject) intent.getSerializableExtra("Object");
+//        if(eventObject!=null) {
+//            eventsArrayList.add(eventObject);
+//        }
+        initializeData();
+        adapter = new EventsAdapter(UpcomingEventsActivity.this,R.layout.upcoming_event_row,eventsArrayList);
+        lv.setAdapter(adapter);
+        adapter.setNotifyOnChange(true);
 
     }
 
-    private void initializeDummyEvents() {
+    private void initializeData() {
+        Cursor data = mDataBaseHelper.getEvenrData();
 
-        UpcomingEventObject event1 = new UpcomingEventObject(1,"George Aoun",545983177,12,"BlaBla", Calendar.getInstance().getTime());
-        UpcomingEventObject event2 = new UpcomingEventObject(1,"Ahed Istaiteh",545922731,10,"BlaBla", Calendar.getInstance().getTime());
-        UpcomingEventObject event3 = new UpcomingEventObject(1,"Areej Salameh",543010759,2,"BlaBla", Calendar.getInstance().getTime());
-        UpcomingEventObject event4 = new UpcomingEventObject(1,"Luna Zreik",505452311,25,"BlaBla", Calendar.getInstance().getTime());
-        UpcomingEventObject event5 = new UpcomingEventObject(1,"David Cohen",545123327,8,"BlaBla", Calendar.getInstance().getTime());
-        UpcomingEventObject event6 = new UpcomingEventObject(1,"Avi Harari",545922477,30,"BlaBla", Calendar.getInstance().getTime());
-        UpcomingEventObject event7 = new UpcomingEventObject(1,"Roey Levi",525544111,2,"BlaBla", Calendar.getInstance().getTime());
-        UpcomingEventObject event8 = new UpcomingEventObject(1,"Omer Avner",505343131,40,"BlaBla", Calendar.getInstance().getTime());
-        UpcomingEventObject event9 = new UpcomingEventObject(1,"Firas Odeh",525019921,16,"BlaBla", Calendar.getInstance().getTime());
-        UpcomingEventObject event10 = new UpcomingEventObject(1,"Charbel Aoun",545987161,2,"BlaBla", Calendar.getInstance().getTime());
+        if(data != null){
+            if(data.moveToFirst()){
+                do {
+                    UpcomingEventObject eventsObject = new UpcomingEventObject();
+                    eventsObject.setTableNum(Integer.parseInt(data.getString(1)));
+                    eventsObject.setContactName(data.getString(2));
+                    eventsObject.setPhoneNum(Integer.parseInt(data.getString(3)));
+                    eventsObject.setNumOfPeople(Integer.parseInt(data.getString(4)));
+                    eventsObject.setNotes(data.getString(5));
+                    eventsObject.setTimeDate(data.getString(6));
 
-        events.add(event1);
-        events.add(event2);
-        events.add(event3);
-        events.add(event4);
-        events.add(event5);
-        events.add(event6);
-        events.add(event7);
-        events.add(event8);
-        events.add(event9);
-        events.add(event10);
-
+                    eventsArrayList.add(eventsObject);
+                } while (data.moveToNext());
+            }
+        }
     }
 
 
@@ -69,8 +75,6 @@ public class UpcomingEventsActivity extends AppCompatActivity {
 
         public EventsAdapter(Context context, int resource, ArrayList<UpcomingEventObject> modelsArrayList) {
             super(context, resource, modelsArrayList);
-
-
             this.context = context;
             this.modelsArrayList = modelsArrayList;
             this.resource = resource;

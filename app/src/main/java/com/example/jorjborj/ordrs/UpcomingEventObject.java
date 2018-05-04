@@ -1,24 +1,27 @@
 package com.example.jorjborj.ordrs;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Ahed on 5/3/2018.
  */
 
-public class UpcomingEventObject {
+public class UpcomingEventObject implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     int tableNum;
     String contactName;
     int phoneNum;
     int numOfPeople;
     String notes;
-    Date timeDate;
+    String timeDate;
 
     public UpcomingEventObject(){
 
     }
 
-    public UpcomingEventObject(int tableNum, String contactName, int phoneNum, int numOfPeople, String notes, Date timeDate) {
+    public UpcomingEventObject(int tableNum, String contactName, int phoneNum, int numOfPeople, String notes, String timeDate) {
         this.tableNum = tableNum;
         this.contactName = contactName;
         this.phoneNum = phoneNum;
@@ -67,11 +70,11 @@ public class UpcomingEventObject {
         this.notes = notes;
     }
 
-    public Date getTimeDate() {
+    public String getTimeDate() {
         return timeDate;
     }
 
-    public void setTimeDate(Date timeDate) {
+    public void setTimeDate(String timeDate) {
         this.timeDate = timeDate;
     }
 }
