@@ -60,6 +60,7 @@ import static android.media.CamcorderProfile.get;
 
 public class MainActivity extends AppCompatActivity implements NumberPicker.OnValueChangeListener {
 
+    ArrayList<Item> startersmenu = new ArrayList<Item>();
     ArrayList<Item> foodmenu = new ArrayList<Item>();
     ArrayList<Item> drinksmenu = new ArrayList<Item>();
     ArrayList<Item> dessertsmenu = new ArrayList<Item>();
@@ -105,9 +106,6 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
             discounttext.setText("10");
         }else{
         }
-
-
-
 
 
         Button sendBtn = (Button)findViewById(R.id.sendBtn);
@@ -175,19 +173,16 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         orders = new ArrayList<String>();
         adapter4 = new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1, orders);
 
-
         orderItems = new ArrayList<>();
         orderAdapter = new OrderItemAdapter(this,R.layout.counterlistitem,orderItems);
 
-
+        final CardviewAdapter adapter0 = new CardviewAdapter(this,startersmenu);
         final CardviewAdapter adapter = new CardviewAdapter(this,foodmenu);
         final CardviewAdapter adapter1 = new CardviewAdapter(this,drinksmenu);
         final CardviewAdapter adapter2 = new CardviewAdapter(this,dessertsmenu);
         final CardviewAdapter adapter3 = new CardviewAdapter(this,alcoholmenu);
 
-
-        rv.setAdapter(adapter);
-
+        rv.setAdapter(adapter0);
 
         counterlv.setAdapter(orderAdapter);
         orderAdapter.setNotifyOnChange(true);
@@ -197,6 +192,10 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
 
             public boolean onNavigationItemSelected(@NonNull final MenuItem item) {
                 switch (item.getItemId()){
+                    case R.id.starters:
+                        rv.setAdapter(adapter0);
+                        item.setChecked(true);
+                        break;
                     case R.id.food:
                         rv.setAdapter(adapter);
                         item.setChecked(true);
@@ -279,6 +278,37 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
     //Initialize dummy data function
 
     public void initializeData (){
+
+
+        Item starter = new Item("Lemon Shrimps",38.50,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.lemon_shrimps));
+        Item starter1 = new Item("Tangri Kebabs",35.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.tangari_kebabs));
+        Item starter2 = new Item("Cheese Balls",41.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.cheese_balls));
+        Item starter3 = new Item("Italian Cuisine",28.50,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.italian_cuisine));
+        Item starter4 = new Item("Lobster Legs",38.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.lobster_legs));
+        Item starter5 = new Item("Smoked Salamon",31.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.smoked_salamon));
+        Item starter6 = new Item("Adamami",34.50,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.adamami));
+        Item starter7 = new Item("Falafel",35.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.falafel));
+        Item starter8 = new Item("Seafood Salad",40.00,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.seafood_salad));
+        Item starter9 = new Item("Baked Potato",28.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.baked_potato));
+        Item starter10 = new Item("Baked Sweet Potato",28.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.baked_sweet_potato));
+        Item starter11 = new Item("Corn Soup",29.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.corn_soup));
+        Item starter12 = new Item("Fish Soup",34.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.fish_soup));
+
+
+        startersmenu.add(starter);
+        startersmenu.add(starter1);
+        startersmenu.add(starter2);
+        startersmenu.add(starter3);
+        startersmenu.add(starter4);
+        startersmenu.add(starter5);
+        startersmenu.add(starter6);
+        startersmenu.add(starter7);
+        startersmenu.add(starter8);
+        startersmenu.add(starter9);
+        startersmenu.add(starter10);
+        startersmenu.add(starter11);
+        startersmenu.add(starter12);
+
 
         Item item = new Item("Chicken Salad",49.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.chicken_salad));
         Item item0 = new Item("Caesar Salad",53.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.caesar_salad));

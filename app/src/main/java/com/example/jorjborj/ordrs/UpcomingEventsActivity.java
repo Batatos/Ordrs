@@ -143,8 +143,6 @@ public class UpcomingEventsActivity extends AppCompatActivity {
 
                     popup.show(); //showing popup menu
 
-
-
                     return false;
                 }
             });

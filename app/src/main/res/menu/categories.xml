@@ -2,8 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item android:id="@+id/starters"
+        android:title="Starters"
+        android:icon="@mipmap/starters_asset"
+        app:showAsAction="always"/>
+
     <item android:id="@+id/food"
-        android:title="Food"
+        android:title="Main Dishes"
         android:icon="@mipmap/forkknife"
         app:showAsAction="always"/>
 
