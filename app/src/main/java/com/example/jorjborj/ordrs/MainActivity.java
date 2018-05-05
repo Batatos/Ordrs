@@ -621,10 +621,9 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
             //convertView = inflater.inflate(resource,parent,false);
             // 2. Get rowView from inflater
 
-            customView.setOnLongClickListener(new View.OnLongClickListener() {
+            customView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public boolean onLongClick(View v) {
-
+                public void onClick(View v) {
                     PopupMenu popup = new PopupMenu(MainActivity.this, v);
                     //Inflating the Popup using xml file
                     popup.getMenuInflater()
@@ -640,10 +639,35 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
 
                     popup.show(); //showing popup menu
 
-
-                    return false;
                 }
             });
+
+            //Did it with onClick instead of onLongClick. See above.
+//            customView.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View v) {
+//
+//                    PopupMenu popup = new PopupMenu(MainActivity.this, v);
+//                    //Inflating the Popup using xml file
+//                    popup.getMenuInflater()
+//                            .inflate(R.menu.order_item_menu, popup.getMenu());
+//                    //registering popup with OnMenuItemClickListener
+//                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                        public boolean onMenuItemClick(MenuItem item) {
+//                            NotesDialog nd = new NotesDialog(context,position);
+//                            nd.show();
+//                            return true;
+//                        }
+//                    });
+//
+//                    popup.show(); //showing popup menu
+//
+//
+//                    return false;
+//                }
+//            });
+
+
             // 3. Get icon,title & counter views from the rowView
             //     ImageView imgView = (ImageView) customView.findViewById(R.id.item_icon);
             TextView titleView = (TextView) customView.findViewById(R.id.itemname);

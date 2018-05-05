@@ -165,4 +165,11 @@ public class UpcomingEventsActivity extends AppCompatActivity {
         finish();
         return true;
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(getBaseContext(),PickOptionActivity.class);
+        startActivity(i);
+        finish();
+    }
 }
