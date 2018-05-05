@@ -197,7 +197,6 @@ public class CashFragment extends Fragment {
             }
         });
 
-
         pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
