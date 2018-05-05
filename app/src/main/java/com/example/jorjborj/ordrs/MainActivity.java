@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
 
         Button sendBtn = (Button)findViewById(R.id.sendBtn);
         Button cancelBtn = (Button)findViewById(R.id.cancelBtn);
-        Button payBtn = (Button)findViewById(R.id.payBtn);
+        final Button payBtn = (Button)findViewById(R.id.payBtn);
         final Button discountBtn = (Button)findViewById(R.id.discountBtn);
 
         sendBtn.setOnClickListener(new View.OnClickListener() {
@@ -157,7 +157,8 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         payBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Todo Dialog", Toast.LENGTH_SHORT).show();
+                payDialog payDialog = new payDialog(MainActivity.this);
+                payDialog.show();
             }
         });
 
@@ -649,22 +650,36 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
             TextView counterView = (TextView) customView.findViewById(R.id.item_counter);
             LinearLayout notesLayout = (LinearLayout)customView.findViewById(R.id.NotesLayout);
 
+            ImageButton add = (ImageButton)customView.findViewById(R.id.add);
+            ImageButton remove = (ImageButton)customView.findViewById(R.id.remove);
+            ImageButton delete = (ImageButton)customView.findViewById(R.id.delete);
+            ImageButton clearNotes = (ImageButton)customView.findViewById(R.id.clearnote);
+            final TextView notesData = (TextView)customView.findViewById(R.id.notesData);
+
             // 4. Set the text for textView
             if(modelsArrayList.get(position).getNotes()!=null){
-                TextView notesTitle = (TextView)customView.findViewById(R.id.notesTitle);
-                TextView notesData = (TextView)customView.findViewById(R.id.notesData);
-
                 notesData.setText(modelsArrayList.get(position).getNotes().toString());
+                orderAdapter.notifyDataSetChanged();
             }else{
                 notesLayout.setVisibility(LinearLayout.GONE);
+                clearNotes.setVisibility(ImageButton.GONE);
             }
+
+            clearNotes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(modelsArrayList.get(position).getNotes()!=null){
+                        modelsArrayList.get(position).setNotes(null);
+                        orderAdapter.notifyDataSetChanged();
+                    }
+                }
+            });
+
             titleView.setText(modelsArrayList.get(position).getTitle());
             //Toast.makeText(context, Integer.toString(modelsArrayList.get(position).getCounter()), Toast.LENGTH_SHORT).show();
             counterView.setText(Integer.toString(modelsArrayList.get(position).getCounter()));
 
-            ImageButton add = (ImageButton)customView.findViewById(R.id.add);
-            ImageButton remove = (ImageButton)customView.findViewById(R.id.remove);
-            ImageButton delete = (ImageButton)customView.findViewById(R.id.delete);
+
             TextView sum = (TextView)customView.findViewById(R.id.sum);
 
 
@@ -866,6 +881,57 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         protected DiscountDialog(@NonNull Context context, boolean cancelable, @Nullable OnCancelListener cancelListener) {
             super(context, cancelable, cancelListener);
         }
+
+    }
+
+
+
+    public class payDialog extends Dialog {
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+
+            setContentView(R.layout.paydialog);
+
+
+            TextView price,ahoz,total,returnCash;
+            EditText received;
+            Button pay,cancel;
+
+            price = (TextView)findViewById(R.id.price);
+            ahoz = (TextView)findViewById(R.id.ahoz);
+            total = (TextView)findViewById(R.id.total);
+            returnCash = (TextView)findViewById(R.id.returncash);
+            received = (EditText)findViewById(R.id.amountreceived);
+            pay = (Button)findViewById(R.id.payBtn);
+            cancel = (Button)findViewById(R.id.cancelBtn);
+
+
+            pay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(MainActivity.this, "Pay", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dismiss();
+                }
+            });
+        }
+
+        public payDialog(@NonNull Context context) {
+            super(context);
+        }
+
+        public payDialog(@NonNull Context context, @StyleRes int themeResId) {
+            super(context,themeResId);
+
+        }
+
 
     }
 }

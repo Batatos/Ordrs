@@ -193,11 +193,20 @@
                     android:textSize="20dp" />
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:text="₪"
+                    android:textColor="#000"
+                    android:textSize="20dp" />
+
+                <TextView
                     android:id="@+id/sumPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="monospace"
                     android:text="00.00"
+                    android:layout_marginLeft="2dp"
                     android:textColor="#000"
                     android:textSize="20dp" />
 
@@ -262,15 +271,25 @@
                     android:textStyle="bold"
                     android:textSize="20dp" />
 
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="monospace"
+                    android:text="₪"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="#000"
+                    android:textStyle="bold"
+                    android:textSize="20dp" />
                 <TextView
                     android:id="@+id/totalPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="monospace"
                     android:text="00.00"
+                    android:layout_marginLeft="2dp"
                     android:textColor="#000"
                     android:textStyle="bold"
-                    android:layout_marginLeft="10dp"
                     android:textSize="20dp" />
 
             </LinearLayout>
