@@ -623,18 +623,15 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
             customView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    Toast.makeText(context, "Long CLick on "+modelsArrayList.get(position).getTitle().toString(), Toast.LENGTH_SHORT).show();
 
                     PopupMenu popup = new PopupMenu(MainActivity.this, v);
                     //Inflating the Popup using xml file
                     popup.getMenuInflater()
                             .inflate(R.menu.order_item_menu, popup.getMenu());
-
-
                     //registering popup with OnMenuItemClickListener
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         public boolean onMenuItemClick(MenuItem item) {
-                            NotesDialog nd = new NotesDialog(getContext());
+                            NotesDialog nd = new NotesDialog(context,position);
                             nd.show();
                             return true;
                         }
@@ -650,9 +647,17 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
             //     ImageView imgView = (ImageView) customView.findViewById(R.id.item_icon);
             TextView titleView = (TextView) customView.findViewById(R.id.itemname);
             TextView counterView = (TextView) customView.findViewById(R.id.item_counter);
+            LinearLayout notesLayout = (LinearLayout)customView.findViewById(R.id.NotesLayout);
 
             // 4. Set the text for textView
+            if(modelsArrayList.get(position).getNotes()!=null){
+                TextView notesTitle = (TextView)customView.findViewById(R.id.notesTitle);
+                TextView notesData = (TextView)customView.findViewById(R.id.notesData);
 
+                notesData.setText(modelsArrayList.get(position).getNotes().toString());
+            }else{
+                notesLayout.setVisibility(LinearLayout.GONE);
+            }
             titleView.setText(modelsArrayList.get(position).getTitle());
             //Toast.makeText(context, Integer.toString(modelsArrayList.get(position).getCounter()), Toast.LENGTH_SHORT).show();
             counterView.setText(Integer.toString(modelsArrayList.get(position).getCounter()));
@@ -661,8 +666,6 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
             ImageButton remove = (ImageButton)customView.findViewById(R.id.remove);
             ImageButton delete = (ImageButton)customView.findViewById(R.id.delete);
             TextView sum = (TextView)customView.findViewById(R.id.sum);
-
-
 
 
 
@@ -727,6 +730,59 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
             return customView;
 
         }
+
+        class NotesDialog extends Dialog {
+
+            int position;
+
+            @Override
+            protected void onCreate(Bundle savedInstanceState) {
+                super.onCreate(savedInstanceState);
+
+                setContentView(R.layout.notes_dialog);
+
+                final EditText notes = (EditText)findViewById(R.id.notesText);
+                Button ok = (Button)findViewById(R.id.submitBtn);
+                final Button cancel = (Button)findViewById(R.id.cancelBtn);
+
+                ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if(notes.getText().toString().isEmpty()){
+                            Toast.makeText(MainActivity.this, "Insert Notes", Toast.LENGTH_SHORT).show();
+                        }else{
+                            //Toast.makeText(MainActivity.this, notes.getText().toString(), Toast.LENGTH_SHORT).show();
+                            modelsArrayList.get(position).setNotes(notes.getText().toString());
+                            getOrderAdapter().notifyDataSetChanged();
+                            dismiss();
+                        }
+                    }
+                });
+
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dismiss();
+                    }
+                });
+
+
+            }
+
+            public NotesDialog(@NonNull Context context) {
+                super(context);
+            }
+
+            public NotesDialog(@NonNull Context context, @StyleRes int themeResId) {
+                super(context);
+                this.position = themeResId;
+
+            }
+
+
+        }
+
     }
 
     public void calculateTotalPrice(){
@@ -811,54 +867,5 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
             super(context, cancelable, cancelListener);
         }
 
-
-    }
-
-    public class NotesDialog extends Dialog {
-
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-
-            setContentView(R.layout.notes_dialog);
-
-            final EditText notes = (EditText)findViewById(R.id.notesText);
-            Button ok = (Button)findViewById(R.id.submitBtn);
-            final Button cancel = (Button)findViewById(R.id.cancelBtn);
-
-
-            ok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    if(notes.getText().toString().isEmpty()){
-                        Toast.makeText(MainActivity.this, "Insert Notes", Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(MainActivity.this, notes.getText().toString(), Toast.LENGTH_SHORT).show();
-                        dismiss();
-                    }
-                }
-                });
-
-            cancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dismiss();
-                }
-            });
-
-
-        }
-        public NotesDialog(@NonNull Context context) {
-            super(context);
-        }
-
-        public NotesDialog(@NonNull Context context, @StyleRes int themeResId) {
-            super(context, themeResId);
-        }
-
-        protected NotesDialog(@NonNull Context context, boolean cancelable, @Nullable OnCancelListener cancelListener) {
-            super(context, cancelable, cancelListener);
-        }
     }
 }
