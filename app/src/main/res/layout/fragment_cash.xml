@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:layout_height="match_parent"
+    android:background="#fff">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/clear"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_delete_black_24dp"/>
+        <TextView
+            android:id="@+id/amounttitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Amount Received: "
+            android:textSize="30sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.0"
+            android:textSize="30sp"
+            android:textColor="@color/colorPrimaryDark"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/twohundred"
+                android:orientation="vertical"
+                android:layout_width="115dp"
+                android:layout_height="220dp"
+                android:background="@mipmap/two_hundred"></LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/onehundred"
+                android:orientation="vertical"
+                android:layout_width="115dp"
+                android:layout_height="220dp"
+                android:background="@mipmap/one_hundred"></LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/fifty"
+                android:orientation="vertical"
+                android:layout_width="115dp"
+                android:layout_height="220dp"
+                android:background="@mipmap/fifty"></LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/twenty"
+                android:orientation="vertical"
+                android:layout_width="115dp"
+                android:layout_height="220dp"
+                android:background="@mipmap/twenty"></LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/ten"
+                android:orientation="vertical"
+                android:layout_width="76dp"
+                android:layout_height="76dp"
+                android:background="@mipmap/ten"></LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/five"
+                android:orientation="vertical"
+                android:layout_width="76dp"
+                android:layout_height="76dp"
+                android:background="@mipmap/five"></LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/two"
+                android:orientation="vertical"
+                android:layout_width="76dp"
+                android:layout_height="76dp"
+                android:background="@mipmap/two"></LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/one"
+                android:orientation="vertical"
+                android:layout_width="76dp"
+                android:layout_height="76dp"
+                android:background="@mipmap/one"></LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/half"
+                android:orientation="vertical"
+                android:layout_width="76dp"
+                android:layout_height="76dp"
+                android:background="@mipmap/half"></LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/agora"
+                android:orientation="vertical"
+                android:layout_width="76dp"
+                android:layout_height="76dp"
+                android:background="@mipmap/agora"></LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/payBtn"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:textColor="#fff"
+            android:text="Pay"
+            android:backgroundTint="@color/colorPrimary"/>
+        <Button
+            android:id="@+id/cancelBtn"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:textColor="#fff"
+            android:text="Cancel"
+            android:backgroundTint="@color/sweetredalert"/>
+    </LinearLayout>
+
+</LinearLayout>

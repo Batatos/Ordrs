@@ -1,9 +1,14 @@
 package com.example.jorjborj.ordrs;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
 /**
  * Created by Ahed on 4/7/2018.
  */
-public class OrderItem {
+public class OrderItem implements Serializable{
 
 
     private String title;
@@ -52,6 +57,7 @@ public class OrderItem {
     public void setPrice(double price) {
         this.price = price;
     }
+
 //gettters & setters...
 }
 

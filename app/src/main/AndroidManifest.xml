@@ -50,6 +50,10 @@
 
         <activity android:name=".UpcomingEventsActivity"
                   android:screenOrientation="reverseLandscape"/>
+
+        <activity android:name=".PaymentProcess"
+            android:screenOrientation="reverseLandscape"/>
+
     </application>
 
 </manifest>

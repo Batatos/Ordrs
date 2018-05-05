@@ -172,10 +172,9 @@
             android:id="@+id/SmallScreen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@mipmap/beigesilk"
             android:layout_marginTop="1.5dp"
-            android:orientation="vertical"
-            >
+            android:background="@mipmap/beigesilk"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -204,9 +203,9 @@
                     android:id="@+id/sumPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
                     android:fontFamily="monospace"
                     android:text="00.00"
-                    android:layout_marginLeft="2dp"
                     android:textColor="#000"
                     android:textSize="20dp" />
 
@@ -268,29 +267,30 @@
                     android:fontFamily="monospace"
                     android:text="Total:    "
                     android:textColor="#000"
-                    android:textStyle="bold"
-                    android:textSize="20dp" />
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:fontFamily="monospace"
                     android:text="₪"
-                    android:layout_marginLeft="10dp"
                     android:textColor="#000"
-                    android:textStyle="bold"
-                    android:textSize="20dp" />
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/totalPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
                     android:fontFamily="monospace"
                     android:text="00.00"
-                    android:layout_marginLeft="2dp"
                     android:textColor="#000"
-                    android:textStyle="bold"
-                    android:textSize="20dp" />
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 

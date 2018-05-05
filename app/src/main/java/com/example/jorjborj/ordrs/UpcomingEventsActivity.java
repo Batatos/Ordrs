@@ -144,7 +144,6 @@ public class UpcomingEventsActivity extends AppCompatActivity {
                                 startActivity(i);
                                 Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
                             }
-
                             return true;
                         }
                     });

@@ -46,6 +46,7 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -157,8 +158,17 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         payBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                payDialog payDialog = new payDialog(MainActivity.this);
-                payDialog.show();
+//                payDialog payDialog = new payDialog(MainActivity.this);
+//                payDialog.show();
+                if(!orderItems.isEmpty()){
+                Intent i = new Intent(MainActivity.this,PaymentProcess.class);
+                i.putExtra("orderlv", getOrderItems());
+                i.putExtra("ahoz",discounttext.getText().toString());
+                i.putExtra("total", totalprice.getText().toString());
+                i.putExtra("price",sumPrice);
+                startActivity(i);}else{
+                    Toast.makeText(MainActivity.this, "No Items Selected.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
