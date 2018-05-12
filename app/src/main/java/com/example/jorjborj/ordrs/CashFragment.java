@@ -211,6 +211,7 @@ public class CashFragment extends Fragment {
 
 
                     AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+
                     alertDialog.setTitle("Thank you!");
                     alertDialog.setMessage("Return to Customer: ₪"+returnToCustomer);
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
@@ -221,6 +222,9 @@ public class CashFragment extends Fragment {
                                 }
                             });
                     alertDialog.show();
+                    TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
+                    textView.setTextSize(25);
+
                 }
             }
         });
