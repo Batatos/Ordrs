@@ -6,54 +6,40 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.annotation.IntegerRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
-import static android.media.CamcorderProfile.get;
 
 /**
  * Created by jorjborj on 4/2/2018.
@@ -102,8 +88,8 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         initializeData();
 
         Calendar rightNow = Calendar.getInstance();
-        int currentHour = rightNow.get(Calendar.HOUR_OF_DAY); // return the hour in 24 hrs format (ranging from 0-23)
-        if(currentHour>14 && currentHour<17){
+        int currentHour = rightNow.get(Calendar.HOUR_OF_DAY)+1; // return the hour in 24 hrs format (ranging from 0-23)
+        if(currentHour>14 && currentHour<=17){
             discounttext.setText("10");
         }else{
         }
@@ -175,9 +161,8 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         discountBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DiscountDialog dg = new DiscountDialog(MainActivity.this);
-                dg.show();
-
+                AdminLoginDialog adminDialog = new AdminLoginDialog(MainActivity.this);
+                adminDialog.show();
             }
         });
 
@@ -968,4 +953,52 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
 
 
     }
+
+    public class AdminLoginDialog extends Dialog {
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+
+            setContentView(R.layout.admin_login);
+            final EditText password = (EditText)findViewById(R.id.inputPassword);
+            Button submit = (Button)findViewById(R.id.submit);
+            Button cancel = (Button)findViewById(R.id.cancel);
+
+
+            submit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(password.getText().toString().equals("0000")){
+                        dismiss();
+                        DiscountDialog dg = new DiscountDialog(MainActivity.this);
+                        dg.show();
+                    }else{
+                        Toast.makeText(MainActivity.this, "WRONG", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dismiss();
+                }
+            });
+
+        }
+
+
+        public AdminLoginDialog(@NonNull Context context) {
+            super(context);
+        }
+
+        public AdminLoginDialog(@NonNull Context context, @StyleRes int themeResId) {
+            super(context, themeResId);
+        }
+
+        protected AdminLoginDialog(@NonNull Context context, boolean cancelable, @Nullable OnCancelListener cancelListener) {
+            super(context, cancelable, cancelListener);
+        }
+    }
+
 }

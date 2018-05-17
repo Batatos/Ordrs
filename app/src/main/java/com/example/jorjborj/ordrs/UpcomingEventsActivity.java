@@ -12,15 +12,12 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class UpcomingEventsActivity extends AppCompatActivity {
 
@@ -33,6 +30,8 @@ public class UpcomingEventsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_upcoming_events);
 
         mDataBaseHelper = new DatabaseHelper(getBaseContext());
+        mDataBaseHelper.getWritableDatabase();
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ListView lv = (ListView) findViewById(R.id.eventslv);
