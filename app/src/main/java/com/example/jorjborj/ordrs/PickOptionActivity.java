@@ -102,8 +102,9 @@ public class PickOptionActivity extends AppCompatActivity {
                 //Toast.makeText(this, "Upcoming Events", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.reports:
-                Intent i4 = new Intent(PickOptionActivity.this,MonthlyReport.class);
-                startActivity(i4);
+
+                ReportsAdminDialog rad = new ReportsAdminDialog(PickOptionActivity.this);
+                rad.show();
                 break;
 
         }
@@ -168,5 +169,55 @@ public class PickOptionActivity extends AppCompatActivity {
         if (anim != null && anim.isRunning())
             anim.stop();
     }
+
+    public class ReportsAdminDialog extends Dialog {
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+
+            setContentView(R.layout.admin_login);
+            final EditText password = (EditText)findViewById(R.id.inputPassword);
+            Button submit = (Button)findViewById(R.id.submit);
+            Button cancel = (Button)findViewById(R.id.cancel);
+
+
+            submit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(password.getText().toString().equals("0000")){
+                        dismiss();
+                        Intent i4 = new Intent(PickOptionActivity.this,MonthlyReport.class);
+                        startActivity(i4);
+                        finish();
+                    }else{
+                        Toast.makeText(PickOptionActivity.this, "WRONG", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dismiss();
+                }
+            });
+
+        }
+
+
+        public ReportsAdminDialog(@NonNull Context context) {
+            super(context);
+        }
+
+        public ReportsAdminDialog(@NonNull Context context, @StyleRes int themeResId) {
+            super(context, themeResId);
+        }
+
+        protected ReportsAdminDialog(@NonNull Context context, boolean cancelable, @Nullable OnCancelListener cancelListener) {
+            super(context, cancelable, cancelListener);
+        }
+    }
+
+
 
 }

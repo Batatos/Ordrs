@@ -1,5 +1,6 @@
 package com.example.jorjborj.ordrs;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -89,6 +90,8 @@ public class MonthlyReport extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
+        Intent i = new Intent(MonthlyReport.this,PickOptionActivity.class);
+        startActivity(i);
         finish();
         return true;
     }

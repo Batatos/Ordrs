@@ -2,8 +2,13 @@ package com.example.jorjborj.ordrs;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -24,6 +29,9 @@ import android.widget.Toast;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Created by jorjborj on 5/1/2018.
@@ -187,20 +195,57 @@ class BarDashboardAdapter extends RecyclerView.Adapter<BarDashboardAdapter.BarDa
 
 
 
-    static class BarDashboardHolder extends RecyclerView.ViewHolder{
+    static class BarDashboardHolder extends RecyclerView.ViewHolder {
 
-        TextView tablenum;
+        TextView tablenum, timer;
         ListView lv;
         protected View mRootView;
-        Button done,dismiss;
+        Button done, dismiss;
+        public int seconds = 59;
+        public int minutes = 9;
+
 
         public BarDashboardHolder(final View itemView) {
             super(itemView);
 
-            lv = (ListView)itemView.findViewById(R.id.orderitems);
-            tablenum = (TextView)itemView.findViewById(R.id.tblnumber);
-            done = (Button)itemView.findViewById(R.id.done);
-            dismiss = (Button)itemView.findViewById(R.id.dismiss);
+            lv = (ListView) itemView.findViewById(R.id.orderitems);
+            tablenum = (TextView) itemView.findViewById(R.id.tblnumber);
+            timer = (TextView) itemView.findViewById(R.id.timer);
+            done = (Button) itemView.findViewById(R.id.done);
+            dismiss = (Button) itemView.findViewById(R.id.dismiss);
+
+            new CountDownTimer(6000000, 1000) {
+
+                public void onTick(long millisUntilFinished) {
+                    timer.setText(minutes+":"+ checkDigit(seconds));
+                    seconds--;
+
+                    if(minutes==8 && seconds==58){
+                        timer.setTextColor(Color.RED);
+                    }
+                }
+
+                public String checkDigit(int number) {
+                    if (number==0) {
+                        minutes--;
+                        seconds = 60;
+                        return "00";
+                    }
+                    if(number<=10){
+                        String s = "0"+--number;
+                        return s;
+                    }
+                    return Integer.toString(--number);
+                }
+
+
+                public void onFinish() {
+                    timer.setText("HURRY UP!");
+                }
+
+            }.start();
+
+
 
             lv.setOnTouchListener(new ListView.OnTouchListener() {
 
@@ -228,7 +273,7 @@ class BarDashboardAdapter extends RecyclerView.Adapter<BarDashboardAdapter.BarDa
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Toast.makeText(itemView.getContext(),lv.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(itemView.getContext(),lv.getItemAtPosition(position).toString(), Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -249,6 +294,7 @@ class BarDashboardAdapter extends RecyclerView.Adapter<BarDashboardAdapter.BarDa
             mRootView = itemView;
 
         }
+
 
     }
 

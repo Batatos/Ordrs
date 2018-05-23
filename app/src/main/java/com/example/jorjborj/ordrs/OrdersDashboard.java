@@ -2,8 +2,10 @@ package com.example.jorjborj.ordrs;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -177,7 +179,7 @@ class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.DashboardHo
         holder.mRootView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mCtx, Integer.toString(position+1) , Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mCtx, Integer.toString(position+1) , Toast.LENGTH_SHORT).show();
                 notifyDataSetChanged();
             }
         });
@@ -192,10 +194,12 @@ class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.DashboardHo
 
     static class DashboardHolder extends RecyclerView.ViewHolder{
 
-        TextView tablenum;
+        TextView tablenum,timer;
         ListView lv;
         Button done,dismiss;
         protected View mRootView;
+        public int seconds = 59;
+        public int minutes = 9;
 
         public DashboardHolder(final View itemView) {
             super(itemView);
@@ -204,6 +208,44 @@ class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.DashboardHo
             tablenum = (TextView)itemView.findViewById(R.id.tblnumber);
             done = (Button)itemView.findViewById(R.id.done);
             dismiss = (Button)itemView.findViewById(R.id.dismiss);
+            timer = (TextView) itemView.findViewById(R.id.timer);
+
+            new CountDownTimer(6000000, 1000) {
+
+                public void onTick(long millisUntilFinished) {
+                    timer.setText(minutes+":"+ checkDigit(seconds));
+                    seconds--;
+
+                    if(minutes==8 && seconds==58){
+                        timer.setTextColor(Color.YELLOW);
+                    }
+                    if(minutes==7 && seconds==58){
+                        timer.setTextColor(Color.RED);
+                    }
+                }
+
+                public String checkDigit(int number) {
+                    if (number==0) {
+                        minutes--;
+                        seconds = 60;
+                        return "00";
+                    }
+                    if(number<=10){
+                        String s = "0"+--number;
+                        return s;
+                    }
+                    return Integer.toString(--number);
+                }
+
+
+                public void onFinish() {
+                    timer.setText("HURRY UP!");
+                }
+
+            }.start();
+
+
+
 
             lv.setOnTouchListener(new ListView.OnTouchListener() {
 
