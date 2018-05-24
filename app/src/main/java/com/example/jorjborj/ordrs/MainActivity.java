@@ -822,6 +822,9 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
     public void calculateTotalPrice(){
         double calc = sumPrice*(Double.parseDouble(discounttext.getText().toString())/100);
         double calc1 = sumPrice-calc;
+        if(calc1==-0.0){
+            calc1=0.0;
+        }
         totalprice.setText(Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(calc1))));
     }
 
