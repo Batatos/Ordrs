@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,11 +39,6 @@ public class UpcomingEventsActivity extends AppCompatActivity {
 
         eventsArrayList = new ArrayList<>();
 
-//        Intent intent = getIntent();
-//        UpcomingEventObject eventObject = (UpcomingEventObject) intent.getSerializableExtra("Object");
-//        if(eventObject!=null) {
-//            eventsArrayList.add(eventObject);
-//        }
         initializeData();
         adapter = new EventsAdapter(UpcomingEventsActivity.this,R.layout.upcoming_event_row,eventsArrayList);
         lv.setAdapter(adapter);
@@ -100,7 +96,7 @@ public class UpcomingEventsActivity extends AppCompatActivity {
             dateTime = (TextView)customView.findViewById(R.id.dateTime);
 
             contactName.setText(modelsArrayList.get(position).getContactName());
-            contactNumber.setText(Integer.toString(modelsArrayList.get(position).getPhoneNum()));
+            contactNumber.setText("0"+Integer.toString(modelsArrayList.get(position).getPhoneNum()));
             numberOfPeople.setText(Integer.toString(modelsArrayList.get(position).getNumOfPeople()));
             dateTime.setText(modelsArrayList.get(position).getTimeDate().toString());
 
@@ -156,17 +152,30 @@ public class UpcomingEventsActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
-    public boolean onSupportNavigateUp() {
-        Intent i = new Intent(getBaseContext(),PickOptionActivity.class);
-        startActivity(i);
-        finish();
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.addeventmenu, menu);
+        return super.onCreateOptionsMenu(menu);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.tableorder:
+                Intent i = new Intent(UpcomingEventsActivity.this,OrderTableActivity.class);
+                startActivity(i);
+                finish();
+                break;
+            case android.R.id.home: onBackPressed();
+        }
         return true;
     }
 
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(getBaseContext(),PickOptionActivity.class);
+        Intent i = new Intent(UpcomingEventsActivity.this,PickOptionActivity.class);
         startActivity(i);
         finish();
     }
