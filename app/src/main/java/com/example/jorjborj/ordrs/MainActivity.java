@@ -276,20 +276,20 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
     public void initializeData (){
 
 
-        Item starter = new Item("Lemon Shrimps",38.50,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.lemon_shrimps));
-        Item starter1 = new Item("Tangri Kebabs",35.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.tangari_kebabs));
-        Item starter2 = new Item("Cheese Balls",41.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.cheese_balls));
-        Item starter3 = new Item("Italian Cuisine",28.50,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.italian_cuisine));
-        Item starter4 = new Item("Lobster Legs",38.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.lobster_legs));
-        Item starter5 = new Item("Smoked Salamon",31.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.smoked_salamon));
-        Item starter6 = new Item("Adamami",34.50,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.adamami));
-        Item starter7 = new Item("Falafel",35.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.falafel));
-        Item starter8 = new Item("Seafood Salad",40.00,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.seafood_salad));
-        Item starter9 = new Item("Baked Potato",28.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.baked_potato));
-        Item starter10 = new Item("Baked Sweet Potato",28.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.baked_sweet_potato));
-        Item starter11 = new Item("Corn Soup",29.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.corn_soup));
-        Item starter12 = new Item("Fish Soup",34.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.fish_soup));
-        Item starter13 = new Item("French Fries", 28.90, 10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.french_fries));
+        Item starter = new Item("Lemon Shrimps",38.50,10,'k',"starters",BitmapFactory.decodeResource(getResources(),R.mipmap.lemon_shrimps));
+        Item starter1 = new Item("Tangri Kebabs",35.90,10,'k',"starters",BitmapFactory.decodeResource(getResources(),R.mipmap.tangari_kebabs));
+        Item starter2 = new Item("Cheese Balls",41.90,10,'k',"starters",BitmapFactory.decodeResource(getResources(),R.mipmap.cheese_balls));
+        Item starter3 = new Item("Italian Cuisine",28.50,10,'k',"starters",BitmapFactory.decodeResource(getResources(),R.mipmap.italian_cuisine));
+        Item starter4 = new Item("Lobster Legs",38.90,10,'k',"starters",BitmapFactory.decodeResource(getResources(),R.mipmap.lobster_legs));
+        Item starter5 = new Item("Smoked Salamon",31.90,10,'k',"starters",BitmapFactory.decodeResource(getResources(),R.mipmap.smoked_salamon));
+        Item starter6 = new Item("Adamami",34.50,10,'k',"starters",BitmapFactory.decodeResource(getResources(),R.mipmap.adamami));
+        Item starter7 = new Item("Falafel",35.90,10,'k',"starters",BitmapFactory.decodeResource(getResources(),R.mipmap.falafel));
+        Item starter8 = new Item("Seafood Salad",40.00,10,'k',"starters",BitmapFactory.decodeResource(getResources(),R.mipmap.seafood_salad));
+        Item starter9 = new Item("Baked Potato",28.90,10,'k',"starters",BitmapFactory.decodeResource(getResources(),R.mipmap.baked_potato));
+        Item starter10 = new Item("Baked Sweet Potato",28.90,10,'k',"starters",BitmapFactory.decodeResource(getResources(),R.mipmap.baked_sweet_potato));
+        Item starter11 = new Item("Corn Soup",29.90,10,'k',"starters",BitmapFactory.decodeResource(getResources(),R.mipmap.corn_soup));
+        Item starter12 = new Item("Fish Soup",34.90,10,'k',"starters",BitmapFactory.decodeResource(getResources(),R.mipmap.fish_soup));
+        Item starter13 = new Item("French Fries", 28.90, 10,'k',"starters",BitmapFactory.decodeResource(getResources(),R.mipmap.french_fries));
 
 
         startersmenu.add(starter);
@@ -308,20 +308,20 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         startersmenu.add(starter13);
 
 
-        Item fooditem = new Item("Chicken Salad",49.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.chicken_salad));
-        Item fooditem1 = new Item("Caesar Salad",53.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.caesar_salad));
-        Item fooditem2 = new Item("Tuna Salad",51.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.tuna_salad));
-        Item fooditem3 = new Item("Nazareth Breakfast",65.90,10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.nazareth_breakfast));
-        Item fooditem4 = new Item("Beef Fillet", 109.90, 10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.beef_fillet));
-        Item fooditem5 = new Item("English Breakfast", 54.50, 10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.english_breakfast));
-        Item fooditem6 = new Item("Italian Pasta", 67.90, 10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.italian_pasta));
-        Item fooditem7 = new Item("Cavatappi Pasta", 28.90, 10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.cavatappi_pasta));
-        Item fooditem8 = new Item("Chicken Pie", 28.90, 10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.chicken_pie));
-        Item fooditem9 = new Item("Fresco Shrimps", 28.90, 10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.fresco_shrimps));
-        Item fooditem10 = new Item("Potato Tortilla", 57.90, 10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.potato_tortilla));
-        Item fooditem11 = new Item("Mac and Cheese", 53.90, 10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.mac_cheese));
-        Item fooditem12 = new Item("Sloppy Joe", 58.90, 10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.sloppy_joe));
-        Item fooditem13 = new Item("Cheesy Cabbage", 56.90, 10,'k',BitmapFactory.decodeResource(getResources(),R.mipmap.cabbage_cheese));
+        Item fooditem = new Item("Chicken Salad",49.90,10,'k',"food",BitmapFactory.decodeResource(getResources(),R.mipmap.chicken_salad));
+        Item fooditem1 = new Item("Caesar Salad",53.90,10,'k',"food",BitmapFactory.decodeResource(getResources(),R.mipmap.caesar_salad));
+        Item fooditem2 = new Item("Tuna Salad",51.90,10,'k',"food",BitmapFactory.decodeResource(getResources(),R.mipmap.tuna_salad));
+        Item fooditem3 = new Item("Nazareth Breakfast",65.90,10,'k',"food",BitmapFactory.decodeResource(getResources(),R.mipmap.nazareth_breakfast));
+        Item fooditem4 = new Item("Beef Fillet", 109.90, 10,'k',"food",BitmapFactory.decodeResource(getResources(),R.mipmap.beef_fillet));
+        Item fooditem5 = new Item("English Breakfast", 54.50, 10,'k',"food",BitmapFactory.decodeResource(getResources(),R.mipmap.english_breakfast));
+        Item fooditem6 = new Item("Italian Pasta", 67.90, 10,'k',"food",BitmapFactory.decodeResource(getResources(),R.mipmap.italian_pasta));
+        Item fooditem7 = new Item("Cavatappi Pasta", 28.90, 10,'k',"food",BitmapFactory.decodeResource(getResources(),R.mipmap.cavatappi_pasta));
+        Item fooditem8 = new Item("Chicken Pie", 28.90, 10,'k',"food",BitmapFactory.decodeResource(getResources(),R.mipmap.chicken_pie));
+        Item fooditem9 = new Item("Fresco Shrimps", 28.90, 10,'k',"food",BitmapFactory.decodeResource(getResources(),R.mipmap.fresco_shrimps));
+        Item fooditem10 = new Item("Potato Tortilla", 57.90, 10,'k',"food",BitmapFactory.decodeResource(getResources(),R.mipmap.potato_tortilla));
+        Item fooditem11 = new Item("Mac and Cheese", 53.90, 10,'k',"food",BitmapFactory.decodeResource(getResources(),R.mipmap.mac_cheese));
+        Item fooditem12 = new Item("Sloppy Joe", 58.90, 10,'k',"food",BitmapFactory.decodeResource(getResources(),R.mipmap.sloppy_joe));
+        Item fooditem13 = new Item("Cheesy Cabbage", 56.90, 10,'k',"food",BitmapFactory.decodeResource(getResources(),R.mipmap.cabbage_cheese));
 
         foodmenu.add(fooditem);
         foodmenu.add(fooditem1);
@@ -338,18 +338,18 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         foodmenu.add(fooditem12);
         foodmenu.add(fooditem13);
 
-        Item drinkitem = new Item("Cola",11.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.cola));
-        Item drinkitem1 = new Item("Sprite",11.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.sprite));
-        Item drinkitem2 = new Item("Espresso",8.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.espresso));
-        Item drinkitem3 = new Item("Americano",10.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.americano));
-        Item drinkitem4 = new Item("Cappuccino",14.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.cappuccino));
-        Item drinkitem5 = new Item("Orange Juice",15.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.orange_juice));
-        Item drinkitem6 = new Item("Lemonade",14.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.lemonade));
-        Item drinkitem7 = new Item("Summer Smoothie",19.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.summer_vibes));
-        Item drinkitem8 = new Item("Fruits Smoothie",16.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.colorfull_smoothie));
-        Item drinkitem9 = new Item("Diaster Milkshake",25.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.disaster_milkshake));
-        Item drinkitem10 = new Item("Red Vanil Milkshake",21.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.vanil_strawberry_milkshake));
-        Item drinkitem11 = new Item("Choco Milkshake",19.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.choco_milkshake));
+        Item drinkitem = new Item("Cola",11.90,10,'b',"drinks",BitmapFactory.decodeResource(getResources(),R.mipmap.cola));
+        Item drinkitem1 = new Item("Sprite",11.90,10,'b',"drinks",BitmapFactory.decodeResource(getResources(),R.mipmap.sprite));
+        Item drinkitem2 = new Item("Espresso",8.90,10,'b',"drinks",BitmapFactory.decodeResource(getResources(),R.mipmap.espresso));
+        Item drinkitem3 = new Item("Americano",10.90,10,'b',"drinks",BitmapFactory.decodeResource(getResources(),R.mipmap.americano));
+        Item drinkitem4 = new Item("Cappuccino",14.90,10,'b',"drinks",BitmapFactory.decodeResource(getResources(),R.mipmap.cappuccino));
+        Item drinkitem5 = new Item("Orange Juice",15.90,10,'b',"drinks",BitmapFactory.decodeResource(getResources(),R.mipmap.orange_juice));
+        Item drinkitem6 = new Item("Lemonade",14.90,10,'b',"drinks",BitmapFactory.decodeResource(getResources(),R.mipmap.lemonade));
+        Item drinkitem7 = new Item("Summer Smoothie",19.90,10,'b',"drinks",BitmapFactory.decodeResource(getResources(),R.mipmap.summer_vibes));
+        Item drinkitem8 = new Item("Fruits Smoothie",16.90,10,'b',"drinks",BitmapFactory.decodeResource(getResources(),R.mipmap.colorfull_smoothie));
+        Item drinkitem9 = new Item("Diaster Milkshake",25.90,10,'b',"drinks",BitmapFactory.decodeResource(getResources(),R.mipmap.disaster_milkshake));
+        Item drinkitem10 = new Item("Red Vanil Milkshake",21.90,10,'b',"drinks",BitmapFactory.decodeResource(getResources(),R.mipmap.vanil_strawberry_milkshake));
+        Item drinkitem11 = new Item("Choco Milkshake",19.90,10,'b',"drinks",BitmapFactory.decodeResource(getResources(),R.mipmap.choco_milkshake));
 
         drinksmenu.add(drinkitem);
         drinksmenu.add(drinkitem1);
@@ -364,17 +364,17 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         drinksmenu.add(drinkitem10);
         drinksmenu.add(drinkitem11);
 
-        Item dessertitem = new Item("Chocolate Cake", 42.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.chocolate_cake));
-        Item dessertitem1 = new Item("Cheese Cake",42.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.cheese_cake));
-        Item dessertitem2 = new Item("Truffle",35.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.truffle));
-        Item dessertitem3 = new Item("Apple Pie",33.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.apple_pie));
-        Item dessertitem4 = new Item("Chocolate Mousse",42.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.choco_mousse));
-        Item dessertitem5 = new Item("Strawberry Cake",45.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.straw_cake));
-        Item dessertitem6 = new Item("Lemon Sorbet",33.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.lemon_sorbet));
-        Item dessertitem7 = new Item("Lemon Tart",42.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.lemon_tart));
-        Item dessertitem8 = new Item("IceCream Cake",45.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.iceream_cake));
-        Item dessertitem9 = new Item("Guinness Cake",34.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.guinness_cake));
-        Item dessertitem10 = new Item("Bannoffee Whoopies",43.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.bannoffee_whoopies));
+        Item dessertitem = new Item("Chocolate Cake", 42.90,10,'b',"desserts",BitmapFactory.decodeResource(getResources(),R.mipmap.chocolate_cake));
+        Item dessertitem1 = new Item("Cheese Cake",42.90,10,'b',"desserts",BitmapFactory.decodeResource(getResources(),R.mipmap.cheese_cake));
+        Item dessertitem2 = new Item("Truffle",35.90,10,'b',"desserts",BitmapFactory.decodeResource(getResources(),R.mipmap.truffle));
+        Item dessertitem3 = new Item("Apple Pie",33.90,10,'b',"desserts",BitmapFactory.decodeResource(getResources(),R.mipmap.apple_pie));
+        Item dessertitem4 = new Item("Chocolate Mousse",42.90,10,'b',"desserts",BitmapFactory.decodeResource(getResources(),R.mipmap.choco_mousse));
+        Item dessertitem5 = new Item("Strawberry Cake",45.90,10,'b',"desserts",BitmapFactory.decodeResource(getResources(),R.mipmap.straw_cake));
+        Item dessertitem6 = new Item("Lemon Sorbet",33.90,10,'b',"desserts",BitmapFactory.decodeResource(getResources(),R.mipmap.lemon_sorbet));
+        Item dessertitem7 = new Item("Lemon Tart",42.90,10,'b',"desserts",BitmapFactory.decodeResource(getResources(),R.mipmap.lemon_tart));
+        Item dessertitem8 = new Item("IceCream Cake",45.90,10,'b',"desserts",BitmapFactory.decodeResource(getResources(),R.mipmap.iceream_cake));
+        Item dessertitem9 = new Item("Guinness Cake",34.90,10,'b',"desserts",BitmapFactory.decodeResource(getResources(),R.mipmap.guinness_cake));
+        Item dessertitem10 = new Item("B Whoopies",43.90,10,'b',"desserts",BitmapFactory.decodeResource(getResources(),R.mipmap.bannoffee_whoopies));
 
         dessertsmenu.add(dessertitem);
         dessertsmenu.add(dessertitem1);
@@ -389,17 +389,17 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         dessertsmenu.add(dessertitem10);
 
 
-        Item alcoholitem = new Item("Pina Colada",35.20,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.pina_colada));
-        Item alcoholitem1 = new Item("Jin",35.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.jin));
-        Item alcoholitem2 = new Item("Arak",22.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.arak));
-        Item alcoholitem3 = new Item("Carlsberg",26.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.carlsberg));
-        Item alcoholitem4 = new Item("Heineken",22.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.heineken));
-        Item alcoholitem5 = new Item("Green Tuborg",22.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.green_tuborg));
-        Item alcoholitem6 = new Item("Red Tuborg",22.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.red_tuborg));
-        Item alcoholitem7 = new Item("Corona",22.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.corona));
-        Item alcoholitem8 = new Item("Red Label",22.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.red_label));
-        Item alcoholitem9 = new Item("Jameson",25.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.jameson));
-        Item alcoholitem10 = new Item("Royal Chivas",25.90,10,'b',BitmapFactory.decodeResource(getResources(),R.mipmap.royal_chivas));
+        Item alcoholitem = new Item("Pina Colada",35.20,10,'b',"alcohol",BitmapFactory.decodeResource(getResources(),R.mipmap.pina_colada));
+        Item alcoholitem1 = new Item("Jin",35.90,10,'b',"alcohol",BitmapFactory.decodeResource(getResources(),R.mipmap.jin));
+        Item alcoholitem2 = new Item("Arak",22.90,10,'b',"alcohol",BitmapFactory.decodeResource(getResources(),R.mipmap.arak));
+        Item alcoholitem3 = new Item("Carlsberg",26.90,10,'b',"alcohol",BitmapFactory.decodeResource(getResources(),R.mipmap.carlsberg));
+        Item alcoholitem4 = new Item("Heineken",22.90,10,'b',"alcohol",BitmapFactory.decodeResource(getResources(),R.mipmap.heineken));
+        Item alcoholitem5 = new Item("Green Tuborg",22.90,10,'b',"alcohol",BitmapFactory.decodeResource(getResources(),R.mipmap.green_tuborg));
+        Item alcoholitem6 = new Item("Red Tuborg",22.90,10,'b',"alcohol",BitmapFactory.decodeResource(getResources(),R.mipmap.red_tuborg));
+        Item alcoholitem7 = new Item("Corona",22.90,10,'b',"alcohol",BitmapFactory.decodeResource(getResources(),R.mipmap.corona));
+        Item alcoholitem8 = new Item("Red Label",22.90,10,'b',"alcohol",BitmapFactory.decodeResource(getResources(),R.mipmap.red_label));
+        Item alcoholitem9 = new Item("Jameson",25.90,10,'b',"alcohol",BitmapFactory.decodeResource(getResources(),R.mipmap.jameson));
+        Item alcoholitem10 = new Item("Royal Chivas",25.90,10,'b',"alcohol",BitmapFactory.decodeResource(getResources(),R.mipmap.royal_chivas));
 
         alcoholmenu.add(alcoholitem);
         alcoholmenu.add(alcoholitem1);
