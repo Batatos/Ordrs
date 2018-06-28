@@ -212,8 +212,6 @@ import java.util.List;
 
                 }
 
-
-
                 public void initializeData() {
                     for(int i=1 ; i<19; i++){
                      TableItem item = new TableItem(null, ""+i+"");

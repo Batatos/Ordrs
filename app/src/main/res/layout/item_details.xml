@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="500dp"
+    android:layout_height="430dp"
+    android:layout_gravity="center"
+    android:layout_marginTop="10dp">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:layout_gravity="center"
+    android:gravity="center">
+    <TextView
+        android:id="@+id/itemname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Item Name"
+        android:textStyle="bold"
+        android:textSize="24sp"/>
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:gravity="center">
+        <ImageView
+            android:id="@+id/itemimg"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@mipmap/ordrs_asset"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="400dp"
+        android:layout_height="250dp"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:text="Item Price: "/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:textSize="22sp"
+                android:text="₪ "/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/itemprice"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:text="10"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:text="Item Amount: "/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/itemamount"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:text="10"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:text="Item Type: "/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/itemtype"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:text="k"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:text="Item Category: "/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/itemcategory"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:text="Starters"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:text="Item Supplier: "/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/itemsupplier"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:text="George Aoun"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:text="Supplier Number: "/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/itemsuppliernumber"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:text="10"/>
+        </LinearLayout>
+
+</LinearLayout>
+
+    </LinearLayout>

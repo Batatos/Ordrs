@@ -14,11 +14,11 @@ public class OrderItem implements Serializable{
     private String title;
     private int counter;
     double price;
-    char type;
+    String type;
     String notes=null;
 
 
-    public OrderItem( String title, int counter, double price, char type) {
+    public OrderItem( String title, int counter, double price, String type) {
         super();
         this.title = title;
         this.counter = counter;

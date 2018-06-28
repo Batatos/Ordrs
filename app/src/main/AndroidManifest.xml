@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
 
     <application
         android:allowBackup="true"
@@ -16,13 +18,13 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".LoginActivity"
-            android:screenOrientation="reverseLandscape"></activity>
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="reverseLandscape"></activity>
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
             android:name=".PickOptionActivity"
-            android:screenOrientation="reverseLandscape">
+            android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,28 +33,32 @@
         </activity>
         <activity
             android:name=".PickTableActivity"
-            android:screenOrientation="reverseLandscape" />
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".TableOrderDetails"
-            android:screenOrientation="reverseLandscape" />
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".OrderTableActivity"
-            android:screenOrientation="reverseLandscape" />
+            android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".SuppliesMgmt"
+            android:screenOrientation="sensorLandscape" />
+
         <activity
             android:name=".OrdersDashboard"
-            android:screenOrientation="reverseLandscape" />
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".BarDashboard"
-            android:screenOrientation="reverseLandscape" />
+            android:screenOrientation="sensorLandscape" />
         <activity
             android:name=".MonthlyReport"
-            android:screenOrientation="reverseLandscape" />
+            android:screenOrientation="sensorLandscape" />
 
         <activity android:name=".UpcomingEventsActivity"
-                  android:screenOrientation="reverseLandscape"/>
+                  android:screenOrientation="sensorLandscape"/>
 
         <activity android:name=".PaymentProcess"
-            android:screenOrientation="reverseLandscape"/>
+            android:screenOrientation="sensorLandscape"/>
 
     </application>
 

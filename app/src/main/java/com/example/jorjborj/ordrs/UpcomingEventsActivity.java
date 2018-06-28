@@ -1,10 +1,15 @@
 package com.example.jorjborj.ordrs;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
@@ -14,7 +19,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -139,6 +147,19 @@ public class UpcomingEventsActivity extends AppCompatActivity {
                                 startActivity(i);
                                 Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
                             }
+
+                            if(item.getTitle().toString().equals("Edit")){
+//                            int rowId = mDataBaseHelper.getEventId(o.getContactName(),o.getPhoneNum(),o.getNumOfPeople(),o.getTimeDate());
+//                            mDataBaseHelper.updateEvent(rowId,eventsArrayList.get(position).getTableNum(),eventsArrayList.get(position).getContactName(),eventsArrayList.get(position).getPhoneNum(),
+//                                    eventsArrayList.get(position).getNumOfPeople(),eventsArrayList.get(position).getNotes(),eventsArrayList.get(position).getTimeDate());
+//                            Intent i = new Intent(getBaseContext(),UpcomingEventsActivity.class);
+//                            startActivity(i);
+//                            Toast.makeText(context, "Edited", Toast.LENGTH_SHORT).show();
+
+                                Toast.makeText(UpcomingEventsActivity.this, "Todo - edit", Toast.LENGTH_SHORT).show();
+
+                            }
+
                             return true;
                         }
                     });

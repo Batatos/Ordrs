@@ -1,8 +1,10 @@
 package com.example.jorjborj.ordrs;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,11 +26,14 @@ public class PickOptionActivity extends AppCompatActivity {
 //    LinearLayout container;
         AnimationDrawable anim;
         LinearLayout happyhour;
+    DatabaseHelper db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pick_option);
 
+        db = new DatabaseHelper(this);
+        db.getWritableDatabase();
         //HAPPY HOUR!@#!@#!@#!@#!@#
         happyhour = (LinearLayout)findViewById(R.id.happyHourBar);
 
@@ -69,7 +74,6 @@ public class PickOptionActivity extends AppCompatActivity {
         supplies_management.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(PickOptionActivity.this, "Under construction", Toast.LENGTH_SHORT).show();
                 AdminLoginDialog dialog = new AdminLoginDialog(PickOptionActivity.this);
                 dialog.setTitle("Admin Area");
                 dialog.show();
@@ -95,6 +99,7 @@ public class PickOptionActivity extends AppCompatActivity {
             case R.id.dashboard1:
                 Intent i1 = new Intent(PickOptionActivity.this,BarDashboard.class);
                 startActivity(i1);
+
                 break;
             case R.id.events:
                 Intent iStam = new Intent(PickOptionActivity.this,UpcomingEventsActivity.class);
@@ -127,7 +132,17 @@ public class PickOptionActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if(password.getText().toString().equals("0000")){
-                    Toast.makeText(PickOptionActivity.this, "OK", Toast.LENGTH_SHORT).show();}else{
+                        dismiss();
+                    Intent i = new Intent(PickOptionActivity.this, SuppliesMgmt.class);
+                    startActivity(i);
+                        ProgressDialog progress;
+                        progress = new ProgressDialog(getContext());
+                        progress.setTitle("Loading Data from database");
+                        progress.setMessage("Please wait...");
+                        progress.setCancelable(false);
+                        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                        progress.show();
+                    }else{
                         Toast.makeText(PickOptionActivity.this, "WRONG", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -217,7 +232,5 @@ public class PickOptionActivity extends AppCompatActivity {
             super(context, cancelable, cancelListener);
         }
     }
-
-
 
 }

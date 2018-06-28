@@ -3,9 +3,12 @@ package com.example.jorjborj.ordrs;
 
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -59,15 +62,17 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
     double sumPrice = 0.0;
     String tablenum = "waiting for data";
     TextView discounttext,totalprice;
-
+    DatabaseHelper db;
 
     @Override
         protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-        DatabaseHelper myDb = new DatabaseHelper(this);
-        myDb.getWritableDatabase();
+        db = new DatabaseHelper(this);
+        db.getWritableDatabase();
+        initializeData();
+        grabAndFillData();
 
         discounttext = (TextView)findViewById(R.id.discountAhoz);
         totalprice = (TextView)findViewById(R.id.totalPrice);
@@ -85,7 +90,6 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new GridLayoutManager(this,5));
         //TextView price = (TextView) findViewById(R.id.sumPrice);
-        initializeData();
 
         Calendar rightNow = Calendar.getInstance();
         int currentHour = rightNow.get(Calendar.HOUR_OF_DAY)+1; // return the hour in 24 hrs format (ranging from 0-23)
@@ -270,150 +274,6 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         }
     }
 
-
-    //Initialize dummy data function
-
-    public void initializeData (){
-
-
-        Item starter = new Item("Lemon Shrimps",38.50,10,'k',"starters",BitmapFactory.decodeResource(getResources(),R.mipmap.lemon_shrimps));
-        Item starter1 = new Item("Tangri Kebabs",35.90,10,'k',"starters",BitmapFactory.decodeResource(getResources(),R.mipmap.tangari_kebabs));
-        Item starter2 = new Item("Cheese Balls",41.90,10,'k',"starters",BitmapFactory.decodeResource(getResources(),R.mipmap.cheese_balls));
-        Item starter3 = new Item("Italian Cuisine",28.50,10,'k',"starters",BitmapFactory.decodeResource(getResources(),R.mipmap.italian_cuisine));
-        Item starter4 = new Item("Lobster Legs",38.90,10,'k',"starters",BitmapFactory.decodeResource(getResources(),R.mipmap.lobster_legs));
-        Item starter5 = new Item("Smoked Salamon",31.90,10,'k',"starters",BitmapFactory.decodeResource(getResources(),R.mipmap.smoked_salamon));
-        Item starter6 = new Item("Adamami",34.50,10,'k',"starters",BitmapFactory.decodeResource(getResources(),R.mipmap.adamami));
-        Item starter7 = new Item("Falafel",35.90,10,'k',"starters",BitmapFactory.decodeResource(getResources(),R.mipmap.falafel));
-        Item starter8 = new Item("Seafood Salad",40.00,10,'k',"starters",BitmapFactory.decodeResource(getResources(),R.mipmap.seafood_salad));
-        Item starter9 = new Item("Baked Potato",28.90,10,'k',"starters",BitmapFactory.decodeResource(getResources(),R.mipmap.baked_potato));
-        Item starter10 = new Item("Baked Sweet Potato",28.90,10,'k',"starters",BitmapFactory.decodeResource(getResources(),R.mipmap.baked_sweet_potato));
-        Item starter11 = new Item("Corn Soup",29.90,10,'k',"starters",BitmapFactory.decodeResource(getResources(),R.mipmap.corn_soup));
-        Item starter12 = new Item("Fish Soup",34.90,10,'k',"starters",BitmapFactory.decodeResource(getResources(),R.mipmap.fish_soup));
-        Item starter13 = new Item("French Fries", 28.90, 10,'k',"starters",BitmapFactory.decodeResource(getResources(),R.mipmap.french_fries));
-
-
-        startersmenu.add(starter);
-        startersmenu.add(starter1);
-        startersmenu.add(starter2);
-        startersmenu.add(starter3);
-        startersmenu.add(starter4);
-        startersmenu.add(starter5);
-        startersmenu.add(starter6);
-        startersmenu.add(starter7);
-        startersmenu.add(starter8);
-        startersmenu.add(starter9);
-        startersmenu.add(starter10);
-        startersmenu.add(starter11);
-        startersmenu.add(starter12);
-        startersmenu.add(starter13);
-
-
-        Item fooditem = new Item("Chicken Salad",49.90,10,'k',"food",BitmapFactory.decodeResource(getResources(),R.mipmap.chicken_salad));
-        Item fooditem1 = new Item("Caesar Salad",53.90,10,'k',"food",BitmapFactory.decodeResource(getResources(),R.mipmap.caesar_salad));
-        Item fooditem2 = new Item("Tuna Salad",51.90,10,'k',"food",BitmapFactory.decodeResource(getResources(),R.mipmap.tuna_salad));
-        Item fooditem3 = new Item("Nazareth Breakfast",65.90,10,'k',"food",BitmapFactory.decodeResource(getResources(),R.mipmap.nazareth_breakfast));
-        Item fooditem4 = new Item("Beef Fillet", 109.90, 10,'k',"food",BitmapFactory.decodeResource(getResources(),R.mipmap.beef_fillet));
-        Item fooditem5 = new Item("English Breakfast", 54.50, 10,'k',"food",BitmapFactory.decodeResource(getResources(),R.mipmap.english_breakfast));
-        Item fooditem6 = new Item("Italian Pasta", 67.90, 10,'k',"food",BitmapFactory.decodeResource(getResources(),R.mipmap.italian_pasta));
-        Item fooditem7 = new Item("Cavatappi Pasta", 28.90, 10,'k',"food",BitmapFactory.decodeResource(getResources(),R.mipmap.cavatappi_pasta));
-        Item fooditem8 = new Item("Chicken Pie", 28.90, 10,'k',"food",BitmapFactory.decodeResource(getResources(),R.mipmap.chicken_pie));
-        Item fooditem9 = new Item("Fresco Shrimps", 28.90, 10,'k',"food",BitmapFactory.decodeResource(getResources(),R.mipmap.fresco_shrimps));
-        Item fooditem10 = new Item("Potato Tortilla", 57.90, 10,'k',"food",BitmapFactory.decodeResource(getResources(),R.mipmap.potato_tortilla));
-        Item fooditem11 = new Item("Mac and Cheese", 53.90, 10,'k',"food",BitmapFactory.decodeResource(getResources(),R.mipmap.mac_cheese));
-        Item fooditem12 = new Item("Sloppy Joe", 58.90, 10,'k',"food",BitmapFactory.decodeResource(getResources(),R.mipmap.sloppy_joe));
-        Item fooditem13 = new Item("Cheesy Cabbage", 56.90, 10,'k',"food",BitmapFactory.decodeResource(getResources(),R.mipmap.cabbage_cheese));
-
-        foodmenu.add(fooditem);
-        foodmenu.add(fooditem1);
-        foodmenu.add(fooditem2);
-        foodmenu.add(fooditem3);
-        foodmenu.add(fooditem4);
-        foodmenu.add(fooditem5);
-        foodmenu.add(fooditem6);
-        foodmenu.add(fooditem7);
-        foodmenu.add(fooditem8);
-        foodmenu.add(fooditem9);
-        foodmenu.add(fooditem10);
-        foodmenu.add(fooditem11);
-        foodmenu.add(fooditem12);
-        foodmenu.add(fooditem13);
-
-        Item drinkitem = new Item("Cola",11.90,10,'b',"drinks",BitmapFactory.decodeResource(getResources(),R.mipmap.cola));
-        Item drinkitem1 = new Item("Sprite",11.90,10,'b',"drinks",BitmapFactory.decodeResource(getResources(),R.mipmap.sprite));
-        Item drinkitem2 = new Item("Espresso",8.90,10,'b',"drinks",BitmapFactory.decodeResource(getResources(),R.mipmap.espresso));
-        Item drinkitem3 = new Item("Americano",10.90,10,'b',"drinks",BitmapFactory.decodeResource(getResources(),R.mipmap.americano));
-        Item drinkitem4 = new Item("Cappuccino",14.90,10,'b',"drinks",BitmapFactory.decodeResource(getResources(),R.mipmap.cappuccino));
-        Item drinkitem5 = new Item("Orange Juice",15.90,10,'b',"drinks",BitmapFactory.decodeResource(getResources(),R.mipmap.orange_juice));
-        Item drinkitem6 = new Item("Lemonade",14.90,10,'b',"drinks",BitmapFactory.decodeResource(getResources(),R.mipmap.lemonade));
-        Item drinkitem7 = new Item("Summer Smoothie",19.90,10,'b',"drinks",BitmapFactory.decodeResource(getResources(),R.mipmap.summer_vibes));
-        Item drinkitem8 = new Item("Fruits Smoothie",16.90,10,'b',"drinks",BitmapFactory.decodeResource(getResources(),R.mipmap.colorfull_smoothie));
-        Item drinkitem9 = new Item("Diaster Milkshake",25.90,10,'b',"drinks",BitmapFactory.decodeResource(getResources(),R.mipmap.disaster_milkshake));
-        Item drinkitem10 = new Item("Red Vanil Milkshake",21.90,10,'b',"drinks",BitmapFactory.decodeResource(getResources(),R.mipmap.vanil_strawberry_milkshake));
-        Item drinkitem11 = new Item("Choco Milkshake",19.90,10,'b',"drinks",BitmapFactory.decodeResource(getResources(),R.mipmap.choco_milkshake));
-
-        drinksmenu.add(drinkitem);
-        drinksmenu.add(drinkitem1);
-        drinksmenu.add(drinkitem2);
-        drinksmenu.add(drinkitem3);
-        drinksmenu.add(drinkitem4);
-        drinksmenu.add(drinkitem5);
-        drinksmenu.add(drinkitem6);
-        drinksmenu.add(drinkitem7);
-        drinksmenu.add(drinkitem8);
-        drinksmenu.add(drinkitem9);
-        drinksmenu.add(drinkitem10);
-        drinksmenu.add(drinkitem11);
-
-        Item dessertitem = new Item("Chocolate Cake", 42.90,10,'b',"desserts",BitmapFactory.decodeResource(getResources(),R.mipmap.chocolate_cake));
-        Item dessertitem1 = new Item("Cheese Cake",42.90,10,'b',"desserts",BitmapFactory.decodeResource(getResources(),R.mipmap.cheese_cake));
-        Item dessertitem2 = new Item("Truffle",35.90,10,'b',"desserts",BitmapFactory.decodeResource(getResources(),R.mipmap.truffle));
-        Item dessertitem3 = new Item("Apple Pie",33.90,10,'b',"desserts",BitmapFactory.decodeResource(getResources(),R.mipmap.apple_pie));
-        Item dessertitem4 = new Item("Chocolate Mousse",42.90,10,'b',"desserts",BitmapFactory.decodeResource(getResources(),R.mipmap.choco_mousse));
-        Item dessertitem5 = new Item("Strawberry Cake",45.90,10,'b',"desserts",BitmapFactory.decodeResource(getResources(),R.mipmap.straw_cake));
-        Item dessertitem6 = new Item("Lemon Sorbet",33.90,10,'b',"desserts",BitmapFactory.decodeResource(getResources(),R.mipmap.lemon_sorbet));
-        Item dessertitem7 = new Item("Lemon Tart",42.90,10,'b',"desserts",BitmapFactory.decodeResource(getResources(),R.mipmap.lemon_tart));
-        Item dessertitem8 = new Item("IceCream Cake",45.90,10,'b',"desserts",BitmapFactory.decodeResource(getResources(),R.mipmap.iceream_cake));
-        Item dessertitem9 = new Item("Guinness Cake",34.90,10,'b',"desserts",BitmapFactory.decodeResource(getResources(),R.mipmap.guinness_cake));
-        Item dessertitem10 = new Item("B Whoopies",43.90,10,'b',"desserts",BitmapFactory.decodeResource(getResources(),R.mipmap.bannoffee_whoopies));
-
-        dessertsmenu.add(dessertitem);
-        dessertsmenu.add(dessertitem1);
-        dessertsmenu.add(dessertitem2);
-        dessertsmenu.add(dessertitem3);
-        dessertsmenu.add(dessertitem4);
-        dessertsmenu.add(dessertitem5);
-        dessertsmenu.add(dessertitem6);
-        dessertsmenu.add(dessertitem7);
-        dessertsmenu.add(dessertitem8);
-        dessertsmenu.add(dessertitem9);
-        dessertsmenu.add(dessertitem10);
-
-
-        Item alcoholitem = new Item("Pina Colada",35.20,10,'b',"alcohol",BitmapFactory.decodeResource(getResources(),R.mipmap.pina_colada));
-        Item alcoholitem1 = new Item("Jin",35.90,10,'b',"alcohol",BitmapFactory.decodeResource(getResources(),R.mipmap.jin));
-        Item alcoholitem2 = new Item("Arak",22.90,10,'b',"alcohol",BitmapFactory.decodeResource(getResources(),R.mipmap.arak));
-        Item alcoholitem3 = new Item("Carlsberg",26.90,10,'b',"alcohol",BitmapFactory.decodeResource(getResources(),R.mipmap.carlsberg));
-        Item alcoholitem4 = new Item("Heineken",22.90,10,'b',"alcohol",BitmapFactory.decodeResource(getResources(),R.mipmap.heineken));
-        Item alcoholitem5 = new Item("Green Tuborg",22.90,10,'b',"alcohol",BitmapFactory.decodeResource(getResources(),R.mipmap.green_tuborg));
-        Item alcoholitem6 = new Item("Red Tuborg",22.90,10,'b',"alcohol",BitmapFactory.decodeResource(getResources(),R.mipmap.red_tuborg));
-        Item alcoholitem7 = new Item("Corona",22.90,10,'b',"alcohol",BitmapFactory.decodeResource(getResources(),R.mipmap.corona));
-        Item alcoholitem8 = new Item("Red Label",22.90,10,'b',"alcohol",BitmapFactory.decodeResource(getResources(),R.mipmap.red_label));
-        Item alcoholitem9 = new Item("Jameson",25.90,10,'b',"alcohol",BitmapFactory.decodeResource(getResources(),R.mipmap.jameson));
-        Item alcoholitem10 = new Item("Royal Chivas",25.90,10,'b',"alcohol",BitmapFactory.decodeResource(getResources(),R.mipmap.royal_chivas));
-
-        alcoholmenu.add(alcoholitem);
-        alcoholmenu.add(alcoholitem1);
-        alcoholmenu.add(alcoholitem2);
-        alcoholmenu.add(alcoholitem3);
-        alcoholmenu.add(alcoholitem4);
-        alcoholmenu.add(alcoholitem5);
-        alcoholmenu.add(alcoholitem6);
-        alcoholmenu.add(alcoholitem7);
-        alcoholmenu.add(alcoholitem8);
-        alcoholmenu.add(alcoholitem9);
-        alcoholmenu.add(alcoholitem10);
-
-    }
 
     @Override
     public void onBackPressed() {
@@ -1002,6 +862,270 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         protected AdminLoginDialog(@NonNull Context context, boolean cancelable, @Nullable OnCancelListener cancelListener) {
             super(context, cancelable, cancelListener);
         }
+    }
+    public void grabAndFillData(){
+
+        Cursor cursorStarters = db.getAllStartersItems();
+        Cursor cursorFood = db.getAllFoodItems();
+        Cursor cursorDrinks = db.getAllDrinksItems();
+        Cursor cursorDesserts = db.getAllDessertsItems();
+        Cursor cursorAlcohol = db.getAllAlcoholItems();
+
+        if(cursorStarters!=null){
+            for(cursorStarters.moveToFirst(); !cursorStarters.isAfterLast(); cursorStarters.moveToNext()) {
+                String column1 = cursorStarters.getString(cursorStarters.getColumnIndex("name"));
+                double column2 = cursorStarters.getDouble(cursorStarters.getColumnIndex("price"));
+                int column3 = cursorStarters.getInt(cursorStarters.getColumnIndex("amount"));
+                String column4 = cursorStarters.getString(cursorStarters.getColumnIndex("type"));
+                String column5 = cursorStarters.getString(cursorStarters.getColumnIndex("category"));
+
+                byte[] column6 = cursorStarters.getBlob(cursorStarters.getColumnIndex("img"));
+                Bitmap picture = BitmapFactory.decodeByteArray(column6, 0, column6.length);
+
+                String column7 = cursorStarters.getString(cursorStarters.getColumnIndex("supplier"));
+                String column8 = cursorStarters.getString(cursorStarters.getColumnIndex("suppliernumber"));
+
+                Item i = new Item(column1,column2,column3,column4,column5,picture,column7,column8);
+
+                if(!startersmenu.contains(i)){
+                    startersmenu.add(i);
+                }
+            }
+        }
+
+        if(cursorFood!=null){
+            for(cursorFood.moveToFirst(); !cursorFood.isAfterLast(); cursorFood.moveToNext()) {
+                String column1 = cursorFood.getString(cursorFood.getColumnIndex("name"));
+                double column2 = cursorFood.getDouble(cursorFood.getColumnIndex("price"));
+                int column3 = cursorFood.getInt(cursorFood.getColumnIndex("amount"));
+                String column4 = cursorFood.getString(cursorFood.getColumnIndex("type"));
+                String column5 = cursorFood.getString(cursorFood.getColumnIndex("category"));
+                Bitmap picture=null;
+                byte[] column6 = cursorFood.getBlob(cursorFood.getColumnIndex("img"));
+                if (column6 != null && column6.length > 0) {
+                    picture = BitmapFactory.decodeByteArray(column6, 0, column6.length);
+                }
+                String column7 = cursorFood.getString(cursorFood.getColumnIndex("supplier"));
+                String column8 = cursorFood.getString(cursorFood.getColumnIndex("suppliernumber"));
+
+                Item i = new Item(column1,column2,column3,column4,column5,picture,column7,column8);
+
+                if(!foodmenu.contains(i)){
+                    foodmenu.add(i);
+                }
+            }
+        }
+        if(cursorDrinks!=null){
+            for(cursorDrinks.moveToFirst(); !cursorDrinks.isAfterLast(); cursorDrinks.moveToNext()) {
+                String column1 = cursorDrinks.getString(cursorDrinks.getColumnIndex("name"));
+                double column2 = cursorDrinks.getDouble(cursorDrinks.getColumnIndex("price"));
+                int column3 = cursorDrinks.getInt(cursorDrinks.getColumnIndex("amount"));
+                String column4 = cursorDrinks.getString(cursorDrinks.getColumnIndex("type"));
+                String column5 = cursorDrinks.getString(cursorDrinks.getColumnIndex("category"));
+                Bitmap picture=null;
+                byte[] column6 = cursorDrinks.getBlob(cursorDrinks.getColumnIndex("img"));
+                if (column6 != null && column6.length > 0) {
+                    picture = BitmapFactory.decodeByteArray(column6, 0, column6.length);
+                }
+                String column7 = cursorDrinks.getString(cursorDrinks.getColumnIndex("supplier"));
+                String column8 = cursorDrinks.getString(cursorDrinks.getColumnIndex("suppliernumber"));
+
+                Item i = new Item(column1,column2,column3,column4,column5,picture,column7,column8);
+
+                if(!drinksmenu.contains(i)){
+                    drinksmenu.add(i);
+                }
+            }
+        }
+        if(cursorDesserts!=null){
+            for(cursorDesserts.moveToFirst(); !cursorDesserts.isAfterLast(); cursorDesserts.moveToNext()) {
+                String column1 = cursorDesserts.getString(cursorDesserts.getColumnIndex("name"));
+                double column2 = cursorDesserts.getDouble(cursorDesserts.getColumnIndex("price"));
+                int column3 = cursorDesserts.getInt(cursorDesserts.getColumnIndex("amount"));
+                String column4 = cursorDesserts.getString(cursorDesserts.getColumnIndex("type"));
+                String column5 = cursorDesserts.getString(cursorDesserts.getColumnIndex("category"));
+                Bitmap picture=null;
+                byte[] column6 = cursorDesserts.getBlob(cursorDesserts.getColumnIndex("img"));
+                if (column6 != null && column6.length > 0) {
+                    picture = BitmapFactory.decodeByteArray(column6, 0, column6.length);
+                }
+                String column7 = cursorDesserts.getString(cursorDesserts.getColumnIndex("supplier"));
+                String column8 = cursorDesserts.getString(cursorDesserts.getColumnIndex("suppliernumber"));
+
+                Item i = new Item(column1,column2,column3,column4,column5,picture,column7,column8);
+
+                if(!dessertsmenu.contains(i)){
+                    dessertsmenu.add(i);
+                }
+            }
+        }
+        if(cursorAlcohol!=null){
+            for(cursorAlcohol.moveToFirst(); !cursorAlcohol.isAfterLast(); cursorAlcohol.moveToNext()) {
+                String column1 = cursorAlcohol.getString(cursorAlcohol.getColumnIndex("name"));
+                double column2 = cursorAlcohol.getDouble(cursorAlcohol.getColumnIndex("price"));
+                int column3 = cursorAlcohol.getInt(cursorAlcohol.getColumnIndex("amount"));
+                String column4 = cursorAlcohol.getString(cursorAlcohol.getColumnIndex("type"));
+                String column5 = cursorAlcohol.getString(cursorAlcohol.getColumnIndex("category"));
+                Bitmap picture=null;
+                byte[] column6 = cursorAlcohol.getBlob(cursorAlcohol.getColumnIndex("img"));
+                if (column6 != null && column6.length > 0) {
+                    picture = BitmapFactory.decodeByteArray(column6, 0, column6.length);
+                }
+                String column7 = cursorAlcohol.getString(cursorAlcohol.getColumnIndex("supplier"));
+                String column8 = cursorAlcohol.getString(cursorAlcohol.getColumnIndex("suppliernumber"));
+
+                Item i = new Item(column1,column2,column3,column4,column5,picture,column7,column8);
+
+                if(!alcoholmenu.contains(i)){
+                    alcoholmenu.add(i);
+                }
+            }
+        }
+    }
+    public void initializeData() {
+
+        db.getWritableDatabase();
+
+        if(db.getAllItems().getCount()<1){
+            db.insertItem("Lemon Shrimps", 38.50, 10, "k", "starters", BitmapFactory.decodeResource(getResources(), R.mipmap.lemon_shrimps), "George", "0545983177");
+            db.insertItem("Tangri Kebabs", 35.90, 10, "k", "starters", BitmapFactory.decodeResource(getResources(), R.mipmap.tangari_kebabs), "Supplier1", "0545983177");
+            db.insertItem("Cheese Balls", 41.90, 10, "k", "starters", BitmapFactory.decodeResource(getResources(), R.mipmap.cheese_balls), "Supplier1", "0545983177");
+            db.insertItem("Italian Cuisine", 28.50, 10, "k", "starters", BitmapFactory.decodeResource(getResources(), R.mipmap.italian_cuisine), "Supplier1", "0545983177");
+            db.insertItem("Lobster Legs", 38.90, 10, "k", "starters", BitmapFactory.decodeResource(getResources(), R.mipmap.lobster_legs), "Supplier1", "0545983177");
+            db.insertItem("Smoked Salamon", 31.90, 10, "k", "starters", BitmapFactory.decodeResource(getResources(), R.mipmap.smoked_salamon), "Supplier1", "0545983177");
+            db.insertItem("Adamami", 34.50, 10, "k", "starters", BitmapFactory.decodeResource(getResources(), R.mipmap.adamami), "Supplier1", "0545983177");
+            db.insertItem("Falafel", 35.90, 10, "k", "starters", BitmapFactory.decodeResource(getResources(), R.mipmap.falafel), "Supplier1", "0545983177");
+            db.insertItem("Seafood Salad", 40.00, 10, "k", "starters", BitmapFactory.decodeResource(getResources(), R.mipmap.seafood_salad), "Supplier1", "0545983177");
+            db.insertItem("Baked Potato", 28.90, 10, "k", "starters", BitmapFactory.decodeResource(getResources(), R.mipmap.baked_potato), "Supplier1", "0545983177");
+            db.insertItem("Baked Sweet Potato", 28.90, 10, "k", "starters", BitmapFactory.decodeResource(getResources(), R.mipmap.baked_sweet_potato), "Supplier1", "0545983177");
+            db.insertItem("Corn Soup", 29.90, 10, "k", "starters", BitmapFactory.decodeResource(getResources(), R.mipmap.corn_soup), "Supplier1", "0545983177");
+            db.insertItem("Fish Soup", 34.90, 10, "k", "starters", BitmapFactory.decodeResource(getResources(), R.mipmap.fish_soup), "Supplier1", "0545983177");
+            db.insertItem("French Fries", 28.90, 10, "k", "starters", BitmapFactory.decodeResource(getResources(), R.mipmap.french_fries), "Supplier1", "0545983177");
+
+
+            //TODO: get item by category starters and insert into startsmenu
+//        startersmenu.add(starter);
+//        startersmenu.add(starter1);
+//        startersmenu.add(starter2);
+//        startersmenu.add(starter3);
+//        startersmenu.add(starter4);
+//        startersmenu.add(starter5);
+//        startersmenu.add(starter6);
+//        startersmenu.add(starter7);
+//        startersmenu.add(starter8);
+//        startersmenu.add(starter9);
+//        startersmenu.add(starter10);
+//        startersmenu.add(starter11);
+//        startersmenu.add(starter12);
+//        startersmenu.add(starter13);
+
+            db.insertItem("Chicken Salad", 49.90, 10, "k", "food", BitmapFactory.decodeResource(getResources(), R.mipmap.chicken_salad), "George", "0545983177");
+            db.insertItem("Caesar Salad", 53.90, 10, "k", "food", BitmapFactory.decodeResource(getResources(), R.mipmap.caesar_salad), "George", "0545983177");
+            db.insertItem("Tuna Salad", 51.90, 10, "k", "food", BitmapFactory.decodeResource(getResources(), R.mipmap.tuna_salad), "George", "0545983177");
+            db.insertItem("Nazareth Breakfast", 65.90, 10, "k", "food", BitmapFactory.decodeResource(getResources(), R.mipmap.nazareth_breakfast), "George", "0545983177");
+            db.insertItem("Beef Fillet", 109.90, 10, "k", "food", BitmapFactory.decodeResource(getResources(), R.mipmap.beef_fillet), "George", "0545983177");
+            db.insertItem("English Breakfast", 54.50, 10, "k", "food", BitmapFactory.decodeResource(getResources(), R.mipmap.english_breakfast), "George", "0545983177");
+            db.insertItem("Italian Pasta", 67.90, 10, "k", "food", BitmapFactory.decodeResource(getResources(), R.mipmap.italian_pasta), "George", "0545983177");
+            db.insertItem("Cavatappi Pasta", 28.90, 10, "k", "food", BitmapFactory.decodeResource(getResources(), R.mipmap.cavatappi_pasta), "George", "0545983177");
+            db.insertItem("Chicken Pie", 28.90, 10, "k", "food", BitmapFactory.decodeResource(getResources(), R.mipmap.chicken_pie), "George", "0545983177");
+            db.insertItem("Fresco Shrimps", 28.90, 10, "k", "food", BitmapFactory.decodeResource(getResources(), R.mipmap.fresco_shrimps), "George", "0545983177");
+            db.insertItem("Potato Tortilla", 57.90, 10, "k", "food", BitmapFactory.decodeResource(getResources(), R.mipmap.potato_tortilla), "George", "0545983177");
+            db.insertItem("Mac and Cheese", 53.90, 10, "k", "food", BitmapFactory.decodeResource(getResources(), R.mipmap.mac_cheese), "George", "0545983177");
+            db.insertItem("Sloppy Joe", 58.90, 10, "k", "food", BitmapFactory.decodeResource(getResources(), R.mipmap.sloppy_joe), "George", "0545983177");
+            db.insertItem("Cheesy Cabbage", 56.90, 10, "k", "food", BitmapFactory.decodeResource(getResources(), R.mipmap.cabbage_cheese), "George", "0545983177");
+
+
+//        foodmenu.add(fooditem);
+//        foodmenu.add(fooditem1);
+//        foodmenu.add(fooditem2);
+//        foodmenu.add(fooditem3);
+//        foodmenu.add(fooditem4);
+//        foodmenu.add(fooditem5);
+//        foodmenu.add(fooditem6);
+//        foodmenu.add(fooditem7);
+//        foodmenu.add(fooditem8);
+//        foodmenu.add(fooditem9);
+//        foodmenu.add(fooditem10);
+//        foodmenu.add(fooditem11);
+//        foodmenu.add(fooditem12);
+//        foodmenu.add(fooditem13);
+
+            db.insertItem("Cola", 11.90, 10, "b", "drinks", BitmapFactory.decodeResource(getResources(), R.mipmap.cola), "George", "0545983177");
+            db.insertItem("Sprite", 11.90, 10, "b", "drinks", BitmapFactory.decodeResource(getResources(), R.mipmap.sprite), "George", "0545983177");
+            db.insertItem("Espresso", 8.90, 10, "b", "drinks", BitmapFactory.decodeResource(getResources(), R.mipmap.espresso), "George", "0545983177");
+            db.insertItem("Americano", 10.90, 10, "b", "drinks", BitmapFactory.decodeResource(getResources(), R.mipmap.americano), "George", "0545983177");
+            db.insertItem("Cappuccino", 14.90, 10, "b", "drinks", BitmapFactory.decodeResource(getResources(), R.mipmap.cappuccino), "George", "0545983177");
+            db.insertItem("Orange Juice", 15.90, 10, "b", "drinks", BitmapFactory.decodeResource(getResources(), R.mipmap.orange_juice), "George", "0545983177");
+            db.insertItem("Lemonade", 14.90, 10, "b", "drinks", BitmapFactory.decodeResource(getResources(), R.mipmap.lemonade), "George", "0545983177");
+            db.insertItem("Summer Smoothie", 19.90, 10, "b", "drinks", BitmapFactory.decodeResource(getResources(), R.mipmap.summer_vibes), "George", "0545983177");
+            db.insertItem("Fruits Smoothie", 16.90, 10, "b", "drinks", BitmapFactory.decodeResource(getResources(), R.mipmap.colorfull_smoothie), "George", "0545983177");
+            db.insertItem("Diaster Milkshake", 25.90, 10, "b", "drinks", BitmapFactory.decodeResource(getResources(), R.mipmap.disaster_milkshake), "George", "0545983177");
+            db.insertItem("Red Vanil Milkshake", 21.90, 10, "b", "drinks", BitmapFactory.decodeResource(getResources(), R.mipmap.vanil_strawberry_milkshake), "George", "0545983177");
+            db.insertItem("Choco Milkshake", 19.90, 10, "b", "drinks", BitmapFactory.decodeResource(getResources(), R.mipmap.choco_milkshake), "George", "0545983177");
+
+//        drinksmenu.add(drinkitem);
+//        drinksmenu.add(drinkitem1);
+//        drinksmenu.add(drinkitem2);
+//        drinksmenu.add(drinkitem3);
+//        drinksmenu.add(drinkitem4);
+//        drinksmenu.add(drinkitem5);
+//        drinksmenu.add(drinkitem6);
+//        drinksmenu.add(drinkitem7);
+//        drinksmenu.add(drinkitem8);
+//        drinksmenu.add(drinkitem9);
+//        drinksmenu.add(drinkitem10);
+//        drinksmenu.add(drinkitem11);
+
+            db.insertItem("Chocolate Cake", 42.90, 10, "b", "desserts", BitmapFactory.decodeResource(getResources(), R.mipmap.chocolate_cake), "George", "0545983177");
+            db.insertItem("Cheese Cake", 42.90, 10, "b", "desserts", BitmapFactory.decodeResource(getResources(), R.mipmap.cheese_cake), "George", "0545983177");
+            db.insertItem("Truffle", 35.90, 10, "b", "desserts", BitmapFactory.decodeResource(getResources(), R.mipmap.truffle), "George", "0545983177");
+            db.insertItem("Apple Pie", 33.90, 10, "b", "desserts", BitmapFactory.decodeResource(getResources(), R.mipmap.apple_pie), "George", "0545983177");
+            db.insertItem("Chocolate Mousse", 42.90, 10, "b", "desserts", BitmapFactory.decodeResource(getResources(), R.mipmap.choco_mousse), "George", "0545983177");
+            db.insertItem("Strawberry Cake", 45.90, 10, "b", "desserts", BitmapFactory.decodeResource(getResources(), R.mipmap.straw_cake), "George", "0545983177");
+            db.insertItem("Lemon Sorbet", 33.90, 10, "b", "desserts", BitmapFactory.decodeResource(getResources(), R.mipmap.lemon_sorbet), "George", "0545983177");
+            db.insertItem("Lemon Tart", 42.90, 10, "b", "desserts", BitmapFactory.decodeResource(getResources(), R.mipmap.lemon_tart), "George", "0545983177");
+            db.insertItem("IceCream Cake", 45.90, 10, "b", "desserts", BitmapFactory.decodeResource(getResources(), R.mipmap.iceream_cake), "George", "0545983177");
+            db.insertItem("Guinness Cake", 34.90, 10, "b", "desserts", BitmapFactory.decodeResource(getResources(), R.mipmap.guinness_cake), "George", "0545983177");
+            db.insertItem("B Whoopies", 43.90, 10, "b", "desserts", BitmapFactory.decodeResource(getResources(), R.mipmap.bannoffee_whoopies), "George", "0545983177");
+
+//        dessertsmenu.add(dessertitem);
+//        dessertsmenu.add(dessertitem1);
+//        dessertsmenu.add(dessertitem2);
+//        dessertsmenu.add(dessertitem3);
+//        dessertsmenu.add(dessertitem4);
+//        dessertsmenu.add(dessertitem5);
+//        dessertsmenu.add(dessertitem6);
+//        dessertsmenu.add(dessertitem7);
+//        dessertsmenu.add(dessertitem8);
+//        dessertsmenu.add(dessertitem9);
+//        dessertsmenu.add(dessertitem10);
+
+
+            db.insertItem("Pina Colada", 35.20, 10, "b", "alcohol", BitmapFactory.decodeResource(getResources(), R.mipmap.pina_colada), "George", "0545983177");
+            db.insertItem("Jin", 35.90, 10, "b", "alcohol", BitmapFactory.decodeResource(getResources(), R.mipmap.jin), "George", "0545983177");
+            db.insertItem("Arak", 22.90, 10, "b", "alcohol", BitmapFactory.decodeResource(getResources(), R.mipmap.arak), "George", "0545983177");
+            db.insertItem("Carlsberg", 26.90, 10, "b", "alcohol", BitmapFactory.decodeResource(getResources(), R.mipmap.carlsberg), "George", "0545983177");
+            db.insertItem("Heineken", 22.90, 10, "b", "alcohol", BitmapFactory.decodeResource(getResources(), R.mipmap.heineken), "George", "0545983177");
+            db.insertItem("Green Tuborg", 22.90, 10, "b", "alcohol", BitmapFactory.decodeResource(getResources(), R.mipmap.green_tuborg), "George", "0545983177");
+            db.insertItem("Red Tuborg", 22.90, 10, "b", "alcohol", BitmapFactory.decodeResource(getResources(), R.mipmap.red_tuborg), "George", "0545983177");
+            db.insertItem("Corona", 22.90, 10, "b", "alcohol", BitmapFactory.decodeResource(getResources(), R.mipmap.corona), "George", "0545983177");
+            db.insertItem("Red Label", 22.90, 10, "b", "alcohol", BitmapFactory.decodeResource(getResources(), R.mipmap.red_label), "George", "0545983177");
+            db.insertItem("Jameson", 25.90, 10, "b", "alcohol", BitmapFactory.decodeResource(getResources(), R.mipmap.jameson), "George", "0545983177");
+            db.insertItem("Royal Chivas", 25.90, 10, "b", "alcohol", BitmapFactory.decodeResource(getResources(), R.mipmap.royal_chivas), "George", "0545983177");
+
+//        alcoholmenu.add(alcoholitem);
+//        alcoholmenu.add(alcoholitem1);
+//        alcoholmenu.add(alcoholitem2);
+//        alcoholmenu.add(alcoholitem3);
+//        alcoholmenu.add(alcoholitem4);
+//        alcoholmenu.add(alcoholitem5);
+//        alcoholmenu.add(alcoholitem6);
+//        alcoholmenu.add(alcoholitem7);
+//        alcoholmenu.add(alcoholitem8);
+//        alcoholmenu.add(alcoholitem9);
+//        alcoholmenu.add(alcoholitem10);
+        }
+
     }
 
 }
