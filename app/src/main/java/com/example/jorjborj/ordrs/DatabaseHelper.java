@@ -229,7 +229,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             contentValues.put(COLUMN_DATE,date);
 
             // update
-            cnt = db.update(EVENT_TABLE, contentValues,ITEM_NAME+ " = ?", new String[]{Integer.toString(id)});
+            cnt = db.update(EVENT_TABLE, contentValues, EVENT_ID_COL + " = "+id, null);
         } catch (Throwable t) {
             t.printStackTrace();
         }

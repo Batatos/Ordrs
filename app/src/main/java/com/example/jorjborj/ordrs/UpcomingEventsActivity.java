@@ -1,6 +1,7 @@
 package com.example.jorjborj.ordrs;
 
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
@@ -20,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RadioGroup;
@@ -149,14 +152,18 @@ public class UpcomingEventsActivity extends AppCompatActivity {
                             }
 
                             if(item.getTitle().toString().equals("Edit")){
+
 //                            int rowId = mDataBaseHelper.getEventId(o.getContactName(),o.getPhoneNum(),o.getNumOfPeople(),o.getTimeDate());
 //                            mDataBaseHelper.updateEvent(rowId,eventsArrayList.get(position).getTableNum(),eventsArrayList.get(position).getContactName(),eventsArrayList.get(position).getPhoneNum(),
 //                                    eventsArrayList.get(position).getNumOfPeople(),eventsArrayList.get(position).getNotes(),eventsArrayList.get(position).getTimeDate());
 //                            Intent i = new Intent(getBaseContext(),UpcomingEventsActivity.class);
 //                            startActivity(i);
 //                            Toast.makeText(context, "Edited", Toast.LENGTH_SHORT).show();
+                                int rowId = mDataBaseHelper.getEventId(o.getContactName(),o.getPhoneNum(),o.getNumOfPeople(),o.getTimeDate());
 
-                                Toast.makeText(UpcomingEventsActivity.this, "Todo - edit", Toast.LENGTH_SHORT).show();
+                                EditEventDialog eed = new EditEventDialog(UpcomingEventsActivity.this,rowId,o.getTableNum(), o.getContactName(),o.getPhoneNum(),o.getNumOfPeople(),o.getNotes(),o.getTimeDate());
+                                    eed.show();
+//                                Toast.makeText(UpcomingEventsActivity.this, "Todo - edit", Toast.LENGTH_SHORT).show();
 
                             }
 
@@ -200,4 +207,87 @@ public class UpcomingEventsActivity extends AppCompatActivity {
         startActivity(i);
         finish();
     }
+
+    public class EditEventDialog extends Dialog{
+
+        int tableNum,phoneNum,numOfPeople,rowId;
+        String contactName,notes,date;
+
+        int day,month,year,hour,minute;
+        int dayFinal,monthFinal,yearFinal,hourFinal,minuteFinal;
+        EditText contactName1,contactNumber,numberOfPeople,notes1;
+        TextView date1,tblnum;
+        ImageButton pickDate;
+        Button confirm,cancel;
+        String tableNumber;
+        DatabaseHelper dataBaseHelper;
+
+
+
+
+        public EditEventDialog(@NonNull Context context) {
+            super(context);
+        }
+
+        public EditEventDialog(@NonNull Context context, int rowId, int tableNum,String contactName, int phoneNum, int numOfPeople, String notes, String date) {
+            super(context);
+            this.tableNum=tableNum;
+            this.contactName=contactName;
+            this.phoneNum=phoneNum;
+            this.numOfPeople=numOfPeople;
+            this.notes=notes;
+            this.date=date;
+            this.rowId=rowId;
+        }
+
+        @Override
+        protected void onCreate(@Nullable Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.update_table_order_details);
+
+
+            contactName1 = (EditText)findViewById(R.id.contantname);
+            contactNumber = (EditText)findViewById(R.id.contantnumber);
+            numberOfPeople = (EditText)findViewById(R.id.numberofpeople);
+            notes1 = (EditText)findViewById(R.id.notes);
+            date1 = (TextView) findViewById(R.id.date);
+            pickDate = (ImageButton)findViewById(R.id.pickdate);
+            tblnum = (TextView)findViewById(R.id.table_number);
+            confirm = (Button)findViewById(R.id.confirm);
+            cancel = (Button)findViewById(R.id.cancel);
+
+
+            contactName1.setText(contactName);
+            contactNumber.setText(Integer.toString(phoneNum));
+            numberOfPeople.setText(Integer.toString(numOfPeople));
+            notes1.setText(notes);
+            date1.setText(date);
+            tblnum.setText(Integer.toString(tableNum));
+
+
+
+            confirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                            mDataBaseHelper.updateEvent(rowId,Integer.parseInt(tblnum.getText().toString()),contactName1.getText().toString(),Integer.parseInt(contactNumber.getText().toString()),Integer.parseInt(numberOfPeople.getText().toString()),notes1.getText().toString(),date1.getText().toString());
+                            Intent i = new Intent(getBaseContext(),UpcomingEventsActivity.class);
+                            startActivity(i);
+                            adapter.notifyDataSetChanged();
+                            Toast.makeText(UpcomingEventsActivity.this, "Edited", Toast.LENGTH_SHORT).show();
+
+                }
+            });
+
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dismiss();
+                }
+            });
+
+        }
+
+
+
+        }
 }
