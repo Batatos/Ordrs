@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
     ArrayList<Item> alcoholmenu = new ArrayList<Item>();
     ArrayAdapter<String> adapter4 = null;
     ArrayList<String> orders = null;
-    ArrayList<OrderItem> orderItems = null;
+    ArrayList<OrderItem> orderItems = null; //should be Item not OrderItem
     ArrayAdapter orderAdapter = null;
     double sumPrice = 0.0;
     String tablenum = "waiting for data";

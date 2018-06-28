@@ -16,6 +16,7 @@ public class Item {
         String supplier;
         String supplierNumber;
         double price;
+        int quantity = 0; //order quantity
 
 
     //constructor without supplier
@@ -51,6 +52,14 @@ public class Item {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public int getAmount() {

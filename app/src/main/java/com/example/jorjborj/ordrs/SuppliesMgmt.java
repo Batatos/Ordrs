@@ -581,7 +581,7 @@ public class SuppliesMgmt extends AppCompatActivity {
             add.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String t,c="";
+                    String t,c;
 
                     //validate data input for new item
                     if(type.getCheckedRadioButtonId()==-1 || category.getCheckedRadioButtonId()==-1 || name.getText().equals("") || price.getText().toString()=="" ||
@@ -592,11 +592,11 @@ public class SuppliesMgmt extends AppCompatActivity {
                     }
 
                     if(type.getCheckedRadioButtonId()==R.id.kitchen) t="k"; else t="b";
+
                     if(category.getCheckedRadioButtonId()==R.id.starters) c="starters";
                     if(category.getCheckedRadioButtonId()==R.id.food) c="food";
                     if(category.getCheckedRadioButtonId()==R.id.drinks) c="drinks";
-                    if(category.getCheckedRadioButtonId()==R.id.desserts) c="desserts";
-                    if(category.getCheckedRadioButtonId()==R.id.alcohol) c="alcohol";
+                    if(category.getCheckedRadioButtonId()==R.id.desserts) c="desserts"; else c="alcohol";
 
                     //TODO: add picture from library and add it to the item.
 

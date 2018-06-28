@@ -135,8 +135,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor data = db.rawQuery("SELECT * FROM " + ITEM_TABLE, null);
         return data;
-
-        //TODO: should geta items by category.
     }
 
     public Cursor getAllStartersItems(){

@@ -18,7 +18,7 @@ public class OrderItem implements Serializable{
     String notes=null;
 
 
-    public OrderItem( String title, int counter, double price, String type) {
+    public OrderItem(String title, int counter, double price, String type) {
         super();
         this.title = title;
         this.counter = counter;

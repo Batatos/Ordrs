@@ -146,10 +146,8 @@ public class TableOrderDetails extends AppCompatActivity implements DatePickerDi
             minutes += Integer.toString(minuteFinal);
             String time1 = dayFinal + "/" + monthFinal + "/" + yearFinal + " " + hourFinal + ":" + minutes + "";
             date.setText(time1);
-            Toast.makeText(getBaseContext(), "Table #" + getIntent().getStringExtra("order_table")+ "- Date&Time: " + dayFinal + "/" + monthFinal + "/" + yearFinal + ", " + hourFinal + ":" + minutes + ".", Toast.LENGTH_SHORT).show();
         } else {
             String time = dayFinal + "/" + monthFinal + "/" + yearFinal + " " + hourFinal + ":" + minuteFinal + "";
-            Toast.makeText(getBaseContext(), "Table #"+ getIntent().getStringExtra("order_table") + "- Date&Time: " + dayFinal + "/" + monthFinal + "/" + yearFinal + ", " + hourFinal + ":" + minuteFinal + ".", Toast.LENGTH_SHORT).show();
             date.setText(time);
 
         }

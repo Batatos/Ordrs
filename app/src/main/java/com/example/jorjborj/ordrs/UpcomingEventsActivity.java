@@ -1,6 +1,8 @@
 package com.example.jorjborj.ordrs;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -22,20 +24,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class UpcomingEventsActivity extends AppCompatActivity {
 
     public static ArrayList<UpcomingEventObject> eventsArrayList = new ArrayList<>();
     public static EventsAdapter adapter;
     DatabaseHelper mDataBaseHelper;
+    int day,month,year,hour,minute;
+    int dayFinal,monthFinal,yearFinal,hourFinal,minuteFinal;
+    TextView date,tblnum;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +83,6 @@ public class UpcomingEventsActivity extends AppCompatActivity {
             }
         }
     }
-
 
     public class EventsAdapter extends ArrayAdapter<UpcomingEventObject> {
 
@@ -208,7 +215,11 @@ public class UpcomingEventsActivity extends AppCompatActivity {
         finish();
     }
 
-    public class EditEventDialog extends Dialog{
+
+
+
+
+    public class EditEventDialog extends Dialog implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
 
         int tableNum,phoneNum,numOfPeople,rowId;
         String contactName,notes,date;
@@ -221,8 +232,6 @@ public class UpcomingEventsActivity extends AppCompatActivity {
         Button confirm,cancel;
         String tableNumber;
         DatabaseHelper dataBaseHelper;
-
-
 
 
         public EditEventDialog(@NonNull Context context) {
@@ -246,6 +255,7 @@ public class UpcomingEventsActivity extends AppCompatActivity {
             setContentView(R.layout.update_table_order_details);
 
 
+
             contactName1 = (EditText)findViewById(R.id.contantname);
             contactNumber = (EditText)findViewById(R.id.contantnumber);
             numberOfPeople = (EditText)findViewById(R.id.numberofpeople);
@@ -265,6 +275,20 @@ public class UpcomingEventsActivity extends AppCompatActivity {
             tblnum.setText(Integer.toString(tableNum));
 
 
+            pickDate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Calendar c = Calendar.getInstance();
+                    year = c.get(Calendar.YEAR);
+                    month = c.get(Calendar.MONTH);
+                    day = c.get(Calendar.DAY_OF_MONTH);
+
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(UpcomingEventsActivity.this,UpcomingEventsActivity.EditEventDialog.this,year,month,day);
+                    datePickerDialog.show();
+
+                }
+            });
 
             confirm.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -288,6 +312,37 @@ public class UpcomingEventsActivity extends AppCompatActivity {
         }
 
 
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            yearFinal = year;
+            monthFinal = month+1;
+            dayFinal = dayOfMonth;
+
+            Calendar c = Calendar.getInstance();
+            hour = c.get(Calendar.HOUR_OF_DAY);
+            minute = c.get(Calendar.MINUTE);
+
+            TimePickerDialog timePickerDialog = new TimePickerDialog(UpcomingEventsActivity.this,UpcomingEventsActivity.EditEventDialog.this,hour,minute,true);
+            timePickerDialog.show();
 
         }
+
+        @Override
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            hourFinal = hourOfDay;
+            minuteFinal = minute;
+            if (minuteFinal < 10) {
+                //cosmetics
+                String minutes = "0";
+                minutes += Integer.toString(minuteFinal);
+                String time1 = dayFinal + "/" + monthFinal + "/" + yearFinal + " " + hourFinal + ":" + minutes + "";
+                date1.setText(time1);
+            } else {
+                String time = dayFinal + "/" + monthFinal + "/" + yearFinal + " " + hourFinal + ":" + minuteFinal + "";
+                date1.setText(time);
+
+            }
+
+        }
+    }
 }
