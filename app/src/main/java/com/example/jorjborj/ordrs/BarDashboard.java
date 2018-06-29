@@ -72,11 +72,11 @@ public class BarDashboard extends AppCompatActivity {
 
     private void initializeData() {
 
-        OrderItem item = new OrderItem("Chicken Salad",2,50.90,"k");
-        OrderItem item2 = new OrderItem("Cheese Cake",1,42.90,"b");
-        OrderItem item3 = new OrderItem("Chocolate Cake",1,42.90,"b");
-        OrderItem item4 = new OrderItem("Chocolate Cake",1,42.90,"b");
-        OrderItem item5 = new OrderItem("Chocolate Cake",1,42.90,"b");
+        OrderItem item = new OrderItem("Chicken Salad",2,50.90,"k","");
+        OrderItem item2 = new OrderItem("Cheese Cake",1,42.90,"b","");
+        OrderItem item3 = new OrderItem("Chocolate Cake",1,42.90,"b","");
+        OrderItem item4 = new OrderItem("Chocolate Cake",1,42.90,"b","");
+        OrderItem item5 = new OrderItem("Chocolate Cake",1,42.90,"b","");
 
         list.add(item);
         list.add(item2);

@@ -37,8 +37,6 @@ public class OrderTableActivity extends AppCompatActivity {
 //        lv.setAdapter(adapter3);
 //        adapter3.notifyDataSetChanged();
 
-
-
         ConstraintLayout table1 = (ConstraintLayout)findViewById(R.id.table1);
         ConstraintLayout table2 = (ConstraintLayout)findViewById(R.id.table2);
         ConstraintLayout table3 = (ConstraintLayout)findViewById(R.id.table3);

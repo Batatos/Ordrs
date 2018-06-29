@@ -43,6 +43,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by jorjborj on 4/2/2018.
@@ -57,13 +58,14 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
     ArrayList<Item> alcoholmenu = new ArrayList<Item>();
     ArrayAdapter<String> adapter4 = null;
     ArrayList<String> orders = null;
-    ArrayList<OrderItem> orderItems = null; //should be Item not OrderItem
+    ArrayList<OrderItem> orderItems = new ArrayList<>();//should be Item not OrderItem
+    ArrayList<OrderItem> newItems = new ArrayList<>();//should be Item not OrderItem
     ArrayAdapter orderAdapter = null;
     double sumPrice = 0.0;
     String tablenum = "waiting for data";
     TextView discounttext,totalprice;
     DatabaseHelper db;
-
+    int x;
     @Override
         protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,55 +76,93 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         initializeData();
         grabAndFillData();
 
-        discounttext = (TextView)findViewById(R.id.discountAhoz);
-        totalprice = (TextView)findViewById(R.id.totalPrice);
+        discounttext = (TextView) findViewById(R.id.discountAhoz);
+        totalprice = (TextView) findViewById(R.id.totalPrice);
 
-        final BottomNavigationView nav = (BottomNavigationView)findViewById(R.id.navbar);
+        final BottomNavigationView nav = (BottomNavigationView) findViewById(R.id.navbar);
         disableShiftMode(nav);
 
         tablenum = getIntent().getExtras().get("table_num").toString();
-        getSupportActionBar().setTitle("Order on table #"+tablenum);
+        getSupportActionBar().setTitle("Order on table #" + tablenum);
 
         // Large screen, LISTVIEW and adapters
-        final View mainscreen = (View)findViewById(R.id.largeScreen);
-        final RecyclerView rv = (RecyclerView)findViewById(R.id.rv);
-        final ListView counterlv = (ListView)findViewById(R.id.counterlist);
+        final View mainscreen = (View) findViewById(R.id.largeScreen);
+        final RecyclerView rv = (RecyclerView) findViewById(R.id.rv);
+        final ListView counterlv = (ListView) findViewById(R.id.counterlist);
         rv.setHasFixedSize(true);
-        rv.setLayoutManager(new GridLayoutManager(this,5));
+        rv.setLayoutManager(new GridLayoutManager(this, 5));
         //TextView price = (TextView) findViewById(R.id.sumPrice);
 
         Calendar rightNow = Calendar.getInstance();
-        int currentHour = rightNow.get(Calendar.HOUR_OF_DAY)+1; // return the hour in 24 hrs format (ranging from 0-23)
-        if(currentHour>14 && currentHour<=17){
+        int currentHour = rightNow.get(Calendar.HOUR_OF_DAY) + 1; // return the hour in 24 hrs format (ranging from 0-23)
+        if (currentHour > 14 && currentHour <= 17) {
             discounttext.setText("10");
-        }else{
+        } else {
         }
 
 
-        Button sendBtn = (Button)findViewById(R.id.sendBtn);
-        Button cancelBtn = (Button)findViewById(R.id.cancelBtn);
-        final Button payBtn = (Button)findViewById(R.id.payBtn);
-        final Button discountBtn = (Button)findViewById(R.id.discountBtn);
+        Button sendBtn = (Button) findViewById(R.id.sendBtn);
+        Button cancelBtn = (Button) findViewById(R.id.cancelBtn);
+        final Button payBtn = (Button) findViewById(R.id.payBtn);
+        final Button discountBtn = (Button) findViewById(R.id.discountBtn);
 
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String output = "Table #"+tablenum+": ";
-                for (int x=0;x<orderItems.size();x++){
-                    output+=orderItems.get(x).getTitle();
-                    output+=" x";
-                    output+=orderItems.get(x).getCounter();
+                String output = "Table #" + tablenum + ": ";
+                Cursor c = db.getOrderItemsByTableNum(Integer.parseInt(tablenum));
 
-                    if(x+1==orderItems.size()){
+                if (c.getCount() > 0) {
+                    try {
+                        for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+
+                            String column1 = c.getString(c.getColumnIndex("name"));
+                            int column2 = c.getInt(c.getColumnIndex("quantity"));
+                            double column3 = c.getDouble(c.getColumnIndex("price"));
+                            String column4 = c.getString(c.getColumnIndex("notes"));
+                            if (column4.equals("")) column4 = null;
+                            String column5 = c.getString(c.getColumnIndex("type"));
+
+                            OrderItem i = new OrderItem(column1, column2, column3, column5, column4);
+                            orderItems.add(i);
+                        }
+
+                    } catch (Throwable t) {
+                        t.printStackTrace();
+                    }
+                }
+
+                for(OrderItem i : orderItems){
+                    for(OrderItem k : newItems){
+                        if(i.getTitle().equals(k.getTitle())){
+                            k.setCounter(k.getCounter()-i.getCounter());
+                        }
+                    }
+                }
+
+                for (int x = 0; x < orderItems.size(); x++) {
+                    output += orderItems.get(x).getTitle();
+                    output += " x";
+                    output += orderItems.get(x).getCounter();
+
+                    if (x + 1 == orderItems.size()) {
                         output += ".";
-                    }else {
+                    } else {
                         output += ", ";
                     }
                 }
-                if(output.equals("Table #"+tablenum+": ")){
+                if (output.equals("Table #" + tablenum + ": ")) {
                     Toast.makeText(MainActivity.this, "No items selected", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     Toast.makeText(MainActivity.this, output, Toast.LENGTH_SHORT).show();
+                    Random rand = new Random();
+                    x = rand.nextInt(9000) + 1;
+                    db.insertOrder(x, Integer.parseInt(tablenum));
+
+                    for (OrderItem oi : orderItems) {
+                        db.insertOrderItem(x, oi.getTitle(), Integer.parseInt(tablenum), oi.getType(), oi.getCounter(), oi.getPrice(), oi.getNotes());
+                    }
+
                 }
             }
         });
@@ -133,11 +173,11 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
             public void onClick(View v) {
 
                 //if there are no items ordered.. there is no need to show dialog.
-                if(orderItems.isEmpty()){
-                    Intent i = new Intent(getBaseContext(),PickOptionActivity.class);
+                if (orderItems.isEmpty()) {
+                    Intent i = new Intent(getBaseContext(), PickOptionActivity.class);
                     finish();
                     startActivity(i);
-                }else {
+                } else {
 
                     showCancelAlert();
 
@@ -150,13 +190,15 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
             public void onClick(View v) {
 //                payDialog payDialog = new payDialog(MainActivity.this);
 //                payDialog.show();
-                if(!orderItems.isEmpty()){
-                Intent i = new Intent(MainActivity.this,PaymentProcess.class);
-                i.putExtra("orderlv", getOrderItems());
-                i.putExtra("ahoz",discounttext.getText().toString());
-                i.putExtra("total", totalprice.getText().toString());
-                i.putExtra("price",sumPrice);
-                startActivity(i);}else{
+                if (!orderItems.isEmpty()) {
+                    Intent i = new Intent(MainActivity.this, PaymentProcess.class);
+                    i.putExtra("orderlv", getOrderItems());
+                    i.putExtra("ahoz", discounttext.getText().toString());
+                    i.putExtra("total", totalprice.getText().toString());
+                    i.putExtra("price", sumPrice);
+                    i.putExtra("orderId", x);
+                    startActivity(i);
+                } else {
                     Toast.makeText(MainActivity.this, "No Items Selected.", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -171,27 +213,22 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         });
 
         orders = new ArrayList<String>();
-        adapter4 = new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1, orders);
+        adapter4 = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, orders);
 
-        orderItems = new ArrayList<>();
-        orderAdapter = new OrderItemAdapter(this,R.layout.counterlistitem,orderItems);
 
-        final CardviewAdapter adapter0 = new CardviewAdapter(this,startersmenu);
-        final CardviewAdapter adapter = new CardviewAdapter(this,foodmenu);
-        final CardviewAdapter adapter1 = new CardviewAdapter(this,drinksmenu);
-        final CardviewAdapter adapter2 = new CardviewAdapter(this,dessertsmenu);
-        final CardviewAdapter adapter3 = new CardviewAdapter(this,alcoholmenu);
+        final CardviewAdapter adapter0 = new CardviewAdapter(this, startersmenu);
+        final CardviewAdapter adapter = new CardviewAdapter(this, foodmenu);
+        final CardviewAdapter adapter1 = new CardviewAdapter(this, drinksmenu);
+        final CardviewAdapter adapter2 = new CardviewAdapter(this, dessertsmenu);
+        final CardviewAdapter adapter3 = new CardviewAdapter(this, alcoholmenu);
 
         rv.setAdapter(adapter0);
-
-        counterlv.setAdapter(orderAdapter);
-        orderAdapter.setNotifyOnChange(true);
 
         nav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
 
             public boolean onNavigationItemSelected(@NonNull final MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.starters:
                         rv.setAdapter(adapter0);
                         item.setChecked(true);
@@ -220,8 +257,107 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
             }
         });
 
+        orderAdapter = new OrderItemAdapter(this, R.layout.counterlistitem, orderItems);
+        orderAdapter.setNotifyOnChange(true);
+        counterlv.setAdapter(orderAdapter);
+
+        //if theres an order on this table = show this order
+
+        if (db.getOrderItemsByTableNum(Integer.parseInt(tablenum)).getCount()>0) {
+            Toast.makeText(this, "yes", Toast.LENGTH_SHORT).show();
+            Cursor c = db.getOrderItemsByTableNum(Integer.parseInt(tablenum));
+
+                try {
+                    for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+
+                        String column1 = c.getString(c.getColumnIndex("name"));
+                        int column2 = c.getInt(c.getColumnIndex("quantity"));
+                        double column3 = c.getDouble(c.getColumnIndex("price"));
+                        String column4 = c.getString(c.getColumnIndex("notes"));
+                        if(column4.equals("")) column4=null;
+                        String column5 = c.getString(c.getColumnIndex("type"));
+
+                        OrderItem i = new OrderItem(column1,column2,column3,column5,column4);
+                        orderItems.add(i);
+                        orders.add(i.getTitle());
+                        sumPrice += i.getPrice();
+                        TextView tv = (TextView)findViewById(R.id.sumPrice);
+                        tv.setText(Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(sumPrice))));
+                        calculateTotalPrice();
+
+                        orderAdapter.notifyDataSetChanged();
+
+                        //TODO: Should update price!
+
+
+
+//                        if(!orderItems.contains(i)){
+//                            orderItems.add(i);
+//                            Toast.makeText(this, "added to orderItems", Toast.LENGTH_SHORT).show();
+//                            orders.add(i.getTitle());
+//                            sumPrice += i.getPrice();
+//                            TextView tv = (TextView)findViewById(R.id.sumPrice);
+//                            tv.setText(Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(sumPrice))));
+//                            calculateTotalPrice();
+//                            orderAdapter.notifyDataSetChanged();
+//
+//                        }else {
+//                            for (OrderItem oi : orderItems) {
+//                                if (oi.getTitle().equals(i.getTitle())) {
+//                                    Toast.makeText(this, "not added to orderItems", Toast.LENGTH_SHORT).show();
+//                                    oi.setCounter(oi.getCounter() + 1);
+//                                    sumPrice += oi.getPrice();
+//                                    TextView tv = (TextView) findViewById(R.id.sumPrice);
+//                                    tv.setText(Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(sumPrice))));
+//                                    calculateTotalPrice();
+//                                    orderAdapter.notifyDataSetChanged();
+//                                }
+//                            }
+//                        }
+                        }
+
+            } catch (Throwable t) {
+                    t.printStackTrace();
+                }
+            }
+
     }
 
+    public void initorderItems(){
+
+        db.getWritableDatabase();
+        if (db.getOrderItemsByTableNum(Integer.parseInt(tablenum)).getCount()>0) {
+            Cursor c = db.getOrderItemsByTableNum(Integer.parseInt(tablenum));
+
+            try {
+                for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+
+                    String column1 = c.getString(c.getColumnIndex("name"));
+                    int column2 = c.getInt(c.getColumnIndex("quantity"));
+                    double column3 = c.getDouble(c.getColumnIndex("price"));
+                    String column4 = c.getString(c.getColumnIndex("notes"));
+                    if(column4.equals("")) column4=null;
+                    String column5 = c.getString(c.getColumnIndex("type"));
+
+                    OrderItem i = new OrderItem(column1,column2,column3,column5, column4);
+
+                    if(!orderItems.contains(i)){
+                        orderItems.add(i);
+                    }else{
+                        for(OrderItem oi: orderItems){
+                            if(oi.getTitle().equals(i.getTitle())){
+                                oi.setCounter(oi.getCounter()+1);
+                            }
+                        }
+                    }
+                }
+
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
+        }
+
+    }
     private void showCancelAlert() {
 
         final AlertDialog.Builder cancelAlert = new AlertDialog.Builder(MainActivity.this);
@@ -278,7 +414,9 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
     @Override
     public void onBackPressed() {
         if(orderItems.isEmpty()){
-        super.onBackPressed();}else{
+        Intent i = new Intent(MainActivity.this,PickOptionActivity.class);
+        startActivity(i);
+        finish();}else{
             showCancelAlert();
         }
     }
@@ -402,7 +540,7 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
             public void onClick(View v) {
                 //Toast.makeText(mCtx, menu.get(position).getName(), Toast.LENGTH_SHORT).show();
                 if(!orders.contains(menu.get(position).getName())) {
-                    OrderItem newItem = new OrderItem(menu.get(position).getName(), 1,menu.get(position).getPrice(),menu.get(position).getType());
+                    OrderItem newItem = new OrderItem(menu.get(position).getName(), 1,menu.get(position).getPrice(),menu.get(position).getType(),null);
                     orders.add(menu.get(position).getName());
                     orderItems.add(newItem);
                     // Toast.makeText(mCtx, orderItems.get(orderItems.size()).toString(), Toast.LENGTH_SHORT).show();
@@ -496,31 +634,6 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
 
                 }
             });
-
-            //Did it with onClick instead of onLongClick. See above.
-//            customView.setOnLongClickListener(new View.OnLongClickListener() {
-//                @Override
-//                public boolean onLongClick(View v) {
-//
-//                    PopupMenu popup = new PopupMenu(MainActivity.this, v);
-//                    //Inflating the Popup using xml file
-//                    popup.getMenuInflater()
-//                            .inflate(R.menu.order_item_menu, popup.getMenu());
-//                    //registering popup with OnMenuItemClickListener
-//                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//                        public boolean onMenuItemClick(MenuItem item) {
-//                            NotesDialog nd = new NotesDialog(context,position);
-//                            nd.show();
-//                            return true;
-//                        }
-//                    });
-//
-//                    popup.show(); //showing popup menu
-//
-//
-//                    return false;
-//                }
-//            });
 
 
             // 3. Get icon,title & counter views from the rowView
@@ -688,15 +801,6 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         totalprice.setText(Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(calc1))));
     }
 
-    private void showError() {
-        final EditText t = (EditText) findViewById(R.id.ahoz);
-        t.setOnFocusChangeListener(new View.OnFocusChangeListener(){
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                t.setError("Incorrect Input ..");
-            }
-        });
-    }
 
 /**
  *     Discount Dialog Class
@@ -766,56 +870,6 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
 
     }
 
-
-
-    public class payDialog extends Dialog {
-
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-
-            setContentView(R.layout.paydialog);
-
-
-            TextView price,ahoz,total,returnCash;
-            EditText received;
-            Button pay,cancel;
-
-            price = (TextView)findViewById(R.id.price);
-            ahoz = (TextView)findViewById(R.id.ahoz);
-            total = (TextView)findViewById(R.id.total);
-            returnCash = (TextView)findViewById(R.id.returncash);
-            received = (EditText)findViewById(R.id.amountreceived);
-            pay = (Button)findViewById(R.id.payBtn);
-            cancel = (Button)findViewById(R.id.cancelBtn);
-
-
-            pay.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(MainActivity.this, "Pay", Toast.LENGTH_SHORT).show();
-                }
-            });
-
-            cancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dismiss();
-                }
-            });
-        }
-
-        public payDialog(@NonNull Context context) {
-            super(context);
-        }
-
-        public payDialog(@NonNull Context context, @StyleRes int themeResId) {
-            super(context,themeResId);
-
-        }
-
-
-    }
 
     public class AdminLoginDialog extends Dialog {
 
@@ -1002,23 +1056,6 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
             db.insertItem("Fish Soup", 34.90, 10, "k", "starters", BitmapFactory.decodeResource(getResources(), R.mipmap.fish_soup), "Supplier1", "0545983177");
             db.insertItem("French Fries", 28.90, 10, "k", "starters", BitmapFactory.decodeResource(getResources(), R.mipmap.french_fries), "Supplier1", "0545983177");
 
-
-            //TODO: get item by category starters and insert into startsmenu
-//        startersmenu.add(starter);
-//        startersmenu.add(starter1);
-//        startersmenu.add(starter2);
-//        startersmenu.add(starter3);
-//        startersmenu.add(starter4);
-//        startersmenu.add(starter5);
-//        startersmenu.add(starter6);
-//        startersmenu.add(starter7);
-//        startersmenu.add(starter8);
-//        startersmenu.add(starter9);
-//        startersmenu.add(starter10);
-//        startersmenu.add(starter11);
-//        startersmenu.add(starter12);
-//        startersmenu.add(starter13);
-
             db.insertItem("Chicken Salad", 49.90, 10, "k", "food", BitmapFactory.decodeResource(getResources(), R.mipmap.chicken_salad), "George", "0545983177");
             db.insertItem("Caesar Salad", 53.90, 10, "k", "food", BitmapFactory.decodeResource(getResources(), R.mipmap.caesar_salad), "George", "0545983177");
             db.insertItem("Tuna Salad", 51.90, 10, "k", "food", BitmapFactory.decodeResource(getResources(), R.mipmap.tuna_salad), "George", "0545983177");
@@ -1034,22 +1071,6 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
             db.insertItem("Sloppy Joe", 58.90, 10, "k", "food", BitmapFactory.decodeResource(getResources(), R.mipmap.sloppy_joe), "George", "0545983177");
             db.insertItem("Cheesy Cabbage", 56.90, 10, "k", "food", BitmapFactory.decodeResource(getResources(), R.mipmap.cabbage_cheese), "George", "0545983177");
 
-
-//        foodmenu.add(fooditem);
-//        foodmenu.add(fooditem1);
-//        foodmenu.add(fooditem2);
-//        foodmenu.add(fooditem3);
-//        foodmenu.add(fooditem4);
-//        foodmenu.add(fooditem5);
-//        foodmenu.add(fooditem6);
-//        foodmenu.add(fooditem7);
-//        foodmenu.add(fooditem8);
-//        foodmenu.add(fooditem9);
-//        foodmenu.add(fooditem10);
-//        foodmenu.add(fooditem11);
-//        foodmenu.add(fooditem12);
-//        foodmenu.add(fooditem13);
-
             db.insertItem("Cola", 11.90, 10, "b", "drinks", BitmapFactory.decodeResource(getResources(), R.mipmap.cola), "George", "0545983177");
             db.insertItem("Sprite", 11.90, 10, "b", "drinks", BitmapFactory.decodeResource(getResources(), R.mipmap.sprite), "George", "0545983177");
             db.insertItem("Espresso", 8.90, 10, "b", "drinks", BitmapFactory.decodeResource(getResources(), R.mipmap.espresso), "George", "0545983177");
@@ -1063,19 +1084,6 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
             db.insertItem("Red Vanil Milkshake", 21.90, 10, "b", "drinks", BitmapFactory.decodeResource(getResources(), R.mipmap.vanil_strawberry_milkshake), "George", "0545983177");
             db.insertItem("Choco Milkshake", 19.90, 10, "b", "drinks", BitmapFactory.decodeResource(getResources(), R.mipmap.choco_milkshake), "George", "0545983177");
 
-//        drinksmenu.add(drinkitem);
-//        drinksmenu.add(drinkitem1);
-//        drinksmenu.add(drinkitem2);
-//        drinksmenu.add(drinkitem3);
-//        drinksmenu.add(drinkitem4);
-//        drinksmenu.add(drinkitem5);
-//        drinksmenu.add(drinkitem6);
-//        drinksmenu.add(drinkitem7);
-//        drinksmenu.add(drinkitem8);
-//        drinksmenu.add(drinkitem9);
-//        drinksmenu.add(drinkitem10);
-//        drinksmenu.add(drinkitem11);
-
             db.insertItem("Chocolate Cake", 42.90, 10, "b", "desserts", BitmapFactory.decodeResource(getResources(), R.mipmap.chocolate_cake), "George", "0545983177");
             db.insertItem("Cheese Cake", 42.90, 10, "b", "desserts", BitmapFactory.decodeResource(getResources(), R.mipmap.cheese_cake), "George", "0545983177");
             db.insertItem("Truffle", 35.90, 10, "b", "desserts", BitmapFactory.decodeResource(getResources(), R.mipmap.truffle), "George", "0545983177");
@@ -1087,19 +1095,6 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
             db.insertItem("IceCream Cake", 45.90, 10, "b", "desserts", BitmapFactory.decodeResource(getResources(), R.mipmap.iceream_cake), "George", "0545983177");
             db.insertItem("Guinness Cake", 34.90, 10, "b", "desserts", BitmapFactory.decodeResource(getResources(), R.mipmap.guinness_cake), "George", "0545983177");
             db.insertItem("B Whoopies", 43.90, 10, "b", "desserts", BitmapFactory.decodeResource(getResources(), R.mipmap.bannoffee_whoopies), "George", "0545983177");
-
-//        dessertsmenu.add(dessertitem);
-//        dessertsmenu.add(dessertitem1);
-//        dessertsmenu.add(dessertitem2);
-//        dessertsmenu.add(dessertitem3);
-//        dessertsmenu.add(dessertitem4);
-//        dessertsmenu.add(dessertitem5);
-//        dessertsmenu.add(dessertitem6);
-//        dessertsmenu.add(dessertitem7);
-//        dessertsmenu.add(dessertitem8);
-//        dessertsmenu.add(dessertitem9);
-//        dessertsmenu.add(dessertitem10);
-
 
             db.insertItem("Pina Colada", 35.20, 10, "b", "alcohol", BitmapFactory.decodeResource(getResources(), R.mipmap.pina_colada), "George", "0545983177");
             db.insertItem("Jin", 35.90, 10, "b", "alcohol", BitmapFactory.decodeResource(getResources(), R.mipmap.jin), "George", "0545983177");
@@ -1113,17 +1108,6 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
             db.insertItem("Jameson", 25.90, 10, "b", "alcohol", BitmapFactory.decodeResource(getResources(), R.mipmap.jameson), "George", "0545983177");
             db.insertItem("Royal Chivas", 25.90, 10, "b", "alcohol", BitmapFactory.decodeResource(getResources(), R.mipmap.royal_chivas), "George", "0545983177");
 
-//        alcoholmenu.add(alcoholitem);
-//        alcoholmenu.add(alcoholitem1);
-//        alcoholmenu.add(alcoholitem2);
-//        alcoholmenu.add(alcoholitem3);
-//        alcoholmenu.add(alcoholitem4);
-//        alcoholmenu.add(alcoholitem5);
-//        alcoholmenu.add(alcoholitem6);
-//        alcoholmenu.add(alcoholitem7);
-//        alcoholmenu.add(alcoholitem8);
-//        alcoholmenu.add(alcoholitem9);
-//        alcoholmenu.add(alcoholitem10);
         }
 
     }

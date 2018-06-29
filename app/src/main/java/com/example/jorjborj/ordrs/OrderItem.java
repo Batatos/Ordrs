@@ -17,13 +17,25 @@ public class OrderItem implements Serializable{
     String type;
     String notes=null;
 
+    public String getType() {
+        return type;
+    }
 
-    public OrderItem(String title, int counter, double price, String type) {
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public OrderItem() {
+        super();
+    }
+
+    public OrderItem(String title, int counter, double price, String type, String notes) {
         super();
         this.title = title;
         this.counter = counter;
         this.price=price;
         this.type=type;
+        this.notes=notes;
     }
 
     public String getTitle() {

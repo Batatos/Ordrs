@@ -1,5 +1,6 @@
 package com.example.jorjborj.ordrs;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -69,7 +70,9 @@ import java.util.List;
                         public void onClick(View v) {
                             Intent i = new Intent(PickTableActivity.this, MainActivity.class);
                             i.putExtra("table_num", tableItems.get(0).getTableNum());
+                            startProgressBar();
                             startActivity(i);
+
                         }
                     });
                     table2.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +80,7 @@ import java.util.List;
                         public void onClick(View v) {
                             Intent i = new Intent(PickTableActivity.this, MainActivity.class);
                             i.putExtra("table_num", tableItems.get(1).getTableNum());
+                            startProgressBar();
                             startActivity(i);
                         }
                     });
@@ -85,6 +89,7 @@ import java.util.List;
                         public void onClick(View v) {
                             Intent i = new Intent(PickTableActivity.this, MainActivity.class);
                             i.putExtra("table_num", tableItems.get(2).getTableNum());
+                            startProgressBar();
                             startActivity(i);
                         }
                     });
@@ -93,6 +98,7 @@ import java.util.List;
                         public void onClick(View v) {
                             Intent i = new Intent(PickTableActivity.this, MainActivity.class);
                             i.putExtra("table_num", tableItems.get(3).getTableNum());
+                            startProgressBar();
                             startActivity(i);
                         }
                     });
@@ -101,6 +107,7 @@ import java.util.List;
                         public void onClick(View v) {
                             Intent i = new Intent(PickTableActivity.this, MainActivity.class);
                             i.putExtra("table_num", tableItems.get(4).getTableNum());
+                            startProgressBar();
                             startActivity(i);
                         }
                     });
@@ -109,6 +116,7 @@ import java.util.List;
                         public void onClick(View v) {
                             Intent i = new Intent(PickTableActivity.this, MainActivity.class);
                             i.putExtra("table_num", tableItems.get(5).getTableNum());
+                            startProgressBar();
                             startActivity(i);
                         }
                     });
@@ -117,6 +125,7 @@ import java.util.List;
                         public void onClick(View v) {
                             Intent i = new Intent(PickTableActivity.this, MainActivity.class);
                             i.putExtra("table_num", tableItems.get(6).getTableNum());
+                            startProgressBar();
                             startActivity(i);
                         }
                     });
@@ -125,6 +134,7 @@ import java.util.List;
                         public void onClick(View v) {
                             Intent i = new Intent(PickTableActivity.this, MainActivity.class);
                             i.putExtra("table_num", tableItems.get(7).getTableNum());
+                            startProgressBar();
                             startActivity(i);
                         }
                     });
@@ -133,6 +143,7 @@ import java.util.List;
                         public void onClick(View v) {
                             Intent i = new Intent(PickTableActivity.this, MainActivity.class);
                             i.putExtra("table_num", tableItems.get(8).getTableNum());
+                            startProgressBar();
                             startActivity(i);
                         }
                     });
@@ -141,6 +152,7 @@ import java.util.List;
                         public void onClick(View v) {
                             Intent i = new Intent(PickTableActivity.this, MainActivity.class);
                             i.putExtra("table_num", tableItems.get(9).getTableNum());
+                            startProgressBar();
                             startActivity(i);
                         }
                     });
@@ -149,6 +161,7 @@ import java.util.List;
                         public void onClick(View v) {
                             Intent i = new Intent(PickTableActivity.this, MainActivity.class);
                             i.putExtra("table_num", tableItems.get(10).getTableNum());
+                            startProgressBar();
                             startActivity(i);
                         }
                     });
@@ -157,6 +170,7 @@ import java.util.List;
                         public void onClick(View v) {
                             Intent i = new Intent(PickTableActivity.this, MainActivity.class);
                             i.putExtra("table_num", tableItems.get(11).getTableNum());
+                            startProgressBar();
                             startActivity(i);
                         }
                     });
@@ -165,6 +179,7 @@ import java.util.List;
                         public void onClick(View v) {
                             Intent i = new Intent(PickTableActivity.this, MainActivity.class);
                             i.putExtra("table_num", tableItems.get(12).getTableNum());
+                            startProgressBar();
                             startActivity(i);
                         }
                     });
@@ -173,6 +188,7 @@ import java.util.List;
                         public void onClick(View v) {
                             Intent i = new Intent(PickTableActivity.this, MainActivity.class);
                             i.putExtra("table_num", tableItems.get(13).getTableNum());
+                            startProgressBar();
                             startActivity(i);
                         }
                     });
@@ -181,6 +197,7 @@ import java.util.List;
                         public void onClick(View v) {
                             Intent i = new Intent(PickTableActivity.this, MainActivity.class);
                             i.putExtra("table_num", tableItems.get(14).getTableNum());
+                            startProgressBar();
                             startActivity(i);
                         }
                     });
@@ -189,6 +206,7 @@ import java.util.List;
                         public void onClick(View v) {
                             Intent i = new Intent(PickTableActivity.this, MainActivity.class);
                             i.putExtra("table_num", tableItems.get(15).getTableNum());
+                            startProgressBar();
                             startActivity(i);
                         }
                     });
@@ -197,6 +215,7 @@ import java.util.List;
                         public void onClick(View v) {
                             Intent i = new Intent(PickTableActivity.this, MainActivity.class);
                             i.putExtra("table_num", tableItems.get(16).getTableNum());
+                            startProgressBar();
                             startActivity(i);
                         }
                     });
@@ -205,6 +224,7 @@ import java.util.List;
                         public void onClick(View v) {
                             Intent i = new Intent(PickTableActivity.this, MainActivity.class);
                             i.putExtra("table_num", tableItems.get(17).getTableNum());
+                            startProgressBar();
                             startActivity(i);
                         }
                     });
@@ -212,7 +232,18 @@ import java.util.List;
 
                 }
 
-                public void initializeData() {
+    private void startProgressBar() {
+        ProgressDialog progress;
+        progress = new ProgressDialog(PickTableActivity.this);
+        progress.setTitle("Loading Data from database");
+        progress.setMessage("Please wait...");
+        progress.setCancelable(false);
+        progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progress.show();
+
+    }
+
+    public void initializeData() {
                     for(int i=1 ; i<19; i++){
                      TableItem item = new TableItem(null, ""+i+"");
                      tableItems.add(item);
@@ -226,5 +257,10 @@ import java.util.List;
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    @Override
+    public void onBackPressed(){
+        finish();
     }
 }

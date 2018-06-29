@@ -209,7 +209,6 @@ public class CashFragment extends Fragment {
                 }else{
                     Toast.makeText(getContext(), "Return to Customer: "+returnToCustomer, Toast.LENGTH_SHORT).show();
 
-
                     AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
 
                     alertDialog.setTitle("Thank you!");
@@ -217,6 +216,11 @@ public class CashFragment extends Fragment {
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
+                                    int orderId = (int)getActivity().getIntent().getExtras().get("orderId");
+                                    DatabaseHelper db = new DatabaseHelper(getContext());
+                                    db.getWritableDatabase();
+                                    db.deleteOrder(orderId);
+                                    db.deleteOrderItems(orderId);
                                     Intent i = new Intent(getActivity(),PickOptionActivity.class);
                                     startActivity(i);
                                 }

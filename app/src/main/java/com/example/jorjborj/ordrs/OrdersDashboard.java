@@ -66,12 +66,12 @@ public class OrdersDashboard extends AppCompatActivity {
 
     private void initializeData() {
 
-        OrderItem item = new OrderItem("Chicken Salad",2,50.90,"k");
-        OrderItem item1 = new OrderItem("Chicken Salad",2,50.90,"k");
-        OrderItem item2 = new OrderItem("Cheese Cake",1,42.90,"k");
-        OrderItem item3 = new OrderItem("Chocolate Cake",1,42.90,"k");
-        OrderItem item4 = new OrderItem("Chocolate Cake",1,42.90,"k");
-        OrderItem item5 = new OrderItem("Chocolate Cake",1,42.90,"k");
+        OrderItem item = new OrderItem("Chicken Salad",2,50.90,"k","");
+        OrderItem item1 = new OrderItem("Chicken Salad",2,50.90,"k","");
+        OrderItem item2 = new OrderItem("Cheese Cake",1,42.90,"k","");
+        OrderItem item3 = new OrderItem("Chocolate Cake",1,42.90,"k","");
+        OrderItem item4 = new OrderItem("Chocolate Cake",1,42.90,"k","");
+        OrderItem item5 = new OrderItem("Chocolate Cake",1,42.90,"k","");
 
         list.add(item);
         list.add(item1);

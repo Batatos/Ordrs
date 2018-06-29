@@ -32,11 +32,17 @@ public class PaymentProcess extends AppCompatActivity implements CashFragment.On
 
     ArrayList<OrderItem> orderItems;
     OrderItemAdapter orderAdapter;
+    DatabaseHelper db;
+    int orderId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.payment_process);
+
+        db = new DatabaseHelper(this);
+        db.getWritableDatabase();
+        orderId = (int)getIntent().getExtras().get("orderId");
 
         ListView orderslv = (ListView)findViewById(R.id.lv);
         TextView price, ahoz, total;
@@ -45,7 +51,6 @@ public class PaymentProcess extends AppCompatActivity implements CashFragment.On
         tablayout.addTab(tablayout.newTab().setText("Cash"), true);
         tablayout.addTab(tablayout.newTab().setText("Credit Card"));
         HomePagerAdapter adapter = new HomePagerAdapter(getSupportFragmentManager(), tablayout.getTabCount());
-
 
         price = (TextView)findViewById(R.id.price);
         ahoz = (TextView)findViewById(R.id.ahoz);

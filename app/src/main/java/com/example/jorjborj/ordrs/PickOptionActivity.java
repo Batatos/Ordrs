@@ -34,6 +34,9 @@ public class PickOptionActivity extends AppCompatActivity {
 
         db = new DatabaseHelper(this);
         db.getWritableDatabase();
+
+        db.initTables();
+
         //HAPPY HOUR!@#!@#!@#!@#!@#
         happyhour = (LinearLayout)findViewById(R.id.happyHourBar);
 

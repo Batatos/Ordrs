@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -40,18 +41,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String ITEM_SUPPLIER = "supplier";
     public static final String ITEM_SUPPLIERNUMBER = "suppliernumber";
 
+    //tables table
+    public static final String TABLES_TABLE = "tables";
+    public static final String TABLE_NUMBER_COL = "ID";
 
     // orders table
     public static final String ORDER_TABLE = "orders";
     public static final String ORDER_ID_COL = "ID";
     public static final String ORDER_TABLENUM_COL = "tablenum";
 
+
+
+
     // orderItems table
-    public static final String ORDERITEM_TABLE = "orderitem";
-    public static final String ORDERITEM_NAME_COL = "name";
+    public static final String ORDERITEMS_TABLE = "orderitems";
+    public static final String ORDERITEM_NAME_COL = "name"; // FOREIGN KEY -- together with orderid is PRIMARY KEY
     public static final String ORDERITEM_ID_COL = "ID"; //FOREIGN KEY
+    public static final String ORDERITEM_TABLENUM_COL = "tablenum"; //FOREIGN KEY
+    public static final String ORDERITEM_TYPE_COL = "type"; //FOREIGN KEY
     public static final String ORDERITEM_QUANTITY_COL = "quantity";
     public static final String ORDERITEM_NOTES_COL = "notes";
+    public static final String ORDERITEM_PRICE_COL = "price";
 
 
     public DatabaseHelper(Context context) {
@@ -83,23 +93,116 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + ITEM_SUPPLIERNUMBER + " TEXT"
                 + ")");
 
+        db.execSQL("CREATE TABLE " + TABLES_TABLE + " ("
+        + TABLE_NUMBER_COL + " INTEGER NOT NULL PRIMARY KEY"
+        +")");
+
+        db.execSQL("CREATE TABLE "+ ORDER_TABLE + " ("
+        + ORDER_ID_COL + " INTEGER PRIMARY KEY,"
+        + ORDER_TABLENUM_COL + " INTEGER NOT NULL,"
+        + "FOREIGN KEY ("+ORDER_TABLENUM_COL+")" + "REFERENCES "+ TABLES_TABLE +")");
+
+        db.execSQL("CREATE TABLE "+ ORDERITEMS_TABLE + " ("
+                + ORDERITEM_ID_COL + " INTEGER,"
+                + ORDERITEM_NAME_COL + " TEXT,"
+                + ORDERITEM_TABLENUM_COL + " INTEGER,"
+                + ORDERITEM_TYPE_COL + " TEXT,"
+                + ORDERITEM_QUANTITY_COL + " INTEGER,"
+                + ORDERITEM_PRICE_COL + " REAL,"
+                + ORDERITEM_NOTES_COL + " TEXT,"
+                + "PRIMARY KEY ("+ORDERITEM_ID_COL+","+ORDERITEM_NAME_COL+"))");
+
         //TODO: order, orderitem creation
     }
 
-    public boolean insertOrder(){
-
-
-
-        return false;
-    }
 
     //########################ITEM###################################
 
-    public boolean deleteItem(String name){
+    public Cursor getOrderItemsByTableNum(int tableNum){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "DELETE FROM "+ ITEM_TABLE +" WHERE "+ ITEM_NAME +" = '"+name+"'";
+        Cursor data = db.rawQuery("SELECT * FROM "+ ORDERITEMS_TABLE +
+                " WHERE " + ORDERITEM_TABLENUM_COL + " = "+tableNum, null);
+        return data;
+    }
+
+
+    public boolean insertOrderItem(int orderId,String itemName,int tableNum, String type, int quantity,double price,String notes){
+        if (notes==null || notes.equals("")){
+            notes="";
+        }
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(ORDERITEM_ID_COL,orderId);
+        contentValues.put(ORDERITEM_NAME_COL,itemName);
+        contentValues.put(ORDERITEM_TABLENUM_COL,tableNum);
+        contentValues.put(ORDERITEM_TYPE_COL,type);
+        contentValues.put(ORDERITEM_QUANTITY_COL,quantity);
+        contentValues.put(ORDERITEM_PRICE_COL,price);
+        contentValues.put(ORDERITEM_NOTES_COL,notes);
+
+        long result = db.insert(ORDERITEMS_TABLE, null, contentValues);
+        db.close();
+
+        if(result == -1){
+            return false;
+        }else {
+            return true;
+        }
+
+    }
+
+    public boolean deleteOrderItems(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM "+ ORDERITEMS_TABLE +" WHERE "+ ORDERITEM_ID_COL +" = "+id;
         db.execSQL(query);
         return true;
+
+    }
+    public boolean deleteOrder(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM "+ ORDER_TABLE +" WHERE "+ ORDER_ID_COL +" = "+id;
+        db.execSQL(query);
+        return true;
+    }
+
+    public Cursor getOrderById(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String s = Integer.toString(id);
+        Cursor data = db.rawQuery("SELECT * FROM "+ ORDER_TABLE +
+                " WHERE " + ORDER_ID_COL + " = "+s, null);
+        return data;
+
+    }
+
+    public Cursor getOrderByTableNum(int tableNum){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String s = Integer.toString(tableNum);
+        Cursor data = db.rawQuery("SELECT * FROM "+ ORDER_TABLE +
+                " WHERE " + ORDER_TABLENUM_COL + " = "+s, null);
+        return data;
+
+    }
+    public boolean insertOrder(int id, int tableNum){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        if(getOrderByTableNum(tableNum)!=null && getOrderByTableNum(tableNum).getCount()>0){
+            Log.i("##Database##: ","There's another order on this table.");
+        }
+
+        contentValues.put(ORDER_ID_COL,id);
+        contentValues.put(ORDER_TABLENUM_COL,tableNum);
+
+        long result = db.insert(ORDER_TABLE, null, contentValues);
+        db.close();
+
+        if(result == -1){
+            return false;
+        }else {
+            return true;
+        }
+
     }
     public boolean insertItem(String name, double price, int amount, String type, String category, Bitmap img, String supplier, String supplierNumber){
 
@@ -129,6 +232,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }else {
             return true;
         }
+    }
+
+    public boolean deleteItem(String name){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM "+ ITEM_TABLE +" WHERE "+ ITEM_NAME +" = '"+name+"'";
+        db.execSQL(query);
+        return true;
     }
 
     public Cursor getAllItems(){
@@ -172,6 +282,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " WHERE " + ITEM_CATEGORY + " = '"+s+"'", null);
         return data;
     }
+
     public Cursor getAllAlcoholItems(){
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -202,8 +313,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
         }
     }
-
-
 
     public Cursor getEventData(){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -253,16 +362,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return data.getInt(0);
     }
 
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //TODO: to other tables
-        db.execSQL("DROP TABLE IF EXISTS "+EVENT_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS "+ITEM_TABLE);
-
-        onCreate(db);
-    }
-
     public int  updateItem(Item editedItem) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -294,5 +393,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         return cnt;
+    }
+
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        //TODO: to other tables
+        db.execSQL("DROP TABLE IF EXISTS "+EVENT_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS "+ITEM_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLES_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS "+ORDER_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS "+ORDERITEMS_TABLE);
+
+        onCreate(db);
+    }
+
+    public void initTables() {
+
+        for(int i=1;i<19;i++){
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(TABLE_NUMBER_COL,i);
+            db.insert(TABLES_TABLE, null, contentValues);
+            db.close();
+        }
+
     }
 }
