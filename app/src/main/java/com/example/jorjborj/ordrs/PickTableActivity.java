@@ -3,6 +3,7 @@ package com.example.jorjborj.ordrs;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -13,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -39,6 +41,9 @@ import java.util.List;
                     //RecyclerView lv = (RecyclerView) findViewById(R.id.tables_lv);
                     initializeData();
 
+                    final DatabaseHelper db = new DatabaseHelper(this);
+                    db.getWritableDatabase();
+
 //                    final TableCardAdapter adapter3 = new TableCardAdapter(this, tableItems);
 //                    lv.setLayoutManager(new GridLayoutManager(this,7));
 //                    lv.setHasFixedSize(true);
@@ -46,7 +51,7 @@ import java.util.List;
 //                    adapter3.notifyDataSetChanged();
 
 
-                    ConstraintLayout table1 = (ConstraintLayout)findViewById(R.id.table1);
+                    final ConstraintLayout table1 = (ConstraintLayout)findViewById(R.id.table1);
                     ConstraintLayout table2 = (ConstraintLayout)findViewById(R.id.table2);
                     ConstraintLayout table3 = (ConstraintLayout)findViewById(R.id.table3);
                     ConstraintLayout table4 = (ConstraintLayout)findViewById(R.id.table4);
@@ -64,6 +69,61 @@ import java.util.List;
                     ConstraintLayout table16 = (ConstraintLayout)findViewById(R.id.table16);
                     ConstraintLayout table17 = (ConstraintLayout)findViewById(R.id.table17);
                     ConstraintLayout table18 = (ConstraintLayout)findViewById(R.id.table18);
+                    ImageView icon1 = (ImageView)findViewById(R.id.icon1);
+                    ImageView icon2 = (ImageView)findViewById(R.id.icon2);
+                    ImageView icon3 = (ImageView)findViewById(R.id.icon3);
+                    ImageView icon4 = (ImageView)findViewById(R.id.icon4);
+                    ImageView icon5 = (ImageView)findViewById(R.id.icon5);
+                    ImageView icon6 = (ImageView)findViewById(R.id.icon6);
+                    ImageView icon7 = (ImageView)findViewById(R.id.icon7);
+                    ImageView icon8 = (ImageView)findViewById(R.id.icon8);
+                    ImageView icon9 = (ImageView)findViewById(R.id.icon9);
+                    ImageView icon10 = (ImageView)findViewById(R.id.icon10);
+                    ImageView icon11 = (ImageView)findViewById(R.id.icon11);
+                    ImageView icon12 = (ImageView)findViewById(R.id.icon12);
+                    ImageView icon13 = (ImageView)findViewById(R.id.icon13);
+                    ImageView icon14 = (ImageView)findViewById(R.id.icon14);
+                    ImageView icon15 = (ImageView)findViewById(R.id.icon15);
+                    ImageView icon16 = (ImageView)findViewById(R.id.icon16);
+                    ImageView icon17 = (ImageView)findViewById(R.id.icon17);
+                    ImageView icon18 = (ImageView)findViewById(R.id.icon18);
+
+                    if(db.getOrderByTableNum(1).getCount()>0)
+                        icon1.setVisibility(View.VISIBLE);
+                    if(db.getOrderByTableNum(2).getCount()>0)
+                        icon2.setVisibility(View.VISIBLE);
+                    if(db.getOrderByTableNum(3).getCount()>0)
+                        icon3.setVisibility(View.VISIBLE);
+                    if(db.getOrderByTableNum(4).getCount()>0)
+                        icon4.setVisibility(View.VISIBLE);
+                    if(db.getOrderByTableNum(5).getCount()>0)
+                        icon5.setVisibility(View.VISIBLE);
+                    if(db.getOrderByTableNum(6).getCount()>0)
+                        icon6.setVisibility(View.VISIBLE);
+                    if(db.getOrderByTableNum(7).getCount()>0)
+                        icon7.setVisibility(View.VISIBLE);
+                    if(db.getOrderByTableNum(8).getCount()>0)
+                        icon8.setVisibility(View.VISIBLE);
+                    if(db.getOrderByTableNum(9).getCount()>0)
+                        icon9.setVisibility(View.VISIBLE);
+                    if(db.getOrderByTableNum(10).getCount()>0)
+                        icon10.setVisibility(View.VISIBLE);
+                    if(db.getOrderByTableNum(11).getCount()>0)
+                        icon11.setVisibility(View.VISIBLE);
+                    if(db.getOrderByTableNum(12).getCount()>0)
+                        icon12.setVisibility(View.VISIBLE);
+                    if(db.getOrderByTableNum(13).getCount()>0)
+                        icon13.setVisibility(View.VISIBLE);
+                    if(db.getOrderByTableNum(14).getCount()>0)
+                        icon14.setVisibility(View.VISIBLE);
+                    if(db.getOrderByTableNum(15).getCount()>0)
+                        icon15.setVisibility(View.VISIBLE);
+                    if(db.getOrderByTableNum(16).getCount()>0)
+                        icon16.setVisibility(View.VISIBLE);
+                    if(db.getOrderByTableNum(17).getCount()>0)
+                        icon17.setVisibility(View.VISIBLE);
+                    if(db.getOrderByTableNum(18).getCount()>0)
+                        icon18.setVisibility(View.VISIBLE);
 
                     table1.setOnClickListener(new View.OnClickListener() {
                         @Override

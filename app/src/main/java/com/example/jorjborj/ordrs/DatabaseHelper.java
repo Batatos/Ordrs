@@ -44,6 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //tables table
     public static final String TABLES_TABLE = "tables";
     public static final String TABLE_NUMBER_COL = "ID";
+    public static final String TABLE_LOCATION_COL = "location";
 
     // orders table
     public static final String ORDER_TABLE = "orders";
@@ -94,7 +95,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + ")");
 
         db.execSQL("CREATE TABLE " + TABLES_TABLE + " ("
-        + TABLE_NUMBER_COL + " INTEGER NOT NULL PRIMARY KEY"
+        + TABLE_NUMBER_COL + " INTEGER NOT NULL PRIMARY KEY,"
+                + TABLE_LOCATION_COL + " TEXT"
         +")");
 
         db.execSQL("CREATE TABLE "+ ORDER_TABLE + " ("
@@ -159,9 +161,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
 
     }
+
+    public boolean deleteOrderItemsByTable(int tableNum){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM "+ ORDERITEMS_TABLE +" WHERE "+ ORDERITEM_TABLENUM_COL +" = "+tableNum;
+        db.execSQL(query);
+        return true;
+
+    }
+
+
     public boolean deleteOrder(int id){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM "+ ORDER_TABLE +" WHERE "+ ORDER_ID_COL +" = "+id;
+        db.execSQL(query);
+        return true;
+    }
+    public boolean deleteOrderByTableNum(int tableNum){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM "+ ORDER_TABLE +" WHERE "+ ORDER_TABLENUM_COL +" = "+tableNum;
         db.execSQL(query);
         return true;
     }
@@ -414,6 +432,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
             contentValues.put(TABLE_NUMBER_COL,i);
+            if(i<12){
+                contentValues.put(TABLE_LOCATION_COL,"inside");
+            }else
+                contentValues.put(TABLE_LOCATION_COL,"outside");
+
             db.insert(TABLES_TABLE, null, contentValues);
             db.close();
         }

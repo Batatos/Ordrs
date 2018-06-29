@@ -16,6 +16,15 @@ public class OrderItem implements Serializable{
     double price;
     String type;
     String notes=null;
+    int orderId;
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
 
     public String getType() {
         return type;

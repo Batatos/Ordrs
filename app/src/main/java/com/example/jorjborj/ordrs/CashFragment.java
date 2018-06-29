@@ -213,14 +213,15 @@ public class CashFragment extends Fragment {
 
                     alertDialog.setTitle("Thank you!");
                     alertDialog.setMessage("Return to Customer: ₪"+returnToCustomer);
+                    alertDialog.setCanceledOnTouchOutside(false);
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    int orderId = (int)getActivity().getIntent().getExtras().get("orderId");
+                                    int orderId = getActivity().getIntent().getExtras().getInt("id");
                                     DatabaseHelper db = new DatabaseHelper(getContext());
                                     db.getWritableDatabase();
-                                    db.deleteOrder(orderId);
-                                    db.deleteOrderItems(orderId);
+                                    db.deleteOrderByTableNum(Integer.parseInt(getActivity().getIntent().getExtras().get("tablenum").toString()));
+                                    db.deleteOrderItemsByTable(Integer.parseInt(getActivity().getIntent().getExtras().get("tablenum").toString()));
                                     Intent i = new Intent(getActivity(),PickOptionActivity.class);
                                     startActivity(i);
                                 }

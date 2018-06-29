@@ -42,7 +42,6 @@ public class PaymentProcess extends AppCompatActivity implements CashFragment.On
 
         db = new DatabaseHelper(this);
         db.getWritableDatabase();
-        orderId = (int)getIntent().getExtras().get("orderId");
 
         ListView orderslv = (ListView)findViewById(R.id.lv);
         TextView price, ahoz, total;
@@ -65,6 +64,7 @@ public class PaymentProcess extends AppCompatActivity implements CashFragment.On
 
         orderItems = (ArrayList<OrderItem>) getIntent().getSerializableExtra("orderlv");
         orderAdapter = new OrderItemAdapter(this, R.layout.payment_lv_row, orderItems);
+        orderId = orderItems.get(0).getOrderId();
 
         orderslv.setAdapter(orderAdapter);
 
@@ -112,7 +112,7 @@ public class PaymentProcess extends AppCompatActivity implements CashFragment.On
 
     public class OrderItemAdapter extends ArrayAdapter<OrderItem> {
 
-        Double sumPrice = 0.0;
+        double sumPrice = 0.0;
         private final Context context;
         private final ArrayList<OrderItem> modelsArrayList;
         private int ctr;

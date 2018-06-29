@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
     ArrayList<Item> alcoholmenu = new ArrayList<Item>();
     ArrayAdapter<String> adapter4 = null;
     ArrayList<String> orders = null;
-    ArrayList<OrderItem> orderItems = new ArrayList<>();//should be Item not OrderItem
+    ArrayList<OrderItem> orderItems;//should be Item not OrderItem
     ArrayList<OrderItem> newItems = new ArrayList<>();//should be Item not OrderItem
     ArrayAdapter orderAdapter = null;
     double sumPrice = 0.0;
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         db.getWritableDatabase();
         initializeData();
         grabAndFillData();
-
+        orderItems = new ArrayList<>();
         discounttext = (TextView) findViewById(R.id.discountAhoz);
         totalprice = (TextView) findViewById(R.id.totalPrice);
 
@@ -84,6 +84,10 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
 
         tablenum = getIntent().getExtras().get("table_num").toString();
         getSupportActionBar().setTitle("Order on table #" + tablenum);
+
+//        if(db.getOrderByTableNum(Integer.parseInt(tablenum)).getCount()>0){
+//            updateOrderItems(orderItems);
+//        }
 
         // Large screen, LISTVIEW and adapters
         final View mainscreen = (View) findViewById(R.id.largeScreen);
@@ -109,36 +113,18 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ArrayList<OrderItem> orderItems1 = new ArrayList<OrderItem>();
+
+
                 String output = "Table #" + tablenum + ": ";
                 Cursor c = db.getOrderItemsByTableNum(Integer.parseInt(tablenum));
+                Random rand = new Random();
+                x = rand.nextInt(9000) + 1;
 
                 if (c.getCount() > 0) {
-                    try {
-                        for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
-
-                            String column1 = c.getString(c.getColumnIndex("name"));
-                            int column2 = c.getInt(c.getColumnIndex("quantity"));
-                            double column3 = c.getDouble(c.getColumnIndex("price"));
-                            String column4 = c.getString(c.getColumnIndex("notes"));
-                            if (column4.equals("")) column4 = null;
-                            String column5 = c.getString(c.getColumnIndex("type"));
-
-                            OrderItem i = new OrderItem(column1, column2, column3, column5, column4);
-                            orderItems.add(i);
-                        }
-
-                    } catch (Throwable t) {
-                        t.printStackTrace();
-                    }
+                    updateOrderItems(orderItems1);
                 }
 
-                for(OrderItem i : orderItems){
-                    for(OrderItem k : newItems){
-                        if(i.getTitle().equals(k.getTitle())){
-                            k.setCounter(k.getCounter()-i.getCounter());
-                        }
-                    }
-                }
 
                 for (int x = 0; x < orderItems.size(); x++) {
                     output += orderItems.get(x).getTitle();
@@ -154,16 +140,17 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
                 if (output.equals("Table #" + tablenum + ": ")) {
                     Toast.makeText(MainActivity.this, "No items selected", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(MainActivity.this, output, Toast.LENGTH_SHORT).show();
-                    Random rand = new Random();
-                    x = rand.nextInt(9000) + 1;
+                    db.deleteOrderItemsByTable(Integer.parseInt(tablenum));
                     db.insertOrder(x, Integer.parseInt(tablenum));
-
                     for (OrderItem oi : orderItems) {
                         db.insertOrderItem(x, oi.getTitle(), Integer.parseInt(tablenum), oi.getType(), oi.getCounter(), oi.getPrice(), oi.getNotes());
                     }
 
                 }
+                Toast.makeText(MainActivity.this, "Order Sent Successfully!", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(MainActivity.this,PickOptionActivity.class);
+                startActivity(i);
+                finish();
             }
         });
 
@@ -196,7 +183,8 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
                     i.putExtra("ahoz", discounttext.getText().toString());
                     i.putExtra("total", totalprice.getText().toString());
                     i.putExtra("price", sumPrice);
-                    i.putExtra("orderId", x);
+                    i.putExtra("tablenum",tablenum);
+                    i.putExtra("id", x);
                     startActivity(i);
                 } else {
                     Toast.makeText(MainActivity.this, "No Items Selected.", Toast.LENGTH_SHORT).show();
@@ -264,7 +252,7 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         //if theres an order on this table = show this order
 
         if (db.getOrderItemsByTableNum(Integer.parseInt(tablenum)).getCount()>0) {
-            Toast.makeText(this, "yes", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, orderItems.get(0).getOrderId(), Toast.LENGTH_SHORT).show();
             Cursor c = db.getOrderItemsByTableNum(Integer.parseInt(tablenum));
 
                 try {
@@ -274,48 +262,22 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
                         int column2 = c.getInt(c.getColumnIndex("quantity"));
                         double column3 = c.getDouble(c.getColumnIndex("price"));
                         String column4 = c.getString(c.getColumnIndex("notes"));
-                        if(column4.equals("")) column4=null;
+                        if (column4.equals("")) column4 = null;
                         String column5 = c.getString(c.getColumnIndex("type"));
 
-                        OrderItem i = new OrderItem(column1,column2,column3,column5,column4);
+                        OrderItem i = new OrderItem(column1, column2, column3, column5, column4);
+                        x = i.getOrderId();
                         orderItems.add(i);
                         orders.add(i.getTitle());
                         sumPrice += i.getPrice();
-                        TextView tv = (TextView)findViewById(R.id.sumPrice);
+                        TextView tv = (TextView) findViewById(R.id.sumPrice);
                         tv.setText(Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(sumPrice))));
                         calculateTotalPrice();
 
                         orderAdapter.notifyDataSetChanged();
 
                         //TODO: Should update price!
-
-
-
-//                        if(!orderItems.contains(i)){
-//                            orderItems.add(i);
-//                            Toast.makeText(this, "added to orderItems", Toast.LENGTH_SHORT).show();
-//                            orders.add(i.getTitle());
-//                            sumPrice += i.getPrice();
-//                            TextView tv = (TextView)findViewById(R.id.sumPrice);
-//                            tv.setText(Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(sumPrice))));
-//                            calculateTotalPrice();
-//                            orderAdapter.notifyDataSetChanged();
-//
-//                        }else {
-//                            for (OrderItem oi : orderItems) {
-//                                if (oi.getTitle().equals(i.getTitle())) {
-//                                    Toast.makeText(this, "not added to orderItems", Toast.LENGTH_SHORT).show();
-//                                    oi.setCounter(oi.getCounter() + 1);
-//                                    sumPrice += oi.getPrice();
-//                                    TextView tv = (TextView) findViewById(R.id.sumPrice);
-//                                    tv.setText(Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(sumPrice))));
-//                                    calculateTotalPrice();
-//                                    orderAdapter.notifyDataSetChanged();
-//                                }
-//                            }
-//                        }
-                        }
-
+                    }
             } catch (Throwable t) {
                     t.printStackTrace();
                 }
@@ -323,33 +285,26 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
 
     }
 
-    public void initorderItems(){
-
+    public void updateOrderItems(ArrayList<OrderItem> orderItems){
         db.getWritableDatabase();
-        if (db.getOrderItemsByTableNum(Integer.parseInt(tablenum)).getCount()>0) {
-            Cursor c = db.getOrderItemsByTableNum(Integer.parseInt(tablenum));
+        Cursor c = db.getOrderItemsByTableNum(Integer.parseInt(tablenum));
 
+        if (c.getCount() > 0) {
             try {
-                for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+                for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
 
                     String column1 = c.getString(c.getColumnIndex("name"));
                     int column2 = c.getInt(c.getColumnIndex("quantity"));
+                    int id = c.getInt(c.getColumnIndex("ID"));
                     double column3 = c.getDouble(c.getColumnIndex("price"));
                     String column4 = c.getString(c.getColumnIndex("notes"));
-                    if(column4.equals("")) column4=null;
+                    if (column4.equals("")) column4 = null;
                     String column5 = c.getString(c.getColumnIndex("type"));
 
-                    OrderItem i = new OrderItem(column1,column2,column3,column5, column4);
+                    OrderItem i = new OrderItem(column1, column2, column3, column5, column4);
+                    i.setOrderId(id);
 
-                    if(!orderItems.contains(i)){
-                        orderItems.add(i);
-                    }else{
-                        for(OrderItem oi: orderItems){
-                            if(oi.getTitle().equals(i.getTitle())){
-                                oi.setCounter(oi.getCounter()+1);
-                            }
-                        }
-                    }
+                    orderItems.add(i);
                 }
 
             } catch (Throwable t) {
