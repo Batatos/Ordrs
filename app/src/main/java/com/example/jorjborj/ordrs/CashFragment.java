@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.icu.text.DecimalFormat;
 import android.media.Image;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -214,10 +215,10 @@ public class CashFragment extends Fragment {
                     alertDialog.setTitle("Thank you!");
                     alertDialog.setMessage("Return to Customer: ₪"+returnToCustomer);
                     alertDialog.setCanceledOnTouchOutside(false);
+
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    int orderId = getActivity().getIntent().getExtras().getInt("id");
                                     DatabaseHelper db = new DatabaseHelper(getContext());
                                     db.getWritableDatabase();
                                     db.deleteOrderByTableNum(Integer.parseInt(getActivity().getIntent().getExtras().get("tablenum").toString()));
@@ -227,6 +228,8 @@ public class CashFragment extends Fragment {
                                 }
                             });
                     alertDialog.show();
+                    final MediaPlayer mp = MediaPlayer.create(getContext(), R.raw.cashregister);
+                    mp.start();
                     TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
                     textView.setTextSize(25);
 

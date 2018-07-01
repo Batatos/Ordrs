@@ -2,25 +2,20 @@ package com.example.jorjborj.ordrs;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.netopen.hotbitmapgg.library.view.RingProgressBar;
 
 /**
  * Created by Ahed on 4/8/2018.
@@ -29,8 +24,9 @@ import java.util.List;
             public class PickTableActivity extends AppCompatActivity {
 
                 private List<TableItem> tableItems = new ArrayList<>();
+                ProgressDialog progress;
 
-                @Override
+    @Override
                 protected void onCreate(@Nullable Bundle savedInstanceState) {
                     super.onCreate(savedInstanceState);
                     setContentView(R.layout.pick_table_layout);
@@ -43,13 +39,6 @@ import java.util.List;
 
                     final DatabaseHelper db = new DatabaseHelper(this);
                     db.getWritableDatabase();
-
-//                    final TableCardAdapter adapter3 = new TableCardAdapter(this, tableItems);
-//                    lv.setLayoutManager(new GridLayoutManager(this,7));
-//                    lv.setHasFixedSize(true);
-//                    lv.setAdapter(adapter3);
-//                    adapter3.notifyDataSetChanged();
-
 
                     final ConstraintLayout table1 = (ConstraintLayout)findViewById(R.id.table1);
                     ConstraintLayout table2 = (ConstraintLayout)findViewById(R.id.table2);
@@ -292,25 +281,48 @@ import java.util.List;
 
                 }
 
+    Handler myHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg){
+            super.handleMessage(msg);
+            progress.incrementProgressBy(20);
+        }
+    };
+
     private void startProgressBar() {
-        ProgressDialog progress;
         progress = new ProgressDialog(PickTableActivity.this);
-        progress.setTitle("Loading Data from database");
+        progress.setTitle("Loading items from Database");
         progress.setMessage("Please wait...");
+        progress.setMax(100);
         progress.setCancelable(false);
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.show();
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+
+                    while (progress.getProgress() <= progress.getMax()) {
+                        Thread.sleep(300);
+                        myHandler.sendMessage(myHandler.obtainMessage());
+                        if(progress.getProgress() == progress.getMax()){
+                            progress.dismiss();
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
+
 
     public void initializeData() {
                     for(int i=1 ; i<19; i++){
                      TableItem item = new TableItem(null, ""+i+"");
                      tableItems.add(item);
                     }
-
-
-
                 }
 
     @Override

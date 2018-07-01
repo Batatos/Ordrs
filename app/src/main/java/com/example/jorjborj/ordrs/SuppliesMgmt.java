@@ -3,6 +3,7 @@ package com.example.jorjborj.ordrs;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -10,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.PopupMenu;
@@ -204,15 +207,8 @@ public class SuppliesMgmt extends AppCompatActivity {
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         public boolean onMenuItemClick(MenuItem item) {
                             if (item.getTitle().toString().equals("Delete")) {
-                                if(db.deleteItem(holder.title.getText().toString())) {
-                                    Intent i = new Intent(SuppliesMgmt.this,SuppliesMgmt.class);
-                                    startActivity(i);
-                                    Toast.makeText(SuppliesMgmt.this, "Successfully Deleted from Database", Toast.LENGTH_SHORT).show();
-                                }else
-                                    Toast.makeText(SuppliesMgmt.this, "Couldn't Delete from Database", Toast.LENGTH_SHORT).show();
-
+                                showCancelAlert(holder.title.getText().toString());
                             }
-
                             if (item.getTitle().toString().equals("Edit")) {
 
                                 EditItemDialog eid = new EditItemDialog(SuppliesMgmt.this,menu.get(position));
@@ -229,6 +225,37 @@ public class SuppliesMgmt extends AppCompatActivity {
             });
 
 
+
+
+        }
+
+        private void showCancelAlert(final String item) {
+
+            final AlertDialog.Builder cancelAlert = new AlertDialog.Builder(SuppliesMgmt.this);
+            cancelAlert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    final MediaPlayer mp1 = MediaPlayer.create(getBaseContext(), R.raw.deleted);
+                    mp1.start();
+                    if(db.deleteItem(item)) {
+                        Intent i = new Intent(SuppliesMgmt.this,SuppliesMgmt.class);
+                        startActivity(i);
+                        Toast.makeText(SuppliesMgmt.this, "Successfully Deleted from Database", Toast.LENGTH_SHORT).show();
+                    }else
+                        Toast.makeText(SuppliesMgmt.this, "Couldn't Delete from Database", Toast.LENGTH_SHORT).show();
+
+                }
+            });
+            cancelAlert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            cancelAlert.setTitle("Delete Item");
+            cancelAlert.setMessage("Are you sure you want to delete " + item + " from Database?\n"+"You will not be able to retrieve it again!");
+            cancelAlert.show();
 
 
         }
@@ -605,6 +632,8 @@ public class SuppliesMgmt extends AppCompatActivity {
                     Bitmap pic = ((BitmapDrawable)drawable).getBitmap();
 
                     db.insertItem(name.getText().toString(),Double.parseDouble(price.getText().toString()),Integer.parseInt(amount.getText().toString()),t,c,pic,supplier.getText().toString(),suppliernumber.getText().toString());
+                    final MediaPlayer mp = MediaPlayer.create(getContext(), R.raw.bell);
+                    mp.start();
                     dismiss();
                     Intent i = new Intent(SuppliesMgmt.this,SuppliesMgmt.class);
                     startActivity(i);

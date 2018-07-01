@@ -73,7 +73,7 @@
                         android:layout_marginRight="20dp"
                         android:backgroundTint="#fa755f"
                         android:gravity="center"
-                        android:text="cancel order"
+                        android:text="exit"
                         android:textColor="#fff" />
 
 
@@ -140,14 +140,15 @@
             android:gravity="center">
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="monospace"
                 android:gravity="center"
                 android:text="Order Summary"
                 android:textColor="#000"
-                android:textSize="20dp" />
+                android:textSize="22dp" />
+
         </LinearLayout>
 
         <LinearLayout

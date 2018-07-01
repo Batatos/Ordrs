@@ -281,7 +281,7 @@
                     android:layout_width="170dp"
                     android:layout_height="170dp"
                     android:id="@+id/editimg"
-                    android:background="@mipmap/insertpic"/>
+                    android:src="@mipmap/insertpic"/>
             </LinearLayout>
 
             <LinearLayout

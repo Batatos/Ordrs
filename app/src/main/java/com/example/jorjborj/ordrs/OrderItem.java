@@ -17,6 +17,24 @@ public class OrderItem implements Serializable{
     String type;
     String notes=null;
     int orderId;
+    String status = "false";
+    int tableNum;
+
+    public int getTableNum() {
+        return tableNum;
+    }
+
+    public void setTableNum(int tableNum) {
+        this.tableNum = tableNum;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public int getOrderId() {
         return orderId;
@@ -40,6 +58,17 @@ public class OrderItem implements Serializable{
 
     public OrderItem(String title, int counter, double price, String type, String notes) {
         super();
+        this.title = title;
+        this.counter = counter;
+        this.price=price;
+        this.type=type;
+        this.notes=notes;
+    }
+    public OrderItem(int orderId, String title, int counter, double price, String type, String notes,String status,int tableNum) {
+        super();
+        this.status=status;
+        this.orderId=orderId;
+        this.tableNum=tableNum;
         this.title = title;
         this.counter = counter;
         this.price=price;

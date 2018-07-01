@@ -59,13 +59,12 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
     ArrayAdapter<String> adapter4 = null;
     ArrayList<String> orders = null;
     ArrayList<OrderItem> orderItems;//should be Item not OrderItem
-    ArrayList<OrderItem> newItems = new ArrayList<>();//should be Item not OrderItem
     ArrayAdapter orderAdapter = null;
     double sumPrice = 0.0;
     String tablenum = "waiting for data";
     TextView discounttext,totalprice;
     DatabaseHelper db;
-    int x;
+    int x,i=0,i1=0;
     @Override
         protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +77,6 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         orderItems = new ArrayList<>();
         discounttext = (TextView) findViewById(R.id.discountAhoz);
         totalprice = (TextView) findViewById(R.id.totalPrice);
-
         final BottomNavigationView nav = (BottomNavigationView) findViewById(R.id.navbar);
         disableShiftMode(nav);
 
@@ -109,22 +107,33 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         Button cancelBtn = (Button) findViewById(R.id.cancelBtn);
         final Button payBtn = (Button) findViewById(R.id.payBtn);
         final Button discountBtn = (Button) findViewById(R.id.discountBtn);
-
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<OrderItem> orderItems1 = new ArrayList<OrderItem>();
-
-
-                String output = "Table #" + tablenum + ": ";
                 Cursor c = db.getOrderItemsByTableNum(Integer.parseInt(tablenum));
+
+                if(c.getCount()==orderItems.size()){
+                    i=0;
+                    i1=0;
+                    for(OrderItem o : orderItems){
+                        i+= o.getCounter();
+                    }
+
+                    try {
+                        for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+                            i1+=c.getInt(c.getColumnIndex("quantity"));                        }
+                        }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                    if(i1==i){
+                            Toast.makeText(MainActivity.this, "No new items selected!", Toast.LENGTH_SHORT).show();
+                            return;}
+                }
+                String output = "Table #" + tablenum + ": ";
+                //Cursor c = db.getOrderItemsByTableNum(Integer.parseInt(tablenum));
                 Random rand = new Random();
                 x = rand.nextInt(9000) + 1;
-
-                if (c.getCount() > 0) {
-                    updateOrderItems(orderItems1);
-                }
-
 
                 for (int x = 0; x < orderItems.size(); x++) {
                     output += orderItems.get(x).getTitle();
@@ -137,13 +146,17 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
                         output += ", ";
                     }
                 }
+
                 if (output.equals("Table #" + tablenum + ": ")) {
                     Toast.makeText(MainActivity.this, "No items selected", Toast.LENGTH_SHORT).show();
                 } else {
-                    db.deleteOrderItemsByTable(Integer.parseInt(tablenum));
+                    db.deleteOrderItemsByTable(Integer.parseInt(tablenum)); //naah
+                    //db.deleteOrderByTableNum(Integer.parseInt(tablenum));
+                    if(orderItems.size()>0) db.deleteOrder(orderItems.get(0).getOrderId());
                     db.insertOrder(x, Integer.parseInt(tablenum));
                     for (OrderItem oi : orderItems) {
-                        db.insertOrderItem(x, oi.getTitle(), Integer.parseInt(tablenum), oi.getType(), oi.getCounter(), oi.getPrice(), oi.getNotes());
+                        oi.setTableNum(Integer.parseInt(tablenum));
+                        db.insertOrderItem(x, oi.getTitle(), Integer.parseInt(tablenum), oi.getType(), oi.getCounter(), oi.getPrice(), oi.getNotes(),oi.getStatus());
                     }
 
                 }
@@ -177,6 +190,32 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
             public void onClick(View v) {
 //                payDialog payDialog = new payDialog(MainActivity.this);
 //                payDialog.show();
+
+                Cursor c = db.getOrderItemsByTableNum(Integer.parseInt(tablenum));
+                i=0;
+                i1=0;
+                for(OrderItem o : orderItems){
+                    i+= o.getCounter();
+                }
+
+                try {
+                    for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+                        i1+=c.getInt(c.getColumnIndex("quantity"));                        }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+                if(c.getCount()<1){
+                    Toast.makeText(MainActivity.this, "There aren't any orders sent on this table!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if(db.getOrderByTableNum(Integer.parseInt(tablenum)).getCount()<1 || i>i1){
+                    Toast.makeText(MainActivity.this, "Some items weren't sent! Send before paying", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
                 if (!orderItems.isEmpty()) {
                     Intent i = new Intent(MainActivity.this, PaymentProcess.class);
                     i.putExtra("orderlv", getOrderItems());
@@ -269,14 +308,12 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
                         x = i.getOrderId();
                         orderItems.add(i);
                         orders.add(i.getTitle());
-                        sumPrice += i.getPrice();
+                        sumPrice += i.getPrice()*i.getCounter();
                         TextView tv = (TextView) findViewById(R.id.sumPrice);
                         tv.setText(Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(sumPrice))));
                         calculateTotalPrice();
 
                         orderAdapter.notifyDataSetChanged();
-
-                        //TODO: Should update price!
                     }
             } catch (Throwable t) {
                     t.printStackTrace();
@@ -285,11 +322,12 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
 
     }
 
-    public void updateOrderItems(ArrayList<OrderItem> orderItems){
+    public void updateOrderItems(ArrayList<OrderItem> orderItems1){
         db.getWritableDatabase();
         Cursor c = db.getOrderItemsByTableNum(Integer.parseInt(tablenum));
 
         if (c.getCount() > 0) {
+            orderItems1 = new ArrayList<>();
             try {
                 for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
 
@@ -304,7 +342,7 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
                     OrderItem i = new OrderItem(column1, column2, column3, column5, column4);
                     i.setOrderId(id);
 
-                    orderItems.add(i);
+                    orderItems1.add(i);
                 }
 
             } catch (Throwable t) {
@@ -319,6 +357,7 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         cancelAlert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                updateOrderItems(orderItems);
                 Intent i = new Intent(getBaseContext(), PickOptionActivity.class);
                 startActivity(i);
                 finish();
@@ -332,8 +371,8 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
             }
         });
 
-        cancelAlert.setTitle("Cancel Order");
-        cancelAlert.setMessage("Are you sure you want to cancel order on table " + tablenum + " ?");
+        cancelAlert.setTitle("Exit Order");
+        cancelAlert.setMessage("Are you sure you want to exit order on table " + tablenum + " ?");
         cancelAlert.show();
 
 
@@ -499,7 +538,7 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
                     orders.add(menu.get(position).getName());
                     orderItems.add(newItem);
                     // Toast.makeText(mCtx, orderItems.get(orderItems.size()).toString(), Toast.LENGTH_SHORT).show();
-                    sumPrice += newItem.getPrice();
+                    sumPrice += newItem.getPrice()*newItem.getCounter();
                     TextView tv = (TextView)findViewById(R.id.sumPrice);
                     tv.setText(Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(sumPrice))));
                     calculateTotalPrice();

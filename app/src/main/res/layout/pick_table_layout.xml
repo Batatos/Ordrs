@@ -8,8 +8,6 @@
     tools:layout_editor_absoluteY="89dp"
     tools:layout_editor_absoluteX="0dp">
 
-
-
     <android.support.constraint.ConstraintLayout
         android:layout_width="95dp"
         android:layout_height="93dp"

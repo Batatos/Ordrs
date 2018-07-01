@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -89,13 +90,15 @@ public class TableOrderDetails extends AppCompatActivity implements DatePickerDi
                     Toast.makeText(TableOrderDetails.this, "Data is missing", Toast.LENGTH_SHORT).show();
                 }else
                 {
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-                    Date theDate = Calendar.getInstance().getTime();
+//                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+//                    Date theDate = Calendar.getInstance().getTime();
+                    final MediaPlayer mp = MediaPlayer.create(getBaseContext(), R.raw.waterdrop);
+                    mp.start();
+
                     String dateString = date.getText().toString();
                     AddData(Integer.parseInt(tableNumber), contactName.getText().toString(), Integer.parseInt(contactNumber.getText().toString())
                             , Integer.parseInt(numberOfPeople.getText().toString()), notes.getText().toString(), dateString);
                     Intent i = new Intent(getApplicationContext(), UpcomingEventsActivity.class);
-
                     startActivity(i);
                 }
             }

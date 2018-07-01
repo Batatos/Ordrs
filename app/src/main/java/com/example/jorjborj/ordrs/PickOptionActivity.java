@@ -96,11 +96,11 @@ public class PickOptionActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.dashboard:
-                Intent i = new Intent(PickOptionActivity.this,OrdersDashboard.class);
+                Intent i = new Intent(PickOptionActivity.this,KitchenDash.class);
                 startActivity(i);
                 break;
             case R.id.dashboard1:
-                Intent i1 = new Intent(PickOptionActivity.this,BarDashboard.class);
+                Intent i1 = new Intent(PickOptionActivity.this,BarDash.class);
                 startActivity(i1);
 
                 break;

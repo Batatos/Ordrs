@@ -59,6 +59,10 @@
 
         <activity android:name=".PaymentProcess"
             android:screenOrientation="sensorLandscape"/>
+        <activity android:name=".KitchenDash"
+            android:screenOrientation="sensorLandscape"/>
+        <activity android:name=".BarDash"
+            android:screenOrientation="sensorLandscape"/>
 
     </application>
 

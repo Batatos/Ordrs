@@ -63,6 +63,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String ORDERITEM_QUANTITY_COL = "quantity";
     public static final String ORDERITEM_NOTES_COL = "notes";
     public static final String ORDERITEM_PRICE_COL = "price";
+    public static final String ORDERITEM_STATUS_COL = "status";
 
 
     public DatabaseHelper(Context context) {
@@ -112,6 +113,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + ORDERITEM_QUANTITY_COL + " INTEGER,"
                 + ORDERITEM_PRICE_COL + " REAL,"
                 + ORDERITEM_NOTES_COL + " TEXT,"
+                + ORDERITEM_STATUS_COL + " TEXT,"
                 + "PRIMARY KEY ("+ORDERITEM_ID_COL+","+ORDERITEM_NAME_COL+"))");
 
         //TODO: order, orderitem creation
@@ -120,15 +122,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //########################ITEM###################################
 
-    public Cursor getOrderItemsByTableNum(int tableNum){
+    public Cursor getOrderItemsByTableNum( int tableNum){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor data = db.rawQuery("SELECT * FROM "+ ORDERITEMS_TABLE +
-                " WHERE " + ORDERITEM_TABLENUM_COL + " = "+tableNum, null);
+                " WHERE "+ORDERITEM_TABLENUM_COL+" = "+ tableNum, null);
         return data;
     }
 
 
-    public boolean insertOrderItem(int orderId,String itemName,int tableNum, String type, int quantity,double price,String notes){
+    public boolean insertOrderItem(int orderId,String itemName,int tableNum, String type, int quantity,double price,String notes,String status){
         if (notes==null || notes.equals("")){
             notes="";
         }
@@ -142,7 +144,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(ORDERITEM_QUANTITY_COL,quantity);
         contentValues.put(ORDERITEM_PRICE_COL,price);
         contentValues.put(ORDERITEM_NOTES_COL,notes);
-
+        contentValues.put(ORDERITEM_STATUS_COL,status);
         long result = db.insert(ORDERITEMS_TABLE, null, contentValues);
         db.close();
 
@@ -169,6 +171,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
 
     }
+
+
 
 
     public boolean deleteOrder(int id){
@@ -312,13 +316,57 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //########################EVENTS###################################
 
-    public boolean insertEvent(int tableNum, String contactName, int phoneNum, int numOfPeope, String notes, String date){
+    public int setOrderItemStatusTrue(OrderItem oi){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int cnt = 0;
+        try {
+
+            // make values to be inserted
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(ORDERITEM_ID_COL,oi.getOrderId());
+            contentValues.put(ORDERITEM_NAME_COL,oi.getTitle());
+            contentValues.put(ORDERITEM_TABLENUM_COL,oi.getTableNum());
+            contentValues.put(ORDERITEM_TYPE_COL,oi.getType());
+            contentValues.put(ORDERITEM_QUANTITY_COL,oi.getCounter());
+            contentValues.put(ORDERITEM_PRICE_COL,oi.getPrice());
+            contentValues.put(ORDERITEM_NOTES_COL,oi.getNotes());
+            contentValues.put(ORDERITEM_STATUS_COL,"true");
+
+            // update
+            cnt = db.update(ORDERITEMS_TABLE, contentValues,ORDERITEM_ID_COL+ " = ? AND "+ORDERITEM_NAME_COL+" = ?", new String[]{Integer.toString(oi.getOrderId()),oi.getTitle().toString()});
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+
+        return cnt;
+
+    }
+
+    public Cursor getKitchenAllOrderItemsStatusFalse(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String s = "false";
+        Cursor data = db.rawQuery("SELECT * FROM "+ ORDERITEMS_TABLE +
+                " WHERE " + ORDERITEM_STATUS_COL + " = '"+s+"' AND "+ ORDERITEM_TYPE_COL + " = 'k'", null);
+        return data;
+    }
+
+    public Cursor getBarAllOrderItemsStatusFalse(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String s = "false";
+        Cursor data = db.rawQuery("SELECT * FROM "+ ORDERITEMS_TABLE +
+                " WHERE " + ORDERITEM_STATUS_COL + " = '"+s+"' AND "+ ORDERITEM_TYPE_COL + " = 'b'", null);
+        return data;
+    }
+
+    public boolean insertEvent(int tableNum, String contactName, int phoneNum, int numOfPeople, String notes, String date){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(TABLE_NUMBER,tableNum);
         contentValues.put(COLUMN_CONTACT_NAME,contactName);
         contentValues.put(COLUMN_PHONENUM,phoneNum);
-        contentValues.put(COLUMN_NUMOFPEOPLE,numOfPeope);
+        contentValues.put(COLUMN_NUMOFPEOPLE,numOfPeople);
         contentValues.put(COLUMN_NOTES,notes);
         contentValues.put(COLUMN_DATE,date);
 
@@ -422,7 +470,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+TABLES_TABLE);
         db.execSQL("DROP TABLE IF EXISTS "+ORDER_TABLE);
         db.execSQL("DROP TABLE IF EXISTS "+ORDERITEMS_TABLE);
-
         onCreate(db);
     }
 
@@ -441,5 +488,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.close();
         }
 
+    }
+
+    public Cursor getAllOrders() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor data = db.rawQuery("SELECT * FROM "+ ITEM_TABLE , null);
+        return data;
     }
 }
