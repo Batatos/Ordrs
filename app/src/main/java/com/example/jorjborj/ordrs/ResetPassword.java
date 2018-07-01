@@ -29,6 +29,9 @@ public class ResetPassword extends AppCompatActivity {
 
         db = new DatabaseHelper(this);
         db.getWritableDatabase();
+        if(db.getAdmin()==0){
+            db.initAdminPassword();
+        }
 
         container = (LinearLayout)findViewById(R.id.container);
         anim = (AnimationDrawable) container.getBackground();
@@ -46,13 +49,26 @@ public class ResetPassword extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(currentPass.getText().toString().equals(db.getAdminPassword())){
+                    if(newPass1.getText().toString().equals("") || newPass2.getText().toString().equals("")){
+                        Toast.makeText(ResetPassword.this, "Some fields are empty!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     if(newPass1.getText().toString().equals(newPass2.getText().toString())){
                         db.updatePassword(currentPass.getText().toString(),newPass1.getText().toString());
                         Toast.makeText(ResetPassword.this, "Password reset successfully!", Toast.LENGTH_SHORT).show();
                         finish();
+                    }else{
+                        Toast.makeText(ResetPassword.this, "Password and Repeat don't match!", Toast.LENGTH_SHORT).show();
+                        return;
                     }
-                }
-            }
+                }else
+                    if(currentPass.getText().toString().equals("")){
+                        Toast.makeText(ResetPassword.this, "Some fields are empty!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }else{
+                    Toast.makeText(ResetPassword.this, "Wrong password!", Toast.LENGTH_SHORT).show();
+                            return;}
+                    }
         });
 
         cancelBtn.setOnClickListener(new View.OnClickListener() {

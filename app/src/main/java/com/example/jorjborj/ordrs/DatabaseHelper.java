@@ -623,10 +623,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    public Cursor getItemByName(String name) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor data = db.rawQuery("SELECT * FROM "+ ITEM_TABLE + " WHERE name='"+name+"'" , null);
+        return data;
+    }
 
     public Cursor getAllOrders() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor data = db.rawQuery("SELECT * FROM "+ ITEM_TABLE , null);
         return data;
+    }
+
+    public int updateItemQuantity(String name,int quantity) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor x = getItemByName(name);
+        x.moveToFirst();
+        int currentAmount = x.getInt(x.getColumnIndex("amount"));
+        int newAmount = currentAmount-quantity;
+        if (newAmount<0){
+            newAmount=0;
+        }
+        String query = "UPDATE "+ITEM_TABLE+" SET amount = "+newAmount+" WHERE name = '"+name+"';";
+        Cursor data = db.rawQuery(query , null);
+        return data.getCount();
     }
 }

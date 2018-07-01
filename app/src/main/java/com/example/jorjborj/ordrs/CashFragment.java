@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.icu.text.DecimalFormat;
 import android.media.Image;
 import android.media.MediaPlayer;
@@ -20,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -226,7 +228,20 @@ public class CashFragment extends Fragment {
                                 public void onClick(DialogInterface dialog, int which) {
                                     DatabaseHelper db = new DatabaseHelper(getContext());
                                     db.getWritableDatabase();
-                                    db.deleteOrderByTableNum(Integer.parseInt(getActivity().getIntent().getExtras().get("tablenum").toString()));
+
+                                    Cursor c = db.getOrderItemsByTableNum(Integer.parseInt(getActivity().getIntent().getExtras().get("tablenum").toString()));
+                                    ArrayList<String> arr = new ArrayList<String>();
+                                    ArrayList<Integer> arr1 = new ArrayList<Integer>();
+
+                                    for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+                                        arr.add(c.getString(c.getColumnIndex("name")));
+                                        arr1.add(c.getInt(c.getColumnIndex("quantity")));
+                                    }
+                                    for(int x=0;x<arr.size();x++){
+                                        db.updateItemQuantity(arr.get(x),arr1.get(x));
+                                    }
+
+                                        db.deleteOrderByTableNum(Integer.parseInt(getActivity().getIntent().getExtras().get("tablenum").toString()));
                                     db.deleteOrderItemsByTable(Integer.parseInt(getActivity().getIntent().getExtras().get("tablenum").toString()));
                                     db.updateReport(m,Double.parseDouble((String)getActivity().getIntent().getExtras().get("total")));
                                     Intent i = new Intent(getActivity(), PickOptionActivity.class);
