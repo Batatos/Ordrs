@@ -80,9 +80,18 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
         final BottomNavigationView nav = (BottomNavigationView) findViewById(R.id.navbar);
         disableShiftMode(nav);
 
+
+
+
         tablenum = getIntent().getExtras().get("table_num").toString();
         getSupportActionBar().setTitle("Order on table #" + tablenum);
 
+        db.getWritableDatabase();
+        Cursor cur = db.getOrderByTableNum(Integer.parseInt(tablenum));
+        if(cur.getCount()>0){
+            cur.moveToFirst();
+            discounttext.setText(cur.getInt(cur.getColumnIndex("discount"))+"");
+        }
 //        if(db.getOrderByTableNum(Integer.parseInt(tablenum)).getCount()>0){
 //            updateOrderItems(orderItems);
 //        }
@@ -153,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
                     db.deleteOrderItemsByTable(Integer.parseInt(tablenum)); //naah
                     //db.deleteOrderByTableNum(Integer.parseInt(tablenum));
                     if(orderItems.size()>0) db.deleteOrder(orderItems.get(0).getOrderId());
-                    db.insertOrder(x, Integer.parseInt(tablenum));
+                    db.insertOrder(x, Integer.parseInt(tablenum),Integer.parseInt(discounttext.getText().toString()));
                     for (OrderItem oi : orderItems) {
                         oi.setTableNum(Integer.parseInt(tablenum));
                         db.insertOrderItem(x, oi.getTitle(), Integer.parseInt(tablenum), oi.getType(), oi.getCounter(), oi.getPrice(), oi.getNotes(),oi.getStatus());
@@ -880,8 +889,10 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
             submit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(password.getText().toString().equals("0000")){
+                    db.getWritableDatabase();
+                    if(password.getText().toString().equals(db.getAdminPassword())){
                         dismiss();
+                        db.close();
                         DiscountDialog dg = new DiscountDialog(MainActivity.this);
                         dg.show();
                     }else{

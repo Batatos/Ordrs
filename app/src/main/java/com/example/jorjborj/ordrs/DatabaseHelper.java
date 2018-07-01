@@ -50,8 +50,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String ORDER_TABLE = "orders";
     public static final String ORDER_ID_COL = "ID";
     public static final String ORDER_TABLENUM_COL = "tablenum";
+    public static final String ORDER_DISCOUNT_COL = "discount";
 
 
+    //report table
+    public static final String INCOME_STATISTICS_TABLE = "report";
+    public static final String MONTH_COL = "month";
+    public static final String INCOME_COL = "income";
+
+    //admin table
+    public static final String ADMIN_TABLE = "admin";
+    public static final String ADMIN_PASS = "password";
 
 
     // orderItems table
@@ -96,14 +105,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + ")");
 
         db.execSQL("CREATE TABLE " + TABLES_TABLE + " ("
-        + TABLE_NUMBER_COL + " INTEGER NOT NULL PRIMARY KEY,"
+        + TABLE_NUMBER_COL + " INTEGER PRIMARY KEY,"
                 + TABLE_LOCATION_COL + " TEXT"
         +")");
 
+        db.execSQL("CREATE TABLE " + ADMIN_TABLE + " ("
+                + ADMIN_PASS + " TEXT PRIMARY KEY"
+                +")");
+
+
+        db.execSQL("CREATE TABLE " + INCOME_STATISTICS_TABLE + " ("
+                + MONTH_COL + " INTEGER PRIMARY KEY,"
+                + INCOME_COL + " REAL"
+                +")");
+
         db.execSQL("CREATE TABLE "+ ORDER_TABLE + " ("
         + ORDER_ID_COL + " INTEGER PRIMARY KEY,"
-        + ORDER_TABLENUM_COL + " INTEGER NOT NULL,"
-        + "FOREIGN KEY ("+ORDER_TABLENUM_COL+")" + "REFERENCES "+ TABLES_TABLE +")");
+        + ORDER_TABLENUM_COL + " INTEGER,"
+                + ORDER_DISCOUNT_COL + " INTEGER,"
+                + "FOREIGN KEY ("+ORDER_TABLENUM_COL+")" + "REFERENCES "+ TABLES_TABLE +")");
 
         db.execSQL("CREATE TABLE "+ ORDERITEMS_TABLE + " ("
                 + ORDERITEM_ID_COL + " INTEGER,"
@@ -205,7 +225,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return data;
 
     }
-    public boolean insertOrder(int id, int tableNum){
+    public boolean insertOrder(int id, int tableNum,int discount){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -215,6 +235,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         contentValues.put(ORDER_ID_COL,id);
         contentValues.put(ORDER_TABLENUM_COL,tableNum);
+        contentValues.put(ORDER_DISCOUNT_COL,discount);
 
         long result = db.insert(ORDER_TABLE, null, contentValues);
         db.close();
@@ -380,6 +401,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public int getTablesCount(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor data = db.rawQuery("SELECT * FROM "+ TABLES_TABLE, null);
+        return data.getCount();
+
+    }
+
     public Cursor getEventData(){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor data = db.rawQuery("SELECT * FROM " + EVENT_TABLE, null);
@@ -470,7 +498,51 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+TABLES_TABLE);
         db.execSQL("DROP TABLE IF EXISTS "+ORDER_TABLE);
         db.execSQL("DROP TABLE IF EXISTS "+ORDERITEMS_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS "+INCOME_STATISTICS_TABLE);
+
         onCreate(db);
+    }
+
+    public double getMonthIncome(int month){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor data = db.rawQuery("SELECT * FROM "+ INCOME_STATISTICS_TABLE +
+                " WHERE " + MONTH_COL + " = "+month, null);
+
+        data.moveToFirst();
+        double i = data.getDouble(data.getColumnIndex("income"));
+
+        return i;
+    }
+
+    public int getReportsCount(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor data = db.rawQuery("SELECT * FROM "+ INCOME_STATISTICS_TABLE, null);
+
+        return data.getCount();
+
+    }
+    public int updateReport(int month, double addedValue){
+        double current = getMonthIncome(month);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int cnt = 0;
+        try {
+
+            // make values to be inserted
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(MONTH_COL,month);
+            contentValues.put(INCOME_COL,current+addedValue);
+
+            // update
+            cnt = db.update(INCOME_STATISTICS_TABLE, contentValues,MONTH_COL+ " = ?", new String[]{Integer.toString(month)});
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+
+        return cnt;
+
+
     }
 
     public void initTables() {
@@ -489,6 +561,68 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
     }
+    public void initReportTable() {
+
+        for(int i=1;i<13;i++){
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(MONTH_COL,i);
+            contentValues.put(INCOME_COL,0);
+
+            db.insert(INCOME_STATISTICS_TABLE, null, contentValues);
+            db.close();
+        }
+
+    }
+
+    public void initAdminPassword() {
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(ADMIN_PASS,"0000");
+
+            db.insert(ADMIN_TABLE, null, contentValues);
+            db.close();
+
+    }
+
+    public int getAdmin(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor data = db.rawQuery("SELECT * FROM "+ ADMIN_TABLE, null);
+
+        return data.getCount();
+
+    }
+
+    public int updatePassword(String oldPass,String newPassword){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int cnt = 0;
+        try {
+
+            // make values to be inserted
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(ADMIN_PASS,newPassword);
+
+            // update
+            cnt = db.update(ADMIN_TABLE, contentValues,ADMIN_PASS+ " = ?", new String[]{oldPass});
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+
+        return cnt;
+
+    }
+
+    public String getAdminPassword(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor data = db.rawQuery("SELECT * FROM "+ ADMIN_TABLE, null);
+        data.moveToFirst();
+
+        return data.getString(data.getColumnIndex("password"));
+    }
+
+
 
     public Cursor getAllOrders() {
         SQLiteDatabase db = this.getWritableDatabase();

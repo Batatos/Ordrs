@@ -20,5 +20,10 @@
         android:orderInCategory="100"
         android:icon="@mipmap/woodbg"
         android:title="Monthly Reports"/>
+    <item
+        android:id="@+id/passwordreset"
+        android:orderInCategory="100"
+        android:icon="@mipmap/woodbg"
+        android:title="Reset Admin Password"/>
 
 </menu>

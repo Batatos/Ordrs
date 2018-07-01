@@ -20,6 +20,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -216,7 +219,8 @@ public class CashFragment extends Fragment {
                     alertDialog.setTitle("Thank you!");
                     alertDialog.setMessage("Return to Customer: ₪" + returnToCustomer);
                     alertDialog.setCanceledOnTouchOutside(false);
-
+                    Calendar now = Calendar.getInstance();
+                    final int m = (now.get(Calendar.MONTH) + 1);
                     alertDialog.setButton(AlertDialog.BUTTON1, "Finish",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
@@ -224,6 +228,7 @@ public class CashFragment extends Fragment {
                                     db.getWritableDatabase();
                                     db.deleteOrderByTableNum(Integer.parseInt(getActivity().getIntent().getExtras().get("tablenum").toString()));
                                     db.deleteOrderItemsByTable(Integer.parseInt(getActivity().getIntent().getExtras().get("tablenum").toString()));
+                                    db.updateReport(m,Double.parseDouble((String)getActivity().getIntent().getExtras().get("total")));
                                     Intent i = new Intent(getActivity(), PickOptionActivity.class);
                                     startActivity(i);
                                 }
@@ -233,6 +238,7 @@ public class CashFragment extends Fragment {
                                 public void onClick(DialogInterface dialog, int which) {
                                     DatabaseHelper db = new DatabaseHelper(getContext());
                                     db.getWritableDatabase();
+                                    db.updateReport(m,Integer.parseInt((String)getActivity().getIntent().getExtras().get("total")));
                                     String subject, message = "";
                                     int counter = 0;
 

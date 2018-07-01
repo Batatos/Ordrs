@@ -35,8 +35,18 @@ public class PickOptionActivity extends AppCompatActivity {
         db = new DatabaseHelper(this);
         db.getWritableDatabase();
 
-        db.initTables();
+        if(db.getReportsCount()==0){
+            db.initReportTable();
+        }
 
+        if(db.getTablesCount()==0) {
+            db.initTables();
+        }
+        if(db.getAdmin()==0){
+            db.initAdminPassword();
+        }
+
+        db.close();
         //HAPPY HOUR!@#!@#!@#!@#!@#
         happyhour = (LinearLayout)findViewById(R.id.happyHourBar);
 
@@ -114,6 +124,11 @@ public class PickOptionActivity extends AppCompatActivity {
                 ReportsAdminDialog rad = new ReportsAdminDialog(PickOptionActivity.this);
                 rad.show();
                 break;
+            case R.id.passwordreset:
+
+                Intent x = new Intent(PickOptionActivity.this,ResetPassword.class);
+                startActivity(x);
+                break;
 
         }
         return true;
@@ -134,7 +149,8 @@ public class PickOptionActivity extends AppCompatActivity {
             submit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(password.getText().toString().equals("0000")){
+                    db.getWritableDatabase();
+                    if(password.getText().toString().equals(db.getAdminPassword())){
                         dismiss();
                     Intent i = new Intent(PickOptionActivity.this, SuppliesMgmt.class);
                     startActivity(i);
@@ -203,7 +219,8 @@ public class PickOptionActivity extends AppCompatActivity {
             submit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(password.getText().toString().equals("0000")){
+                    db.getWritableDatabase();
+                    if(password.getText().toString().equals(db.getAdminPassword())){
                         dismiss();
                         Intent i4 = new Intent(PickOptionActivity.this,MonthlyReport.class);
                         startActivity(i4);

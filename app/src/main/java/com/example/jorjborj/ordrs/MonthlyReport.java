@@ -1,6 +1,7 @@
 package com.example.jorjborj.ordrs;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -43,29 +44,31 @@ public class MonthlyReport extends AppCompatActivity {
         mChart.setDoubleTapToZoomEnabled(false);
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(MonthlyReport.this,PickOptionActivity.class);
+        startActivity(i);
+        finish();
+    }
+
     private void setData(int count) {
 
         ArrayList<BarEntry> yVals = new ArrayList<>();
         ArrayList<Integer> values = new ArrayList<>();
-        values.add(22033);
-        values.add(19203);
-        values.add(18920);
-        values.add(13004);
-        values.add(18232);
-        values.add(11022);
-        values.add(16311);
-        values.add(18210);
-        values.add(22023);
-        values.add(26120);
-        values.add(21643);
-        values.add(22622);
+
+        DatabaseHelper db = new DatabaseHelper(getBaseContext());
+        db.getWritableDatabase();
+
+        for(int i=1;i<13;i++){
+            values.add((int)db.getMonthIncome(i));
+        }
+        db.close();
 
         for(int i=0;i<count;i++){
             float value;
             Calendar c = Calendar.getInstance();
             if(i<c.get(Calendar.MONTH)+1) {
                 value = values.get(i);
-                value+=1522;
             }else{
                 value = (float) (0);
             }

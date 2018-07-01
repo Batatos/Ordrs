@@ -63,6 +63,8 @@
             android:screenOrientation="sensorLandscape"/>
         <activity android:name=".BarDash"
             android:screenOrientation="sensorLandscape"/>
+        <activity android:name=".ResetPassword"
+            android:screenOrientation="sensorLandscape"/>
 
     </application>
 
