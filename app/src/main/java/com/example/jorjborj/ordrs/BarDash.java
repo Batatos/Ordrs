@@ -3,6 +3,7 @@ package com.example.jorjborj.ordrs;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +26,8 @@ public class BarDash extends AppCompatActivity {
     DatabaseHelper db;
     ArrayList<OrderItem> orderItems;
     int i;
+    AnimationDrawable anim;
+    LinearLayout container;
     OrdersAdapter adapter;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +36,12 @@ public class BarDash extends AppCompatActivity {
         db = new DatabaseHelper(getBaseContext());
         db.getWritableDatabase();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        container = (LinearLayout) findViewById(R.id.container);
+        anim = (AnimationDrawable) container.getBackground();
+        anim.setEnterFadeDuration(4000);
+        anim.setExitFadeDuration(4000);
+        anim.start();
 
         orderItems = new ArrayList<>();
         i=0;
@@ -67,6 +77,19 @@ public class BarDash extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (anim != null && !anim.isRunning())
+            anim.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (anim != null && anim.isRunning())
+            anim.stop();
+    }
 
     public class OrdersAdapter extends ArrayAdapter<OrderItem> {
 

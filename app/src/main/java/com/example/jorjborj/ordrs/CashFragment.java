@@ -3,6 +3,7 @@ package com.example.jorjborj.ordrs;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.icu.text.DecimalFormat;
 import android.media.Image;
 import android.media.MediaPlayer;
@@ -201,32 +202,97 @@ public class CashFragment extends Fragment {
         pay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Double total = Double.parseDouble(getActivity().getIntent().getExtras().get("total").toString());
-                Double received = Double.parseDouble(amount.getText().toString());
-                Double returnToCustomer = Double.parseDouble((new java.text.DecimalFormat("##.##").format(received-total)));
+                final Double total = Double.parseDouble(getActivity().getIntent().getExtras().get("total").toString());
+                final Double received = Double.parseDouble(amount.getText().toString());
+                final Double returnToCustomer = Double.parseDouble((new java.text.DecimalFormat("##.##").format(received-total)));
 
                 if(total>received){
                     Toast.makeText(getContext(), "Not Enough.", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(getContext(), "Return to Customer: "+returnToCustomer, Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(getContext(), "Return to Customer: " + returnToCustomer, Toast.LENGTH_SHORT).show();
 
                     AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
 
                     alertDialog.setTitle("Thank you!");
-                    alertDialog.setMessage("Return to Customer: ₪"+returnToCustomer);
+                    alertDialog.setMessage("Return to Customer: ₪" + returnToCustomer);
                     alertDialog.setCanceledOnTouchOutside(false);
 
-                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    alertDialog.setButton(AlertDialog.BUTTON1, "Finish",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     DatabaseHelper db = new DatabaseHelper(getContext());
                                     db.getWritableDatabase();
                                     db.deleteOrderByTableNum(Integer.parseInt(getActivity().getIntent().getExtras().get("tablenum").toString()));
                                     db.deleteOrderItemsByTable(Integer.parseInt(getActivity().getIntent().getExtras().get("tablenum").toString()));
-                                    Intent i = new Intent(getActivity(),PickOptionActivity.class);
+                                    Intent i = new Intent(getActivity(), PickOptionActivity.class);
                                     startActivity(i);
                                 }
                             });
+                    alertDialog.setButton(AlertDialog.BUTTON2, "Send Receipt",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    DatabaseHelper db = new DatabaseHelper(getContext());
+                                    db.getWritableDatabase();
+                                    String subject, message = "";
+                                    int counter = 0;
+
+                                    subject = "Ordrs App - Receipt on Table " + Integer.parseInt(getActivity().getIntent().getExtras().get("tablenum").toString());
+
+                                    Cursor c = db.getOrderItemsByTableNum(Integer.parseInt((String) getActivity().getIntent().getExtras().get("tablenum")));
+                                    message+="------------------------------------\n";
+                                    message+="--------  SUMMARY  -------\n";
+                                    message+="------------------------------------\n";
+
+                                    try {
+                                        counter = 0;
+                                        for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+                                            message += c.getString(c.getColumnIndex("quantity"));
+                                            message += "x ";
+                                            message += c.getString(c.getColumnIndex("name"));
+                                            message += "\n";
+                                            counter += c.getInt(c.getColumnIndex("price"));
+                                        }
+
+                                    } catch (Throwable t) {
+                                        t.printStackTrace();
+                                    }
+
+                                    double t = total - ((total*Integer.parseInt((String)getActivity().getIntent().getExtras().get("ahoz")))/100);
+                                    double t1 = Double.parseDouble((new java.text.DecimalFormat("##.##").format(t)));
+
+                                    message+="==================\n";
+                                    message += "Price: ₪" + total +"\n";
+                                    message += "Discount: " + getActivity().getIntent().getExtras().get("ahoz") +"%\n\n";
+                                    message += "Total Price: ₪" + t1+"\n";
+
+                                    message+="==================\n\n";
+                                    message+="Thank you for choosing Ordrs Application.\n";
+                                    message+="For any issues please call +972-545-983-177.";
+
+                                    final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+                                    emailIntent.setType("text/plain");
+                                    emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
+                                    emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, message);
+
+                                    emailIntent.setType("message/rfc822");
+
+                                    try {
+                                        Intent i = new Intent(getContext(),PickOptionActivity.class);
+                                        getActivity().finish();
+                                        startActivity(i);
+                                        startActivity(Intent.createChooser(emailIntent,
+                                                "Send email using..."));
+                                    } catch (android.content.ActivityNotFoundException ex) {
+                                        Toast.makeText(getActivity(),
+                                                "No email clients installed.",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                    db.deleteOrderByTableNum(Integer.parseInt(getActivity().getIntent().getExtras().get("tablenum").toString()));
+                                    db.deleteOrderItemsByTable(Integer.parseInt(getActivity().getIntent().getExtras().get("tablenum").toString()));
+
+                                }
+                            });
+
                     alertDialog.show();
                     final MediaPlayer mp = MediaPlayer.create(getContext(), R.raw.cashregister);
                     mp.start();

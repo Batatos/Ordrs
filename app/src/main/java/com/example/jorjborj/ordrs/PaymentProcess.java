@@ -34,6 +34,15 @@ public class PaymentProcess extends AppCompatActivity implements CashFragment.On
     OrderItemAdapter orderAdapter;
     DatabaseHelper db;
     int orderId;
+    int a;
+
+    public int getA() {
+        return a;
+    }
+
+    public void setA(int a) {
+        this.a = a;
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,6 +66,7 @@ public class PaymentProcess extends AppCompatActivity implements CashFragment.On
 
         Double totald = Double.parseDouble(getIntent().getExtras().get("total").toString());
         Double priced = Double.parseDouble(getIntent().getExtras().get("price").toString());
+        a = Integer.parseInt(getIntent().getExtras().get("ahoz").toString());
 
         price.setText(new DecimalFormat("##.##").format(priced));
         ahoz.setText(getIntent().getExtras().get("ahoz").toString());
