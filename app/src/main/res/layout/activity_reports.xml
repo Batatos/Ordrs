@@ -15,7 +15,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:text="MOST SOLD ITEMS REPORT"
-        android:textSize="60sp"
+        android:textSize="50sp"
         android:padding="85dp"
         android:textColor="#fff"/>
     <Button
@@ -27,8 +27,8 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:text="MONTHLY SALES REPORT"
-        android:textSize="60sp"
-        android:padding="15dp"
+        android:textSize="50sp"
+        android:padding="55dp"
         android:textColor="#fff"/>
     <Button
         android:id="@+id/minAmountLayout"
@@ -39,7 +39,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:text="MINIMUM AMOUNT ITEMS REPORT"
-        android:textSize="60sp"
+        android:textSize="50sp"
         android:padding="45dp"
         android:textColor="#fff"/>
 

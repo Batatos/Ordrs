@@ -18,6 +18,7 @@ public class Reports extends AppCompatActivity {
         setContentView(R.layout.activity_reports);
 
         Button mostSold,monthlySales,minAmount;
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mostSold = (Button)findViewById(R.id.mostsoldLayout);
         monthlySales = (Button)findViewById(R.id.monthlySalesLayout);
@@ -52,6 +53,18 @@ public class Reports extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(Reports.this,PickOptionActivity.class);
+        startActivity(i);
+        finish();
     }
 
     }
