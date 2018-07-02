@@ -17,6 +17,7 @@ public class Item {
         String supplierNumber;
         double price;
         int quantity = 0; //order quantity
+        int sold = 0;
 
 
     //constructor without supplier
@@ -28,6 +29,17 @@ public class Item {
         this.price=price;
         this.img=img;
 
+    }
+
+    public Item(String name, int amount){
+        this.name=name;
+        this.amount=amount;
+    }
+
+    public Item(String name, int amount, double price){
+        this.name=name;
+        this.amount=amount;
+        this.price=price;
     }
 
     public Item(String name){

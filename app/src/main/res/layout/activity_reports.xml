@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/container"
+    android:background="@drawable/animation_list">
+
+
+    <Button
+        android:id="@+id/mostsoldLayout"
+        android:backgroundTint="#8ec151"
+        android:orientation="vertical"
+        android:layout_width="420dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="MOST SOLD ITEMS REPORT"
+        android:textSize="60sp"
+        android:padding="85dp"
+        android:textColor="#fff"/>
+    <Button
+        android:id="@+id/monthlySalesLayout"
+        android:backgroundTint="#b08cff"
+        android:orientation="vertical"
+        android:layout_width="440dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="MONTHLY SALES REPORT"
+        android:textSize="60sp"
+        android:padding="15dp"
+        android:textColor="#fff"/>
+    <Button
+        android:id="@+id/minAmountLayout"
+        android:backgroundTint="#e16973"
+        android:orientation="vertical"
+        android:layout_width="420dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="MINIMUM AMOUNT ITEMS REPORT"
+        android:textSize="60sp"
+        android:padding="45dp"
+        android:textColor="#fff"/>
+
+</LinearLayout>

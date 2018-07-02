@@ -33,6 +33,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -106,13 +108,15 @@ public class UpcomingEventsActivity extends AppCompatActivity {
             View customView = inflater.inflate(R.layout.upcoming_event_row, parent, false);
 
 
-            TextView contactName, contactNumber, numberOfPeople, dateTime;
+            TextView contactName, contactNumber, numberOfPeople, dateTime,tablenum;
 
+            tablenum = (TextView)customView.findViewById(R.id.tablenum);
             contactName = (TextView)customView.findViewById(R.id.contactname);
             contactNumber = (TextView)customView.findViewById(R.id.contactnumber);
             numberOfPeople = (TextView)customView.findViewById(R.id.numberofpeople);
             dateTime = (TextView)customView.findViewById(R.id.dateTime);
 
+            tablenum.setText(modelsArrayList.get(position).getTableNum()+"");
             contactName.setText(modelsArrayList.get(position).getContactName());
             contactNumber.setText("0"+Integer.toString(modelsArrayList.get(position).getPhoneNum()));
             numberOfPeople.setText(Integer.toString(modelsArrayList.get(position).getNumOfPeople()));
@@ -345,4 +349,11 @@ public class UpcomingEventsActivity extends AppCompatActivity {
 
         }
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
 }

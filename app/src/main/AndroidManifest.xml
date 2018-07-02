@@ -65,6 +65,12 @@
             android:screenOrientation="sensorLandscape"/>
         <activity android:name=".ResetPassword"
             android:screenOrientation="sensorLandscape"/>
+        <activity android:name=".Reports"
+            android:screenOrientation="sensorLandscape"/>
+        <activity android:name=".MinAmountReport"
+            android:screenOrientation="sensorLandscape"/>
+        <activity android:name=".MostSoldReport"
+            android:screenOrientation="sensorLandscape"/>
 
     </application>
 

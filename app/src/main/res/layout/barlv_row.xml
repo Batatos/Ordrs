@@ -9,21 +9,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:gravity="center">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/orderid"
-            android:text="orderid"
-            android:textSize="25sp"
-            android:textStyle="bold"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="160dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:gravity="center">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,7 +47,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="290dp"
+        android:layout_width="350dp"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:gravity="center">

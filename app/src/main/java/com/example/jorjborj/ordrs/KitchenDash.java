@@ -116,14 +116,12 @@ public class KitchenDash extends AppCompatActivity {
             LayoutInflater inflater = (LayoutInflater) LayoutInflater.from(context);
             View customView = inflater.inflate(R.layout.kitchelv_row, parent, false);
 
-            orderid = (TextView)customView.findViewById(R.id.orderid);
             tablenum = (TextView)customView.findViewById(R.id.tablenum);
             itemname = (TextView)customView.findViewById(R.id.itemname);
             quantity = (TextView)customView.findViewById(R.id.quantity);
             check = (ImageButton)customView.findViewById(R.id.checkBtn);
             notes = (TextView)customView.findViewById(R.id.notes);
 
-            orderid.setText(this.orderItems.get(position).getOrderId()+"");
             tablenum.setText(this.orderItems.get(position).getTableNum()+"");
             itemname.setText(this.orderItems.get(position).getTitle()+"");
             quantity.setText(this.orderItems.get(position).getCounter()+"");

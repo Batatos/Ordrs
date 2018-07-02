@@ -57,6 +57,16 @@ public class PickOptionActivity extends AppCompatActivity {
         Button order = (Button)findViewById(R.id.order);
         Button table_order = (Button)findViewById(R.id.tableorder);
         Button supplies_management = (Button)findViewById(R.id.supplies);
+        Button reportsBtn = (Button)findViewById(R.id.reportsBtn);
+
+        reportsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(PickOptionActivity.this,Reports.class);
+                startActivity(i);
+                finish();
+            }
+        });
 
         Calendar rightNow = Calendar.getInstance();
         int currentHour = rightNow.get(Calendar.HOUR_OF_DAY); // return the hour in 24 hrs format (ranging from 0-23)
@@ -112,20 +122,13 @@ public class PickOptionActivity extends AppCompatActivity {
             case R.id.dashboard1:
                 Intent i1 = new Intent(PickOptionActivity.this,BarDash.class);
                 startActivity(i1);
-
                 break;
             case R.id.events:
                 Intent iStam = new Intent(PickOptionActivity.this,UpcomingEventsActivity.class);
                 startActivity(iStam);
                 //Toast.makeText(this, "Upcoming Events", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.reports:
-
-                ReportsAdminDialog rad = new ReportsAdminDialog(PickOptionActivity.this);
-                rad.show();
-                break;
             case R.id.passwordreset:
-
                 Intent x = new Intent(PickOptionActivity.this,ResetPassword.class);
                 startActivity(x);
                 break;

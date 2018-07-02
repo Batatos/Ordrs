@@ -240,8 +240,7 @@ public class CashFragment extends Fragment {
                                     for(int x=0;x<arr.size();x++){
                                         db.updateItemQuantity(arr.get(x),arr1.get(x));
                                     }
-
-                                        db.deleteOrderByTableNum(Integer.parseInt(getActivity().getIntent().getExtras().get("tablenum").toString()));
+                                    db.deleteOrderByTableNum(Integer.parseInt(getActivity().getIntent().getExtras().get("tablenum").toString()));
                                     db.deleteOrderItemsByTable(Integer.parseInt(getActivity().getIntent().getExtras().get("tablenum").toString()));
                                     db.updateReport(m,Double.parseDouble((String)getActivity().getIntent().getExtras().get("total")));
                                     Intent i = new Intent(getActivity(), PickOptionActivity.class);
@@ -253,7 +252,7 @@ public class CashFragment extends Fragment {
                                 public void onClick(DialogInterface dialog, int which) {
                                     DatabaseHelper db = new DatabaseHelper(getContext());
                                     db.getWritableDatabase();
-                                    db.updateReport(m,Integer.parseInt((String)getActivity().getIntent().getExtras().get("total")));
+                                    db.updateReport(m,(int)Double.parseDouble((String)getActivity().getIntent().getExtras().get("total")));
                                     String subject, message = "";
                                     int counter = 0;
 

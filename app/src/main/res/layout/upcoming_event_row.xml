@@ -11,12 +11,12 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:gravity="center">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/eventicon"
-            android:src="@drawable/ic_eventicon"
-            android:layout_margin="15dp"/>
+        <TextView
+            android:id="@+id/tablenum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10"
+            android:textSize="20sp"/>
     </LinearLayout>
     <LinearLayout
         android:orientation="vertical"

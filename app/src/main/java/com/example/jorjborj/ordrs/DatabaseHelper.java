@@ -40,6 +40,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String ITEM_IMG = "img";
     public static final String ITEM_SUPPLIER = "supplier";
     public static final String ITEM_SUPPLIERNUMBER = "suppliernumber";
+    public static final String ITEM_SOLD_AMOUNT = "sold";
 
     //tables table
     public static final String TABLES_TABLE = "tables";
@@ -101,7 +102,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + ITEM_CATEGORY + " TEXT,"
                 + ITEM_IMG + " BLOB,"
                 + ITEM_SUPPLIER + " TEXT,"
-                + ITEM_SUPPLIERNUMBER + " TEXT"
+                + ITEM_SUPPLIERNUMBER + " TEXT,"
+                + ITEM_SOLD_AMOUNT + " INTEGER"
                 + ")");
 
         db.execSQL("CREATE TABLE " + TABLES_TABLE + " ("
@@ -247,7 +249,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
     }
-    public boolean insertItem(String name, double price, int amount, String type, String category, Bitmap img, String supplier, String supplierNumber){
+    public boolean insertItem(String name, double price, int amount, String type, String category, Bitmap img, String supplier, String supplierNumber,int sold){
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -266,6 +268,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(ITEM_IMG,bArray);
         contentValues.put(ITEM_SUPPLIER,supplier);
         contentValues.put(ITEM_SUPPLIERNUMBER,supplierNumber);
+        contentValues.put(ITEM_SOLD_AMOUNT,sold);
 
         long result = db.insert(ITEM_TABLE, null, contentValues);
         db.close();
@@ -647,5 +650,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String query = "UPDATE "+ITEM_TABLE+" SET amount = "+newAmount+" WHERE name = '"+name+"';";
         Cursor data = db.rawQuery(query , null);
         return data.getCount();
+    }
+
+    public Cursor getAllItemsOrderedByMinAmount() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor data = db.rawQuery("SELECT * FROM "+ ITEM_TABLE +" ORDER BY "+ ITEM_AMOUNT , null);
+        return data;
+    }
+
+    public int updateItemSold(String title, int counter) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor x = getItemByName(title);
+        x.moveToFirst();
+        int newCounter = x.getInt(x.getColumnIndex("sold"));
+        newCounter+=counter;
+
+        String query = "UPDATE "+ITEM_TABLE+" SET sold = "+newCounter+" WHERE name = '"+title+"';";
+        Cursor data = db.rawQuery(query , null);
+        return data.getCount();
+
+
+    }
+
+    public Cursor getAllItemsOrderedByMaxSold() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor data = db.rawQuery("SELECT * FROM "+ ITEM_TABLE +" ORDER BY "+ ITEM_SOLD_AMOUNT +" DESC" , null);
+        return data;
     }
 }
