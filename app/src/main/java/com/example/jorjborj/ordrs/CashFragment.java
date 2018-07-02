@@ -252,6 +252,18 @@ public class CashFragment extends Fragment {
                                 public void onClick(DialogInterface dialog, int which) {
                                     DatabaseHelper db = new DatabaseHelper(getContext());
                                     db.getWritableDatabase();
+
+                                    Cursor c1 = db.getOrderItemsByTableNum(Integer.parseInt(getActivity().getIntent().getExtras().get("tablenum").toString()));
+                                    ArrayList<String> arr = new ArrayList<String>();
+                                    ArrayList<Integer> arr1 = new ArrayList<Integer>();
+
+                                    for(c1.moveToFirst(); !c1.isAfterLast(); c1.moveToNext()) {
+                                        arr.add(c1.getString(c1.getColumnIndex("name")));
+                                        arr1.add(c1.getInt(c1.getColumnIndex("quantity")));
+                                    }
+                                    for(int x=0;x<arr.size();x++){
+                                        db.updateItemQuantity(arr.get(x),arr1.get(x));
+                                    }
                                     db.updateReport(m,(int)Double.parseDouble((String)getActivity().getIntent().getExtras().get("total")));
                                     String subject, message = "";
                                     int counter = 0;

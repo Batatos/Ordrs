@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -27,6 +28,7 @@ public class MostSoldReport extends AppCompatActivity {
         ListView lv = (ListView) findViewById(R.id.lv);
         ArrayList<Item> items = new ArrayList<>();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Most Sold Items Report");
 
         DatabaseHelper db = new DatabaseHelper(this);
         db.getWritableDatabase();
@@ -80,7 +82,7 @@ public class MostSoldReport extends AppCompatActivity {
             double x = y * modelsArrayList.get(position).getPrice();
             itemname.setText(modelsArrayList.get(position).getName() + "");
             amount.setText(y + "");
-            totalPrice.setText(Double.toString(x));
+            totalPrice.setText(Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(x))));
 
             return customView;
         }
@@ -95,7 +97,7 @@ public class MostSoldReport extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(MostSoldReport.this,PickOptionActivity.class);
+        Intent i = new Intent(MostSoldReport.this,Reports.class);
         startActivity(i);
         finish();
     }

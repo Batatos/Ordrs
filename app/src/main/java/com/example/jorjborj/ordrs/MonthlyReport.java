@@ -46,7 +46,7 @@ public class MonthlyReport extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(MonthlyReport.this,PickOptionActivity.class);
+        Intent i = new Intent(MonthlyReport.this,Reports.class);
         startActivity(i);
         finish();
     }
@@ -93,9 +93,11 @@ public class MonthlyReport extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        Intent i = new Intent(MonthlyReport.this,PickOptionActivity.class);
+        Intent i = new Intent(MonthlyReport.this,Reports.class);
         startActivity(i);
         finish();
         return true;
     }
+
+
 }

@@ -24,6 +24,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Item Name"
+                    android:textStyle="bold"
                     android:textColor="#000"
                     android:textSize="28sp" />
             </LinearLayout>
@@ -38,6 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Amount in Stock"
+                    android:textStyle="bold"
                     android:textColor="#000"
                     android:textSize="28sp" />
             </LinearLayout>

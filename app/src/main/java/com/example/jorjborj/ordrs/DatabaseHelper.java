@@ -417,6 +417,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return data;
     }
 
+    public Cursor getEventOnTableByTime(int tableNum, String time){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor data = db.rawQuery("SELECT * FROM " + EVENT_TABLE + " WHERE "+TABLE_NUMBER+" = "+tableNum+" AND date ='"+time+"'", null);
+        return data;
+    }
     public int  updateEvent(int id, int tableNum,String contactName, int phoneNum, int numOfPeople, String notes, String date) {
         SQLiteDatabase db = this.getWritableDatabase();
 

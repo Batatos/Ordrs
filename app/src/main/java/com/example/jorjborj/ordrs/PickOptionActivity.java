@@ -39,7 +39,6 @@ public class PickOptionActivity extends AppCompatActivity {
 
         db = new DatabaseHelper(this);
         db.getWritableDatabase();
-        initializeData();
 
         if(db.getReportsCount()==0){
             db.initReportTable();
@@ -63,9 +62,8 @@ public class PickOptionActivity extends AppCompatActivity {
         reportsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(PickOptionActivity.this,Reports.class);
-                startActivity(i);
-                finish();
+                AdminLoginDialog1 login = new AdminLoginDialog1(PickOptionActivity.this);
+                login.show();
             }
         });
 
@@ -188,6 +186,54 @@ public class PickOptionActivity extends AppCompatActivity {
         }
     }
 
+    public class AdminLoginDialog1 extends Dialog {
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+
+            setContentView(R.layout.admin_login);
+            final EditText password = (EditText)findViewById(R.id.inputPassword);
+            Button submit = (Button)findViewById(R.id.submit);
+            Button cancel = (Button)findViewById(R.id.cancel);
+
+
+            submit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    db.getWritableDatabase();
+                    if(password.getText().toString().equals(db.getAdminPassword())){
+                        dismiss();
+                        Intent i = new Intent(PickOptionActivity.this,Reports.class);
+                        startActivity(i);
+                        finish();
+                    }else{
+                        Toast.makeText(PickOptionActivity.this, "WRONG", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dismiss();
+                }
+            });
+
+        }
+
+
+        public AdminLoginDialog1(@NonNull Context context) {
+            super(context);
+        }
+
+        public AdminLoginDialog1(@NonNull Context context, @StyleRes int themeResId) {
+            super(context, themeResId);
+        }
+
+        protected AdminLoginDialog1(@NonNull Context context, boolean cancelable, @Nullable OnCancelListener cancelListener) {
+            super(context, cancelable, cancelListener);
+        }
+    }
 
     @Override
     protected void onResume() {

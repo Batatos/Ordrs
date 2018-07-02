@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -85,6 +86,15 @@ public class TableOrderDetails extends AppCompatActivity implements DatePickerDi
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DatabaseHelper db = new DatabaseHelper(getBaseContext());
+                db.getWritableDatabase();
+                
+                Cursor c = db.getEventOnTableByTime(Integer.parseInt(tableNumber),date.getText().toString());
+                c.moveToFirst();
+                if(c.getCount()>0){
+                    Toast.makeText(TableOrderDetails.this, "There's another order on this table by this time!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if(contactName.getText().toString().isEmpty() || contactNumber.getText().toString().isEmpty() ||
                         numberOfPeople.getText().toString().isEmpty()){
                     Toast.makeText(TableOrderDetails.this, "Data is missing", Toast.LENGTH_SHORT).show();

@@ -32,6 +32,7 @@ public class MinAmountReport extends AppCompatActivity {
         ListView lv = (ListView) findViewById(R.id.lv);
         ArrayList<Item> items = new ArrayList<>();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Minimum Amount Report");
 
         DatabaseHelper db = new DatabaseHelper(this);
         db.getWritableDatabase();
@@ -93,7 +94,7 @@ public class MinAmountReport extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(MinAmountReport.this,PickOptionActivity.class);
+        Intent i = new Intent(MinAmountReport.this,Reports.class);
         startActivity(i);
         finish();
     }
