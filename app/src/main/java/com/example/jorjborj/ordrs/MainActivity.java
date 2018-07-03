@@ -183,10 +183,15 @@ public class MainActivity extends AppCompatActivity implements NumberPicker.OnVa
                     }
 
                 }
-                Toast.makeText(MainActivity.this, "Order Sent Successfully!", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(MainActivity.this,PickOptionActivity.class);
-                startActivity(i);
-                finish();
+                if(orderItems.size()<c.getCount()){
+                    Toast.makeText(MainActivity.this, "You can't delete items that has already been sent!", Toast.LENGTH_SHORT).show();
+                    return;
+                }else {
+                    Toast.makeText(MainActivity.this, "Order Sent Successfully!", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(MainActivity.this, PickOptionActivity.class);
+                    startActivity(i);
+                    finish();
+                }
             }
         });
 

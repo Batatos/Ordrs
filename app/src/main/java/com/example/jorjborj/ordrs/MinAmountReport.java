@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -73,12 +74,30 @@ public class MinAmountReport extends AppCompatActivity {
             View customView = inflater.inflate(R.layout.min_amount_row, parent, false);
 
             TextView itemname,amount;
+            LinearLayout bg;
+
+            bg = (LinearLayout)customView.findViewById(R.id.bg);
 
             itemname = (TextView)customView.findViewById(R.id.itemname);
             amount = (TextView)customView.findViewById(R.id.itemamount);
 
+
             itemname.setText(modelsArrayList.get(position).getName()+"");
             amount.setText(modelsArrayList.get(position).getAmount()+"");
+
+            int a = Integer.parseInt(amount.getText().toString());
+
+            if(a>=0 && a <=4 ){
+                bg.setBackgroundResource(R.mipmap.redrow);
+            }
+
+            if(a>4 && a<10) {
+                bg.setBackgroundResource(R.mipmap.yellowrow);
+            }
+
+            if(a>=10){
+                bg.setBackgroundResource(R.mipmap.greenrow);
+            }
 
             return customView;
         }

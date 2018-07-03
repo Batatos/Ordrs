@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -69,10 +70,12 @@ public class MostSoldReport extends AppCompatActivity {
             View customView = inflater.inflate(R.layout.most_sold_row, parent, false);
 
             TextView itemname, amount, totalPrice;
+            LinearLayout bg;
 
             itemname = (TextView) customView.findViewById(R.id.itemname);
             amount = (TextView) customView.findViewById(R.id.itemamount);
             totalPrice = (TextView) customView.findViewById(R.id.itemtotalprice);
+            bg = (LinearLayout)customView.findViewById(R.id.bg);
 
             DatabaseHelper db = new DatabaseHelper(getBaseContext());
             db.getWritableDatabase();
@@ -83,6 +86,18 @@ public class MostSoldReport extends AppCompatActivity {
             itemname.setText(modelsArrayList.get(position).getName() + "");
             amount.setText(y + "");
             totalPrice.setText(Double.toString(Double.parseDouble(new DecimalFormat("##.##").format(x))));
+
+            if(y>=0 && y <=2 ){
+                bg.setBackgroundResource(R.mipmap.redrow);
+            }
+
+            if(y>2 && y<6) {
+                bg.setBackgroundResource(R.mipmap.yellowrow);
+            }
+
+            if(y>=6){
+                bg.setBackgroundResource(R.mipmap.greenrow);
+            }
 
             return customView;
         }
