@@ -281,13 +281,13 @@
             <LinearLayout
                 android:layout_width="400dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:orientation="vertical">
 
                 <ImageButton
-                    android:layout_width="170dp"
-                    android:layout_height="170dp"
+                    android:layout_width="250dp"
+                    android:layout_height="230dp"
                     android:id="@+id/addimg"
                     android:src="@mipmap/insertpic"/>
             </LinearLayout>
@@ -296,7 +296,8 @@
                 android:layout_width="400dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="45dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="15dp"
                 android:orientation="horizontal">
 
                 <Button
