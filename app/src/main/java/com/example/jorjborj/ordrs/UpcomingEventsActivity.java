@@ -155,11 +155,7 @@ public class UpcomingEventsActivity extends AppCompatActivity {
                         public boolean onMenuItemClick(MenuItem item) {
                             UpcomingEventObject o = eventsArrayList.get(position);
                             if(item.getTitle().toString().equals("Delete")){
-                                int rowId = mDataBaseHelper.getEventId(o.getContactName(),o.getPhoneNum(),o.getNumOfPeople(),o.getTimeDate());
-                                mDataBaseHelper.deleteEvent(rowId);
-                                Intent i = new Intent(getBaseContext(),UpcomingEventsActivity.class);
-                                startActivity(i);
-                                Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
+                                showCancelAlert(o);
                             }
 
                             if(item.getTitle().toString().equals("Edit")){
@@ -191,6 +187,32 @@ public class UpcomingEventsActivity extends AppCompatActivity {
         }
     }
 
+    private void showCancelAlert(final UpcomingEventObject o) {
+
+        final AlertDialog.Builder cancelAlert = new AlertDialog.Builder(UpcomingEventsActivity.this);
+        cancelAlert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                int rowId = mDataBaseHelper.getEventId(o.getContactName(),o.getPhoneNum(),o.getNumOfPeople(),o.getTimeDate());
+                mDataBaseHelper.deleteEvent(rowId);
+                Intent i = new Intent(getBaseContext(),UpcomingEventsActivity.class);
+                startActivity(i);
+                Toast.makeText(getBaseContext(), "Deleted", Toast.LENGTH_SHORT).show();
+            }
+        });
+        cancelAlert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        cancelAlert.setTitle("Delete Item");
+        cancelAlert.setMessage("Are you sure you want to delete item?");
+        cancelAlert.show();
+
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
