@@ -25,11 +25,13 @@ import io.netopen.hotbitmapgg.library.view.RingProgressBar;
 
                 private List<TableItem> tableItems = new ArrayList<>();
                 ProgressDialog progress;
+                int p = 0;
 
     @Override
                 protected void onCreate(@Nullable Bundle savedInstanceState) {
                     super.onCreate(savedInstanceState);
                     setContentView(R.layout.pick_table_layout);
+
 
                     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                     getSupportActionBar().setTitle("Choose Table");
@@ -281,13 +283,6 @@ import io.netopen.hotbitmapgg.library.view.RingProgressBar;
 
                 }
 
-    Handler myHandler = new Handler(){
-        @Override
-        public void handleMessage(Message msg){
-            super.handleMessage(msg);
-            progress.incrementProgressBy(20);
-        }
-    };
 
     private void startProgressBar() {
         progress = new ProgressDialog(PickTableActivity.this);
@@ -297,24 +292,6 @@ import io.netopen.hotbitmapgg.library.view.RingProgressBar;
         progress.setCancelable(false);
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.show();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-
-                    while (progress.getProgress() <= progress.getMax()) {
-                        Thread.sleep(300);
-                        myHandler.sendMessage(myHandler.obtainMessage());
-                        if(progress.getProgress() == progress.getMax()){
-                            progress.dismiss();
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
     }
 
 
